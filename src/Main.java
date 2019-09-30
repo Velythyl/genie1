@@ -2,6 +2,8 @@ import java.util.Date;
 
 public class Main {
 
+    public static void newClient()
+
     public static void main(String[] args) {
         //CU: creer un client
         Client bob1 = new Client("Robert", "Bobert", "450-322-1344", "bobin@robmail.com",

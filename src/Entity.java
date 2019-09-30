@@ -1,6 +1,6 @@
 import java.util.Date;
 
-public abstract class Entity {
+public abstract class Entity extends GymClass {
     private String name, surname, phone, email, address;
     private boolean isMale; //gender
     private Date birthdate;
@@ -8,7 +8,9 @@ public abstract class Entity {
 
     private static int nextUuid = 0;
 
-    public Entity(String name, String surname, String phone, String email, String address, boolean isMale, Date birthdate) {
+    public Entity(String name, String surname, String phone, String email, String address, boolean isMale, Date birthdate, String comment) {
+        super(comment);
+
         this.name = name;
         this.surname = surname;
         this.phone = phone;
