@@ -2,9 +2,11 @@ import java.util.Date;
 
 public class Activity extends GymClass {
     private Date start, end;    //start and end of activity's offering
-    private int hour, capacity, proNumber;
+    private int hour, capacity, proNumber, uuid;
     private boolean[] days; //7-sized array
-    
+
+    private static int nextUuid = 0;
+
     public Activity(String comment, Date start, Date end, int hour, int capacity, int proNumber, boolean[] days) {
         super(comment);
         this.start = start;
@@ -13,6 +15,13 @@ public class Activity extends GymClass {
         this.capacity = capacity;
         this.proNumber = proNumber;
         this.days = days;
+
+        this.uuid = nextUuid;
+        nextUuid++;
+    }
+
+    public int getUuid() {
+        return uuid;
     }
 
     public Date getStart() {
