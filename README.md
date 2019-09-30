@@ -4,3 +4,4 @@ Google doc pour l'écriture en pair du rapport: https://docs.google.com/document
 
 #TODO:
 - Dans la version 2, enlever les uuid et les laisser generer par SQL? Ou alors bouger ca dans GymClass?
+- Faire une superclasse abstraite "UuidGymClass" que Entity et Activity pourrait extend pour avoir l'UUID automatique
