@@ -1,5 +1,6 @@
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
 
@@ -51,6 +52,7 @@ public class Main {
         }
 
         existingClients.add(new Client(name, surname, phone, email, address, isMale, birthdate, comment));
+        return "Inscription réussie";
     }
 
     /**
@@ -58,6 +60,49 @@ public class Main {
      * @param args
      */
     public static void main(String[] args) {
+        // create a scanner so we can read the command-line input
+        Scanner scanner = new Scanner(System.in);
 
+        System.out.println("Bienvenue à l'interface de #GYM. Que voulez-vous faire?\n" +
+                "Choisissez l'une des options suivantes en ÉCRIVANT SA LETTRE puis APPUYEZ SUR ENTER:\n" +
+                "[A] : inscrire un nouveau membre\n" +
+                "[B] : inscrire un nouveau professionnel\n" +
+                "[C] : inscrire un membre a un cours\n" +
+                "[D] : faire accéder un membre au gym\n" +
+                "[E] : inscrire un nouveau cours au programme\n");
+
+        String agentResponse = scanner.next();
+        switch (agentResponse){
+            case "A":
+            case "[A]":
+            case "a":
+            case "[a]":
+                System.out.println("vous avez choisi : inscrire un nouveau membre");
+                break;
+            case "B":
+            case "[B]":
+            case "b":
+            case "[b]":
+                System.out.println("vous avez choisi : inscrire un nouveau professionnel");
+                break;
+            case "C":
+            case "[C]":
+            case "c":
+            case "[c]":
+                System.out.println("vous avez choisi : inscrire un membre a un cours");
+                break;
+            case "D":
+            case "[D]":
+            case "d":
+            case "[d]":
+                System.out.println("vous avez choisi : faire accéder un membre au gym");
+                break;
+            case "E":
+            case "[E]":
+            case "e":
+            case "[e]":
+                System.out.println("vous avez choisi : inscrire un nouveau cours au programme");
+                break;
+        }
     }
 }
