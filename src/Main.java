@@ -71,7 +71,7 @@ public class Main {
                 "[D] : faire accéder un membre au gym\n" +
                 "[E] : inscrire un nouveau cours au programme\n");
 
-        String agentResponse = scanner.next;
+        String agentResponse = scanner.next();
         switch (agentResponse){
             case "A":
             case "[A]":
