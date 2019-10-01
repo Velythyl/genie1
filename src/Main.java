@@ -4,9 +4,9 @@ import java.util.Scanner;
 
 public class Main {
 
-    ArrayList<Client> existingClients = new ArrayList<>();
-    ArrayList<Professionnal> existingProfessionnals = new ArrayList<>();
-    ArrayList<Activity> existingActivities = new ArrayList<>();
+    static ArrayList<Client> existingClients = new ArrayList<>();
+    static ArrayList<Professionnal> existingProfessionnals = new ArrayList<>();
+    static ArrayList<Activity> existingActivities = new ArrayList<>();
 
     public void initPrototype() {
         existingClients.add(new Client("Yoda", "N/A", "451-219-2131",
@@ -44,7 +44,7 @@ public class Main {
         else return "Validé";
     }
 
-    public String enrollClient(String name, String surname, String phone, String email, String address, boolean isMale,
+    public static String enrollClient(String name, String surname, String phone, String email, String address, boolean isMale,
                                Timestamp birthdate, String comment) {
 
         for(Client cl: existingClients) {
@@ -78,6 +78,36 @@ public class Main {
             case "a":
             case "[a]":
                 System.out.println("vous avez choisi : inscrire un nouveau membre");
+                System.out.println("veuillez écrire son nom:");
+                String name = scanner.next();
+
+                System.out.println("veuillez écrire son nom de famille:");
+                String surname = scanner.next();
+
+                System.out.println("veuillez écrire son numéro de téléphone:");
+                String phone = scanner.next();
+
+                System.out.println("veuillez écrire son addresse courriel:");
+                String email = scanner.next();
+
+                System.out.println("veuillez écrire son addresse physique:");
+                String address = scanner.next();
+
+                System.out.println("veuillez indique son genre: Homme [h],Femme [f], autre [a]");
+                String gender = scanner.next();
+
+                boolean isMale = (gender.equals("h")||gender.equals("H")); // TODO not sure about boolean here ... lol
+                System.out.println("birthdate?:");
+                scanner.next();
+                Timestamp birthdate = new Timestamp(41234123); // not important lol
+
+                System.out.println("comment?");
+                String comment = scanner.next();
+
+                enrollClient(name,surname,phone, email, address, isMale, birthdate, comment);
+
+                System.out.println("client enregistré dans le système");
+
                 break;
             case "B":
             case "[B]":
