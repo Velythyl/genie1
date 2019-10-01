@@ -1,14 +1,13 @@
-import java.util.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 
-public abstract class Entity extends GymClass {
+//NOTE: on utilise Timestamp partout par souci de convention au lieu de java.util.Date
+public abstract class Entity extends UuidGymClass {
     private String name, surname, phone, email, address;
     private boolean isMale; //gender
-    private Date birthdate;
-    private int uuid;    //unique id
+    private Timestamp birthdate;
 
-    private static int nextUuid = 0;
-
-    public Entity(String name, String surname, String phone, String email, String address, boolean isMale, Date birthdate, String comment) {
+    public Entity(String name, String surname, String phone, String email, String address, boolean isMale, Timestamp birthdate, String comment) {
         super(comment);
 
         this.name = name;
@@ -18,15 +17,7 @@ public abstract class Entity extends GymClass {
         this.address = address;
         this.isMale = isMale;
         this.birthdate = birthdate;
-
-        this.uuid = nextUuid;
-        Entity.nextUuid++;
     }
-
-    public int getUuid() {   //only a getter here: can't change uuid
-        return uuid;
-    }
-
 
     public String getName() {
         return name;
@@ -76,11 +67,11 @@ public abstract class Entity extends GymClass {
         isMale = male;
     }
 
-    public Date getBirthdate() {
+    public Timestamp getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(Date birthdate) {
+    public void setBirthdate(Timestamp birthdate) {
         this.birthdate = birthdate;
     }
 

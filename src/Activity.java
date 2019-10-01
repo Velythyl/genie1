@@ -1,13 +1,11 @@
-import java.util.Date;
+import java.sql.Timestamp;
 
-public class Activity extends GymClass {
-    private Date start, end;    //start and end of activity's offering
-    private int hour, capacity, proNumber, uuid;
+public class Activity extends UuidGymClass {
+    private Timestamp start, end;    //start and end of activity's offering
+    private int hour, capacity, proNumber;
     private boolean[] days; //7-sized array
 
-    private static int nextUuid = 0;
-
-    public Activity(String comment, Date start, Date end, int hour, int capacity, int proNumber, boolean[] days) {
+    public Activity(String comment, Timestamp start, Timestamp end, int hour, int capacity, int proNumber, boolean[] days) {
         super(comment);
         this.start = start;
         this.end = end;
@@ -15,28 +13,21 @@ public class Activity extends GymClass {
         this.capacity = capacity;
         this.proNumber = proNumber;
         this.days = days;
-
-        this.uuid = nextUuid;
-        nextUuid++;
     }
 
-    public int getUuid() {
-        return uuid;
-    }
-
-    public Date getStart() {
+    public Timestamp getStart() {
         return start;
     }
 
-    public void setStart(Date start) {
+    public void setStart(Timestamp start) {
         this.start = start;
     }
 
-    public Date getEnd() {
+    public Timestamp getEnd() {
         return end;
     }
 
-    public void setEnd(Date end) {
+    public void setEnd(Timestamp end) {
         this.end = end;
     }
 
