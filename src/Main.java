@@ -27,15 +27,30 @@ public class Main {
                 new boolean[]{true, false, false, true, false, true, true}));
     }
 
-    public String accessGym(int uuid) {
+    public Client findClient(int uuid) {
         for(Client cl: existingClients) {
-            if(cl.getUuid() == uuid) {
-                if(cl.isSuspended()) return "Membre suspendu";
-                return "Validé";
-            }
+            if(cl.getUuid() == uuid) return cl;
         }
 
-        return "Numéro invalide";
+        return null;
+    }
+
+    public String accessGym(int uuid) {
+        Client cl = findClient(uuid);
+
+        if(cl == null) return "Numéro invalide";
+        else if(cl.isSuspended()) return "Membre suspendu";
+        else return "Validé";
+    }
+
+    public String enrollClient(String name, String surname, String phone, String email, String address, boolean isMale,
+                               Timestamp birthdate, String comment) {
+
+        for(Client cl: existingClients) {
+            if(cl.getName().equals(name) && cl.getSurname().equals(surname) && cl.getEmail().equals(email)) return "Utilisateur existe déjà";
+        }
+
+        existingClients.add(new Client(name, surname, phone, email, address, isMale, birthdate, comment));
     }
 
     /**
