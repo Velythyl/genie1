@@ -28,7 +28,7 @@ public class Main {
                 new boolean[]{true, false, false, true, false, true, true}));
     }
 
-    public Client findClient(int uuid) {
+    public static Client findClient(int uuid) {
         for(Client cl: existingClients) {
             if(cl.getUuid() == uuid) return cl;
         }
@@ -36,7 +36,7 @@ public class Main {
         return null;
     }
 
-    public String accessGym(int uuid) {
+    public static String accessGym(int uuid) {
         Client cl = findClient(uuid);
 
         if(cl == null) return "Numéro invalide";
@@ -155,6 +155,9 @@ public class Main {
             case "d":
             case "[d]":
                 System.out.println("vous avez choisi : faire accéder un membre au gym");
+                System.out.println("veuillez entrer son numéro unique, puis appuyez sur ENTER:");
+                int id = Integer.parseInt(scanner.next());
+                System.out.println(accessGym(id));
                 break;
             case "E":
             case "[E]":
