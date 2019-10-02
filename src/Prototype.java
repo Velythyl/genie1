@@ -48,11 +48,13 @@ public class Prototype {
     public String enrollClient(String name, String surname, String phone, String email, String address, String gender,
                                       Timestamp birthdate, String comment) {
 
+        Client newClient = new Client(name, surname, phone, email, address, gender, birthdate, comment);
+
         for(Client cl: existingClients) {
-            if(cl.getName().equals(name) && cl.getSurname().equals(surname) && cl.getEmail().equals(email)) return "Utilisateur existe déjà";
+            if(cl.equals(newClient)) return "Utilisateur existe déjà";
         }
 
-        existingClients.add(new Client(name, surname, phone, email, address, gender, birthdate, comment));
+        existingClients.add(newClient);
         return "Inscription réussie";
     }
 

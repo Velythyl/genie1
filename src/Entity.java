@@ -18,6 +18,17 @@ public abstract class Entity extends UuidGymClass {
         this.birthdate = birthdate;
     }
 
+    /**
+     * Compares two Entities
+     *
+     * Don't want to be TOO harsh, to resist the same person coming by with a new adress
+     * @param obj
+     * @return
+     */
+    public boolean equals(Entity obj) {
+        return obj.getName().equals(this.getName()) && obj.getSurname().equals(this.getSurname()) && obj.getBirthdate().equals(this.getBirthdate());
+    }
+
     public String getName() {
         return name;
     }
