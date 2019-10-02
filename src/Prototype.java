@@ -2,6 +2,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Prototype {
     private ArrayList<Client> existingClients;
@@ -82,12 +84,15 @@ public class Prototype {
      */
     public Object meta_marshallType(String str, String type) {
         if(type.startsWith("[")) {
-            Object[] arr = (Object[]) str.split(",");
+            String[] arr = str.split(",");
+            Object[] typeArr = new Object[arr.length];
 
-            String theType =
+            Matcher matcher = Pattern.compile("^*.(*);$").matcher(type);
+
+            matcher.find();
 
             for(int i=0; i<arr.length; i++) {
-                arr[i] = meta_marshallType(arr[i], );
+                typeArr[i] = meta_marshallType(arr[i], matcher.group(1));
             }
         }
 
