@@ -1,4 +1,3 @@
-import java.lang.reflect.Method;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -22,10 +21,11 @@ public class Main {
                 "kenobae@oldrepublic.org", "1 Master's Council ave.", "Homme",
                 new Timestamp(System.currentTimeMillis()+700000), null));
 
+        /*
         existingActivities.add(new Activity("Good for any aspiring Jedi!",
                 new Timestamp(System.currentTimeMillis()+100000), new Timestamp(System.currentTimeMillis()+1000000),
                 13, 20, existingProfessionnals.get(0).getUuid(),
-                new boolean[]{true, false, false, true, false, true, true}));
+                new boolean[]{true, false, false, true, false, true, true}));*/
     }
 
     public static Client findClient(int uuid) {
@@ -61,7 +61,7 @@ public class Main {
     public static void main(String[] args) {
 
         Prototype pt = new Prototype();
-        System.out.println(pt.callByString("accessGym\t0"));
+        System.out.println(pt.meta_callByString("accessGym\t0"));
 
 
         // create a scanner so we can read the command-line input

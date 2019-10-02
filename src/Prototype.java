@@ -2,7 +2,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Prototype {
     private ArrayList<Client> existingClients;
@@ -27,10 +26,10 @@ public class Prototype {
                 "kenobae@oldrepublic.org", "1 Master's Council ave.", "Homme",
                 new Timestamp(System.currentTimeMillis()+700000), null));
 
-        existingActivities.add(new Activity("Good for any aspiring Jedi!",
+        /*existingActivities.add(new Activity("Good for any aspiring Jedi!",
                 new Timestamp(System.currentTimeMillis()+100000), new Timestamp(System.currentTimeMillis()+1000000),
                 13, 20, existingProfessionnals.get(0).getUuid(),
-                new boolean[]{true, false, false, true, false, true, true}));
+                new boolean[]{true, false, false, true, false, true, true}));*/
     }
 
     public Client findClient(int uuid) {
@@ -42,11 +41,14 @@ public class Prototype {
     }
 
     public String accessGym(int uuid) {
-        Client cl = findClient(uuid);
+        for(Client cl: existingClients) {
+            if(cl.getUuid() == uuid) {
+                if(cl.isSuspended()) return "Membre suspendu";
+                else return "Validé";
+            }
+        }
 
-        if(cl == null) return "Numéro invalide";
-        else if(cl.isSuspended()) return "Membre suspendu";
-        else return "Validé";
+        return "Numéro invalide";
     }
 
     public String enrollClient(String name, String surname, String phone, String email, String address, String gender,
@@ -62,7 +64,9 @@ public class Prototype {
         return "Inscription réussie";
     }
 
-    public Method getMethodByName(String name) throws ClassNotFoundException {
+    public void consultActivities(String[] bla){}
+
+    public Method meta_getMethodByName(String name) throws ClassNotFoundException {
         for(Method m: Class.forName("Prototype").getDeclaredMethods()) {
             if(m.getName().equals(name)) return m;
         }
@@ -76,7 +80,17 @@ public class Prototype {
      * @param type
      * @return
      */
-    public Object marshallType(String str, String type) {
+    public Object meta_marshallType(String str, String type) {
+        if(type.startsWith("[")) {
+            Object[] arr = (Object[]) str.split(",");
+
+            String theType =
+
+            for(int i=0; i<arr.length; i++) {
+                arr[i] = meta_marshallType(arr[i], );
+            }
+        }
+
         switch (type) {
             case "int":
                 return Integer.parseInt(str);
@@ -94,16 +108,17 @@ public class Prototype {
      * @param arr
      * @return
      */
-    public Object callByString(String arr) {
+    public Object meta_callByString(String arr) {
         String[] array = arr.split("\t");
 
         try {
-            Method t = getMethodByName(array[0]);
+            Method t = meta_getMethodByName(array[0]);
 
             Object[] castParams = new Object[array.length-1];
             for(int i=0; i<array.length-1; i++) {
-                castParams[i] = marshallType(array[i+1], t.getParameterTypes()[i].getName());
+                castParams[i] = meta_marshallType(array[i+1], t.getParameterTypes()[i].getName());
             }
+            //TODO after any operation save system state on disc
 
             return t.invoke(this, castParams);
         } catch (ClassNotFoundException e) {

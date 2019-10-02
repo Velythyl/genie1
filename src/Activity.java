@@ -1,11 +1,25 @@
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Activity extends UuidGymClass {
     private Timestamp start, end;    //start and end of activity's offering
     private int hour, capacity, proNumber;
     private boolean[] days; //7-sized array
+    private ArrayList<Integer> inscriptions;    //uuid of clients
 
-    public Activity(String comment, Timestamp start, Timestamp end, int hour, int capacity, int proNumber, boolean[] days) {
+    /**
+     *
+     * @param comment
+     * @param start
+     * @param end
+     * @param hour
+     * @param capacity
+     * @param proNumber
+     * @param days
+     * @param inscriptions csv of the inscriptions
+     */
+    public Activity(String comment, Timestamp start, Timestamp end, int hour, int capacity, int proNumber, boolean[] days, Integer[] inscriptions) {
         super(comment);
         this.start = start;
         this.end = end;
@@ -13,6 +27,8 @@ public class Activity extends UuidGymClass {
         this.capacity = capacity;
         this.proNumber = proNumber;
         this.days = days;
+
+        this.inscriptions = new ArrayList<>(Arrays.asList(inscriptions));
     }
 
     public Timestamp getStart() {
