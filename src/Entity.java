@@ -3,11 +3,10 @@ import java.sql.Timestamp;
 
 //NOTE: on utilise Timestamp partout par souci de convention au lieu de java.util.Date
 public abstract class Entity extends UuidGymClass {
-    private String name, surname, phone, email, address;
-    private boolean isMale; //gender
+    private String name, surname, phone, email, address, gender;
     private Timestamp birthdate;
 
-    public Entity(String name, String surname, String phone, String email, String address, boolean isMale, Timestamp birthdate, String comment) {
+    public Entity(String name, String surname, String phone, String email, String address, String gender, Timestamp birthdate, String comment) {
         super(comment);
 
         this.name = name;
@@ -15,7 +14,7 @@ public abstract class Entity extends UuidGymClass {
         this.phone = phone;
         this.email = email;
         this.address = address;
-        this.isMale = isMale;
+        this.gender = gender;
         this.birthdate = birthdate;
     }
 
@@ -59,12 +58,12 @@ public abstract class Entity extends UuidGymClass {
         this.address = address;
     }
 
-    public boolean isMale() {
-        return isMale;
+    public String getGender() {
+        return gender;
     }
 
-    public void setMale(boolean male) {
-        isMale = male;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public Timestamp getBirthdate() {

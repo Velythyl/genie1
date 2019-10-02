@@ -1,25 +1,25 @@
+import java.lang.reflect.Method;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-
     static ArrayList<Client> existingClients = new ArrayList<>();
     static ArrayList<Professionnal> existingProfessionnals = new ArrayList<>();
     static ArrayList<Activity> existingActivities = new ArrayList<>();
 
     public void initPrototype() {
         existingClients.add(new Client("Yoda", "N/A", "451-219-2131",
-                "yoda_best_jedi@oldrepublic.org", "1 Master's Council ave.", true,
+                "yoda_best_jedi@oldrepublic.org", "1 Master's Council ave.", "guy",
                 new Timestamp(System.currentTimeMillis()), "Is allergic to latex"));
         Client suspended = new Client("Bob", "Bobert", "313-414-4531", "bobinne@bob.com",
-                "3431 rue des Boberts", true, new Timestamp(System.currentTimeMillis()-700000),
+                "3431 rue des Boberts", "male", new Timestamp(System.currentTimeMillis()-700000),
                 null);
         suspended.setSuspended(true);
         existingClients.add(suspended);
 
         existingProfessionnals.add(new Professionnal("Obi Wan", "Kenobi", "451-219-9999",
-                "kenobae@oldrepublic.org", "1 Master's Council ave.", true,
+                "kenobae@oldrepublic.org", "1 Master's Council ave.", "Homme",
                 new Timestamp(System.currentTimeMillis()+700000), null));
 
         existingActivities.add(new Activity("Good for any aspiring Jedi!",
@@ -44,22 +44,26 @@ public class Main {
         else return "Validé";
     }
 
-    public static String enrollClient(String name, String surname, String phone, String email, String address, boolean isMale,
-                               Timestamp birthdate, String comment) {
+    public static String enrollClient(String name, String surname, String phone, String email, String address, String gender,
+                                      Timestamp birthdate, String comment) {
 
         for(Client cl: existingClients) {
             if(cl.getName().equals(name) && cl.getSurname().equals(surname) && cl.getEmail().equals(email)) return "Utilisateur existe déjà";
         }
 
-        existingClients.add(new Client(name, surname, phone, email, address, isMale, birthdate, comment));
+        existingClients.add(new Client(name, surname, phone, email, address, gender, birthdate, comment));
         return "Inscription réussie";
     }
-
     /**
      * inscription au gym: inscription name surname phone email address isMale(boolean) millisTimestamp comment
      * @param args
      */
     public static void main(String[] args) {
+
+        Prototype pt = new Prototype();
+        System.out.println(pt.callByString("accessGym\t0"));
+
+
         // create a scanner so we can read the command-line input
         Scanner scanner = new Scanner(System.in);
 
@@ -96,7 +100,6 @@ public class Main {
                 System.out.println("veuillez indique son genre: Homme [h],Femme [f], autre [a]");
                 String gender = scanner.next();
 
-                boolean isMale = (gender.equals("h")||gender.equals("H")); // TODO not sure about boolean here ... lol
                 System.out.println("birthdate?:");
                 scanner.next();
                 Timestamp birthdate = new Timestamp(41234123); // not important lol
@@ -104,7 +107,7 @@ public class Main {
                 System.out.println("comment?");
                 String comment = scanner.next();
 
-                enrollClient(name,surname,phone, email, address, isMale, birthdate, comment);
+                enrollClient(name,surname,phone, email, address, gender, birthdate, comment);
 
                 System.out.println("client enregistré dans le système");
 
@@ -132,7 +135,6 @@ public class Main {
                 System.out.println("veuillez indique son genre: Homme [h],Femme [f], autre [a]");
                 String gender = scanner.next();
 
-                boolean isMale = (gender.equals("h")||gender.equals("H")); // TODO not sure about boolean here ... lol
                 System.out.println("birthdate?:");
                 scanner.next();
                 Timestamp birthdate = new Timestamp(41234123); // not important lol
@@ -140,7 +142,7 @@ public class Main {
                 System.out.println("comment?");
                 String comment = scanner.next();
 
-                enrollClient(name,surname,phone, email, address, isMale, birthdate, comment);
+                enrollClient(name,surname,phone, email, address, gender, birthdate, comment);
 
                 System.out.println("professionel enregistré dans le système");
                 break; }
