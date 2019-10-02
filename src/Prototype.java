@@ -5,11 +5,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Prototype {
-    static ArrayList<Client> existingClients = new ArrayList<>();
-    static ArrayList<Professionnal> existingProfessionnals = new ArrayList<>();
-    static ArrayList<Activity> existingActivities = new ArrayList<>();
+    private ArrayList<Client> existingClients;
+    private ArrayList<Professionnal> existingProfessionnals;
+    private ArrayList<Activity> existingActivities;
 
     public Prototype() {
+        existingClients = new ArrayList<>();
+        existingProfessionnals = new ArrayList<>();
+        existingActivities = new ArrayList<>();
+
         existingClients.add(new Client("Yoda", "N/A", "451-219-2131",
                 "yoda_best_jedi@oldrepublic.org", "1 Master's Council ave.", "guy",
                 new Timestamp(System.currentTimeMillis()), "Is allergic to latex"));
