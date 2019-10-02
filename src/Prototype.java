@@ -76,11 +76,18 @@ public class Prototype {
                 return Integer.parseInt(str);
             case "String":
                 return str;
+            case "Timestamp":
+                return new Timestamp(Long.parseLong(str));
             default:
-                    return str;
+                return str;
         }
     }
 
+    /**
+     * Calls a function by string. Splits on tabs!
+     * @param arr
+     * @return
+     */
     public Object callByString(String arr) {
         String[] array = arr.split("\t");
 
