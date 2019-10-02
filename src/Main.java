@@ -76,7 +76,7 @@ public class Main {
             case "A":
             case "[A]":
             case "a":
-            case "[a]":
+            case "[a]": {
                 System.out.println("vous avez choisi : inscrire un nouveau membre");
                 System.out.println("veuillez écrire son nom:");
                 String name = scanner.next();
@@ -108,13 +108,42 @@ public class Main {
 
                 System.out.println("client enregistré dans le système");
 
-                break;
+                break; }
             case "B":
             case "[B]":
             case "b":
-            case "[b]":
-                System.out.println("vous avez choisi : inscrire un nouveau professionnel");
-                break;
+            case "[b]": { // TODO : ajouter une question sur son domaine professionnel
+                System.out.println("vous avez choisi : inscrire un nouveau professionnel");;
+                System.out.println("veuillez écrire son nom:");
+                String name = scanner.next();
+
+                System.out.println("veuillez écrire son nom de famille:");
+                String surname = scanner.next();
+
+                System.out.println("veuillez écrire son numéro de téléphone:");
+                String phone = scanner.next();
+
+                System.out.println("veuillez écrire son addresse courriel:");
+                String email = scanner.next();
+
+                System.out.println("veuillez écrire son addresse physique:");
+                String address = scanner.next();
+
+                System.out.println("veuillez indique son genre: Homme [h],Femme [f], autre [a]");
+                String gender = scanner.next();
+
+                boolean isMale = (gender.equals("h")||gender.equals("H")); // TODO not sure about boolean here ... lol
+                System.out.println("birthdate?:");
+                scanner.next();
+                Timestamp birthdate = new Timestamp(41234123); // not important lol
+
+                System.out.println("comment?");
+                String comment = scanner.next();
+
+                enrollClient(name,surname,phone, email, address, isMale, birthdate, comment);
+
+                System.out.println("professionel enregistré dans le système");
+                break; }
             case "C":
             case "[C]":
             case "c":
