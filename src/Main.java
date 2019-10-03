@@ -61,10 +61,10 @@ public class Main {
     public static void main(String[] args) {
 
         Prototype pt = new Prototype();
-        //System.out.println(pt.meta_callByString("consultActivities\t0,1,2,4"));
+        //System.out.println(pt.meta_callByString("createActivity","commentaire\t0319413\t31874313\t21\t30\t0\ttrue,true,true,false,true,true,false\tJedi Diplomacy"));
         //System.out.println(pt.meta_callByString("accessGym\t0"));
-        pt.consultActivities();
-        pt.consultInscriptions(2);
+        //pt.consultActivities();
+        //pt.consultInscriptions(2);
 
 
         // create a scanner so we can read the command-line input
@@ -83,93 +83,52 @@ public class Main {
             case "A":
             case "[A]":
             case "a":
-            case "[a]": {
-                System.out.println("vous avez choisi : inscrire un nouveau membre");
-                System.out.println("veuillez écrire son nom:");
-                String name = scanner.next();
-
-                System.out.println("veuillez écrire son nom de famille:");
-                String surname = scanner.next();
-
-                System.out.println("veuillez écrire son numéro de téléphone:");
-                String phone = scanner.next();
-
-                System.out.println("veuillez écrire son addresse courriel:");
-                String email = scanner.next();
-
-                System.out.println("veuillez écrire son addresse physique:");
-                String address = scanner.next();
-
-                System.out.println("veuillez indique son genre: Homme [h],Femme [f], autre [a]");
-                String gender = scanner.next();
-
-                System.out.println("birthdate?:");
-                scanner.next();
-                Timestamp birthdate = new Timestamp(41234123); // not important lol
-
-                System.out.println("comment?");
-                String comment = scanner.next();
-
-                enrollClient(name,surname,phone, email, address, gender, birthdate, comment);
-
-                System.out.println("client enregistré dans le système");
-
-                break; }
+            case "[a]":
+                helpMessage(0, "prenom nom telephone addresse_email addresse genre anniversaire commentaire");
+                pt.meta_callByString("enrollClient", scanner.next());
+                break;
             case "B":
             case "[B]":
             case "b":
             case "[b]": { // TODO : ajouter une question sur son domaine professionnel
-                System.out.println("vous avez choisi : inscrire un nouveau professionnel");;
-                System.out.println("veuillez écrire son nom:");
-                String name = scanner.next();
-
-                System.out.println("veuillez écrire son nom de famille:");
-                String surname = scanner.next();
-
-                System.out.println("veuillez écrire son numéro de téléphone:");
-                String phone = scanner.next();
-
-                System.out.println("veuillez écrire son addresse courriel:");
-                String email = scanner.next();
-
-                System.out.println("veuillez écrire son addresse physique:");
-                String address = scanner.next();
-
-                System.out.println("veuillez indique son genre: Homme [h],Femme [f], autre [a]");
-                String gender = scanner.next();
-
-                System.out.println("birthdate?:");
-                scanner.next();
-                Timestamp birthdate = new Timestamp(41234123); // not important lol
-
-                System.out.println("comment?");
-                String comment = scanner.next();
-
-                enrollClient(name,surname,phone, email, address, gender, birthdate, comment);
-
-                System.out.println("professionel enregistré dans le système");
+                helpMessage(1,"name,surname,phone, email, address, gender, birthdate, comment");
+                pt.meta_callByString("enrollClient", scanner.next());
                 break; }
             case "C":
             case "[C]":
             case "c":
             case "[c]":
-                System.out.println("vous avez choisi : inscrire un membre a un cours");
+                helpMessage(2,"clientID idService date comment");
+                pt.meta_callByString("enrollIntoActivity", scanner.next());
                 break;
             case "D":
             case "[D]":
             case "d":
             case "[d]":
-                System.out.println("vous avez choisi : faire accéder un membre au gym");
-                System.out.println("veuillez entrer son numéro unique, puis appuyez sur ENTER:");
-                int id = Integer.parseInt(scanner.next());
-                System.out.println(accessGym(id));
+                helpMessage(3, "clientID");
+                pt.meta_callByString("accessGym", scanner.next());
                 break;
             case "E":
             case "[E]":
             case "e":
             case "[e]":
-                System.out.println("vous avez choisi : inscrire un nouveau cours au programme");
+                helpMessage(4, "commentaire date_debut date_fin heure nbr_max_d'utilisateurs professionelID jours_offerts nom_du_cours");
+                pt.meta_callByString("createActivity", scanner.next());
                 break;
         }
+    }
+
+    public static void helpMessage(int x, String text){
+        String[] cu = {"inscrire un nouveau membre",
+                "inscrire un nouveau professionnel",
+                "inscrire un membre a un cours",
+                "faire accéder un membre au gym",
+                "inscrire un nouveau cours au programme"};
+
+        System.out.println("vous avez choisi " + cu[x] +
+                "\nEntrez les informations suivantes separees de \";\"\n" +
+                text + "\nAppuyez ensuite sur entree." +
+                "\nformat des dates : jj/mm/yyyy\n" +
+                "heures : hh:mm");
     }
 }

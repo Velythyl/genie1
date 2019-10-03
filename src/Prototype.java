@@ -23,8 +23,7 @@ public class Prototype {
         System.out.println("Numéro invalide");
     }
 
-    public void enrollClient(String name, String surname, String phone, String email, String address, String gender,
-                                      Timestamp birthdate, String comment) {
+    public void enrollClient(String name, String surname, String phone, String email, String address, String gender, Timestamp birthdate, String comment) {
 
         ArrayList<Client> list = readClients();
         Client newClient = new Client(name, surname, phone, email, address, gender, birthdate, comment);
