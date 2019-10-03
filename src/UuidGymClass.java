@@ -13,4 +13,5 @@ public abstract class UuidGymClass extends GymClass {
     public int getUuid() {   //only a getter here: can't change uuid
         return uuid;
     }
+
 }

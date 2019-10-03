@@ -1,9 +1,12 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.function.Predicate;
 
 public class Prototype {
     private ArrayList<Client> existingClients;
@@ -66,7 +69,35 @@ public class Prototype {
         return "Inscription réussie";
     }
 
-    public void consultActivities(String[] bla){}
+    public ArrayList<Activity> readAndFilterRepository(Predicate<Activity> filter) {
+        ArrayList<Activity> list = new ArrayList<>();
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("RepertoireDesServices.tsv"));
+
+            String line = reader.readLine();
+            while(line != null) {
+                String[] arr = line.split("\t");
+                Activity a = new Activity(arr[0], new Timestamp(Long.parseLong(arr[1])),
+                        new Timestamp(Long.parseLong(arr[1])), Integer.parseInt(arr[2]), Integer.parseInt(arr[3]),
+                        Integer.parseInt(arr[4]), new boolean[]{false}, new Integer[]{0});
+
+                if(filter.test(a)) list.add(a);
+
+                line = reader.readLine();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    public void consultActivities(){
+        ArrayList<Activity> t = readAndFilterRepository( (Activity a) -> a.getInscriptions().size() < a.getCapacity());
+        int i = 0;
+    }
 
     public Method meta_getMethodByName(String name) throws ClassNotFoundException {
         for(Method m: Class.forName("Prototype").getDeclaredMethods()) {
@@ -82,18 +113,16 @@ public class Prototype {
      * @param type
      * @return
      */
-    public Object meta_marshallType(String str, String type) {
+    public Object meta_marshallType(String str, String type, String componentType) {
         if(type.startsWith("[")) {
             String[] arr = str.split(",");
             Object[] typeArr = new Object[arr.length];
 
-            Matcher matcher = Pattern.compile("^*.(*);$").matcher(type);
-
-            matcher.find();
-
             for(int i=0; i<arr.length; i++) {
-                typeArr[i] = meta_marshallType(arr[i], matcher.group(1));
+                typeArr[i] = meta_marshallType(arr[i], componentType, null);
             }
+
+            return typeArr;
         }
 
         switch (type) {
@@ -121,7 +150,10 @@ public class Prototype {
 
             Object[] castParams = new Object[array.length-1];
             for(int i=0; i<array.length-1; i++) {
-                castParams[i] = meta_marshallType(array[i+1], t.getParameterTypes()[i].getName());
+                Class paramType = t.getParameterTypes()[i];
+                String subType = paramType.getComponentType() == null ? null : paramType.getComponentType().getName();
+
+                castParams[i] = meta_marshallType(array[i+1], paramType.getName(), subType);
             }
             //TODO after any operation save system state on disc
 

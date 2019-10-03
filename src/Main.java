@@ -61,7 +61,9 @@ public class Main {
     public static void main(String[] args) {
 
         Prototype pt = new Prototype();
-        System.out.println(pt.meta_callByString("accessGym\t0"));
+        //System.out.println(pt.meta_callByString("consultActivities\t0,1,2,4"));
+        //System.out.println(pt.meta_callByString("accessGym\t0"));
+        pt.consultActivities();
 
 
         // create a scanner so we can read the command-line input

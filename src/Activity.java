@@ -1,3 +1,4 @@
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,6 +30,14 @@ public class Activity extends UuidGymClass {
         this.days = days;
 
         this.inscriptions = new ArrayList<>(Arrays.asList(inscriptions));
+    }
+
+    public ArrayList<Integer> getInscriptions() {
+        return inscriptions;
+    }
+
+    public void setInscriptions(ArrayList<Integer> inscriptions) {
+        this.inscriptions = inscriptions;
     }
 
     public Timestamp getStart() {

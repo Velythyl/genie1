@@ -1,9 +1,10 @@
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
  * All gym entries seem to have a timestamp and a comment field
  */
-public abstract class GymClass {
+public abstract class GymClass implements Serializable {
     private String comment;
     private Timestamp creationStamp;
 
