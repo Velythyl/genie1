@@ -19,6 +19,15 @@ public class Attendance extends GymClass {
         this(comment, pro.getUuid(), client.getUuid(), activity.getUuid());
     }
 
+    @Override
+    public String toString() {
+        return "Attendance{" +
+                "proNumber=" + proNumber +
+                ", clientNumber=" + clientNumber +
+                ", activityNumber=" + activityNumber +
+                "} " + super.toString();
+    }
+
     public int getProNumber() {
         return proNumber;
     }

@@ -1,10 +1,10 @@
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class Inscription extends GymClass {
     private int proNumber, clientNumber, activityNumber;
-    private Date activityDate;
+    private Timestamp activityDate;
 
-    public Inscription(String comment, int proNumber, int clientNumber, int activityNumber, Date activityDate) {
+    public Inscription(String comment, int proNumber, int clientNumber, int activityNumber, Timestamp activityDate) {
         super(comment);
         this.proNumber = proNumber;
         this.clientNumber = clientNumber;
@@ -23,8 +23,18 @@ public class Inscription extends GymClass {
      * @param activity
      * @param activityDate
      */
-    public Inscription(String comment, Professionnal pro, Client client, Activity activity, Date activityDate) {
+    public Inscription(String comment, Professionnal pro, Client client, Activity activity, Timestamp activityDate) {
         this(comment, pro.getUuid(), client.getUuid(), activity.getUuid(), activityDate);
+    }
+
+    @Override
+    public String toString() {
+        return "Inscription{" +
+                "proNumber=" + proNumber +
+                ", clientNumber=" + clientNumber +
+                ", activityNumber=" + activityNumber +
+                ", activityDate=" + activityDate +
+                "} " + super.toString();
     }
 
     public int getProNumber() {
@@ -51,11 +61,11 @@ public class Inscription extends GymClass {
         this.activityNumber = activityNumber;
     }
 
-    public Date getActivityDate() {
+    public Timestamp getActivityDate() {
         return activityDate;
     }
 
-    public void setActivityDate(Date activityDate) {
+    public void setActivityDate(Timestamp activityDate) {
         this.activityDate = activityDate;
     }
 }

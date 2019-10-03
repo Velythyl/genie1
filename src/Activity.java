@@ -1,3 +1,6 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -40,6 +43,32 @@ public class Activity extends UuidGymClass {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void enroll(int clientUuid, Timestamp date, String comment) {
+        this.inscriptions.add(clientUuid);
+
+        try(FileWriter fw = new FileWriter(new File("./Inscriptions.txt"), true)) {
+            fw.write(new Inscription(comment, this.proNumber, clientUuid, this.getUuid(), date).toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void confirmAttendance(int clientUuid, String comment) {
+        try(FileWriter fw = new FileWriter(new File("./Attendances.txt"), true)) {
+            fw.write(new Attendance(comment, this.proNumber, clientUuid, this.getUuid()).toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean isEnrolled(int clientUuid) {
+        for(Integer i: this.inscriptions) {
+            if(i == clientUuid) return true;
+        }
+
+        return false;
     }
 
     @Override
