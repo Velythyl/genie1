@@ -1,9 +1,12 @@
+import java.awt.*;
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Scanner;
+import java.util.function.Predicate;
 
 public class Prototype {
     private ArrayList<Client> existingClients;
@@ -66,7 +69,100 @@ public class Prototype {
         return "Inscription réussie";
     }
 
-    public void consultActivities(String[] bla){}
+    public ArrayList<Activity> readRepository() {
+        try(ObjectInputStream obji = new ObjectInputStream(new FileInputStream("./RepertoireDesServices.txt"))) {
+            return (ArrayList<Activity>) obji.readObject();
+
+        } catch (ClassNotFoundException | IOException e) {
+            e.printStackTrace();
+        }
+
+        return new ArrayList<>();
+    }
+
+    public void createActivity(String comment, Timestamp start, Timestamp end, int hour, int capacity, int proNumber, Boolean[] days, String name) {
+        ArrayList<Activity> list = readRepository();
+        list.add(new Activity(comment, start, end, hour, capacity, proNumber, days, new Integer[0], name));
+
+        try {
+            new ObjectOutputStream(new FileOutputStream("./RepertoireDesServices.txt")).writeObject(list);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Validé");
+    }
+
+    public ArrayList<Activity> readAndFilterRepository(Predicate<Activity> filter) {
+        ArrayList<Activity> fullList = readRepository();
+        ArrayList<Activity> list = new ArrayList<>();
+
+        fullList.forEach( (Activity a) -> {
+            if(filter.test(a)) list.add(a);
+        });
+
+        return list;
+    }
+
+    public void confirmAttendance(int clientUuid, int serviceUuid, String comment) {
+        ArrayList<Activity> list = readAndFilterRepository( (Activity a) -> a.getUuid() == serviceUuid );
+
+        if(list.size() == 0) {
+            System.out.println("Code invalide!");
+        } else if(list.get(0).isEnrolled(clientUuid)) {
+            list.get(0).confirmAttendance(clientUuid, comment);
+            System.out.println("Validé!");
+        } else {
+            System.out.println("Vous n'êtes pas inscrits à cette activité!");
+        }
+    }
+
+    public void enrollIntoActivity(int clientUuid, int serviceUuid, Timestamp onDate, String comment) {
+        ArrayList<Activity> list = readAndFilterRepository( (Activity a) -> a.getUuid() == serviceUuid );
+
+        if(list.size() == 0) {
+            System.out.println("Code invalide!");
+            return;
+        }
+
+        Activity a = list.get(0);
+        if(a.getInscriptions().size() < a.getCapacity()) {
+            System.out.println("Êtes-vous certains? Y/AnyKey");
+
+            Scanner scanner = new Scanner(System.in);
+            String resp = scanner.next();
+            scanner.close();
+
+            if(resp.toLowerCase().equals("y")) {
+                list.get(0).enroll(clientUuid, onDate, comment);
+                System.out.println("Validé");
+            } else {
+                System.out.println("Vous n’êtes pas inscrits");
+            }
+
+        } else {
+            System.out.println("L’activité est pleine");
+        }
+    }
+
+    public void consultActivities(){
+        ArrayList<Activity> list = new ArrayList<>();
+        list.add(new Activity("Good for any aspiring Jedi!",
+                new Timestamp(System.currentTimeMillis()+100000), new Timestamp(System.currentTimeMillis()+1000000),
+                13, 20, existingProfessionnals.get(0).getUuid(),
+                new Boolean[]{true, false, false, true, false, true, true}, new Integer[]{0,1}, "Sword Training"));
+
+
+        for(Activity a: readAndFilterRepository( (Activity a) -> a.getInscriptions().size() < a.getCapacity())) {
+            System.out.println(a);
+        }
+    }
+
+    public void consultInscriptions(int proUuid) {
+        for(Activity a: readAndFilterRepository((Activity a) -> a.getProNumber() == proUuid)) {
+            System.out.println(""+a.getName()+": "+a.getInscriptions());
+        }
+    }
 
     public Method meta_getMethodByName(String name) throws ClassNotFoundException {
         for(Method m: Class.forName("Prototype").getDeclaredMethods()) {
@@ -82,18 +178,16 @@ public class Prototype {
      * @param type
      * @return
      */
-    public Object meta_marshallType(String str, String type) {
+    public Object meta_marshallType(String str, String type, String componentType) {
         if(type.startsWith("[")) {
             String[] arr = str.split(",");
             Object[] typeArr = new Object[arr.length];
 
-            Matcher matcher = Pattern.compile("^*.(*);$").matcher(type);
-
-            matcher.find();
-
             for(int i=0; i<arr.length; i++) {
-                typeArr[i] = meta_marshallType(arr[i], matcher.group(1));
+                typeArr[i] = meta_marshallType(arr[i], componentType, null);
             }
+
+            return typeArr;
         }
 
         switch (type) {
@@ -121,7 +215,10 @@ public class Prototype {
 
             Object[] castParams = new Object[array.length-1];
             for(int i=0; i<array.length-1; i++) {
-                castParams[i] = meta_marshallType(array[i+1], t.getParameterTypes()[i].getName());
+                Class paramType = t.getParameterTypes()[i];
+                String subType = paramType.getComponentType() == null ? null : paramType.getComponentType().getName();
+
+                castParams[i] = meta_marshallType(array[i+1], paramType.getName(), subType);
             }
             //TODO after any operation save system state on disc
 
