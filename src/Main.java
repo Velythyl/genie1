@@ -64,6 +64,7 @@ public class Main {
         //System.out.println(pt.meta_callByString("consultActivities\t0,1,2,4"));
         //System.out.println(pt.meta_callByString("accessGym\t0"));
         pt.consultActivities();
+        pt.consultInscriptions(2);
 
 
         // create a scanner so we can read the command-line input

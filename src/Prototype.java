@@ -1,11 +1,9 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.function.Predicate;
 
 public class Prototype {
@@ -69,34 +67,46 @@ public class Prototype {
         return "Inscription réussie";
     }
 
+
     public ArrayList<Activity> readAndFilterRepository(Predicate<Activity> filter) {
+        ArrayList<Activity> fullList = new ArrayList<>();
         ArrayList<Activity> list = new ArrayList<>();
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader("RepertoireDesServices.tsv"));
 
-            String line = reader.readLine();
-            while(line != null) {
-                String[] arr = line.split("\t");
-                Activity a = new Activity(arr[0], new Timestamp(Long.parseLong(arr[1])),
-                        new Timestamp(Long.parseLong(arr[1])), Integer.parseInt(arr[2]), Integer.parseInt(arr[3]),
-                        Integer.parseInt(arr[4]), new boolean[]{false}, new Integer[]{0});
+        try(ObjectInputStream obji = new ObjectInputStream(new FileInputStream("./RepertoireDesServices.txt"))) {
+            fullList = (ArrayList<Activity>) obji.readObject();
 
-                if(filter.test(a)) list.add(a);
-
-                line = reader.readLine();
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }
+
+        fullList.forEach( (Activity a) -> {
+            if(filter.test(a)) list.add(a);
+        });
 
         return list;
     }
 
     public void consultActivities(){
-        ArrayList<Activity> t = readAndFilterRepository( (Activity a) -> a.getInscriptions().size() < a.getCapacity());
-        int i = 0;
+        ArrayList<Activity> list = new ArrayList<>();
+        list.add(new Activity("Good for any aspiring Jedi!",
+                new Timestamp(System.currentTimeMillis()+100000), new Timestamp(System.currentTimeMillis()+1000000),
+                13, 20, existingProfessionnals.get(0).getUuid(),
+                new Boolean[]{true, false, false, true, false, true, true}, new Integer[]{0,1}, "Sword Training"));
+        try {
+            new ObjectOutputStream(new FileOutputStream("./RepertoireDesServices.txt")).writeObject(list);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        for(Activity a: readAndFilterRepository( (Activity a) -> a.getInscriptions().size() < a.getCapacity())) {
+            System.out.println(a);
+        }
+    }
+
+    public void consultInscriptions(int proUuid) {
+        for(Activity a: readAndFilterRepository((Activity a) -> a.getProNumber() == proUuid)) {
+            System.out.println(""+a.getName()+": "+a.getInscriptions());
+        }
     }
 
     public Method meta_getMethodByName(String name) throws ClassNotFoundException {

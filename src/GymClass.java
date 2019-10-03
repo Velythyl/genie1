@@ -1,3 +1,6 @@
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
@@ -25,4 +28,28 @@ public abstract class GymClass implements Serializable {
         return creationStamp;
     }
 
+    public byte[] getSerialization() {
+        byte[] arr = new byte[]{};
+
+        try {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ObjectOutputStream objo = new ObjectOutputStream(bos);
+            objo.writeObject(this);
+            objo.close();
+            bos.close();
+            arr = bos.toByteArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return arr;
+    }
+
+    @Override
+    public String toString() {
+        return "GymClass{" +
+                "comment='" + comment + '\'' +
+                ", creationStamp=" + creationStamp +
+                '}';
+    }
 }

@@ -6,8 +6,9 @@ import java.util.Arrays;
 public class Activity extends UuidGymClass {
     private Timestamp start, end;    //start and end of activity's offering
     private int hour, capacity, proNumber;
-    private boolean[] days; //7-sized array
+    private Boolean[] days; //7-sized array
     private ArrayList<Integer> inscriptions;    //uuid of clients
+    private String name;
 
     /**
      *
@@ -20,7 +21,7 @@ public class Activity extends UuidGymClass {
      * @param days
      * @param inscriptions csv of the inscriptions
      */
-    public Activity(String comment, Timestamp start, Timestamp end, int hour, int capacity, int proNumber, boolean[] days, Integer[] inscriptions) {
+    public Activity(String comment, Timestamp start, Timestamp end, int hour, int capacity, int proNumber, Boolean[] days, Integer[] inscriptions, String name) {
         super(comment);
         this.start = start;
         this.end = end;
@@ -28,8 +29,32 @@ public class Activity extends UuidGymClass {
         this.capacity = capacity;
         this.proNumber = proNumber;
         this.days = days;
+        this.name = name;
 
         this.inscriptions = new ArrayList<>(Arrays.asList(inscriptions));
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+
+        return "Activity{" +
+                "start=" + start +
+                ", end=" + end +
+                ", hour=" + hour +
+                ", capacity=" + capacity +
+                ", proNumber=" + proNumber +
+                ", days=" + (days == null ? null : Arrays.asList(days)) +
+                ", inscriptions=" + inscriptions +
+                ", name='" + name + '\'' +
+                "} " + super.toString();
     }
 
     public ArrayList<Integer> getInscriptions() {
@@ -80,11 +105,11 @@ public class Activity extends UuidGymClass {
         this.proNumber = proNumber;
     }
 
-    public boolean[] getDays() {
+    public Boolean[] getDays() {
         return days;
     }
 
-    public void setDays(boolean[] days) {
+    public void setDays(Boolean[] days) {
         this.days = days;
     }
 }

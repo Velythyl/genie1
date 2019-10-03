@@ -14,4 +14,10 @@ public abstract class UuidGymClass extends GymClass {
         return uuid;
     }
 
+    @Override
+    public String toString() {
+        return "UuidGymClass{" +
+                "uuid=" + uuid +
+                "} " + super.toString();
+    }
 }
