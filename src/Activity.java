@@ -133,11 +133,11 @@ public class Activity extends UuidGymClass {
         this.proNumber = proNumber;
     }
 
-    public Boolean[] getDays() {
+    public String getDays() {
         return days;
     }
 
-    public void setDays(Boolean[] days) {
+    public void setDays(String days) {
         this.days = days;
     }
 }
