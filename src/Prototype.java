@@ -208,8 +208,8 @@ public class Prototype {
             Method t = meta_getMethodByName(commandName);
 
             Object[] castParams = new Object[array.length-1];
-            for(int i=0; i<array.length-1; i++) {
-                castParams[i] = meta_marshallType(array[i+1], t.getParameterTypes()[i].getName());
+            for(int i=0; i<array.length; i++) {
+                castParams[i] = meta_marshallType(array[i], t.getParameterTypes()[i].getName());
             }
 
             return t.invoke(this, castParams);
