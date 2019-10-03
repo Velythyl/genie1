@@ -205,7 +205,7 @@ public class Prototype {
         String[] array = params.split(";");
 
         try {
-            Method t = meta_getMethodByName(array[0]);
+            Method t = meta_getMethodByName(commandName);
 
             Object[] castParams = new Object[array.length-1];
             for(int i=0; i<array.length-1; i++) {
