@@ -61,7 +61,7 @@ public class Main {
     public static void main(String[] args) {
 
         Prototype pt = new Prototype();
-        //System.out.println(pt.meta_callByString("consultActivities\t0,1,2,4"));
+        System.out.println(pt.meta_callByString("createActivity\tcommentaire\t0319413\t31874313\t21\t30\t0\ttrue,true,true,false,true,true,false\tJedi Diplomacy"));
         //System.out.println(pt.meta_callByString("accessGym\t0"));
         pt.consultActivities();
         pt.consultInscriptions(2);

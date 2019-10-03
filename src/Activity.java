@@ -9,7 +9,7 @@ import java.util.Arrays;
 public class Activity extends UuidGymClass {
     private Timestamp start, end;    //start and end of activity's offering
     private int hour, capacity, proNumber;
-    private Boolean[] days; //7-sized array
+    private String days; //7-sized array
     private ArrayList<Integer> inscriptions;    //uuid of clients
     private String name;
 
@@ -22,9 +22,8 @@ public class Activity extends UuidGymClass {
      * @param capacity
      * @param proNumber
      * @param days
-     * @param inscriptions csv of the inscriptions
      */
-    public Activity(String comment, Timestamp start, Timestamp end, int hour, int capacity, int proNumber, Boolean[] days, Integer[] inscriptions, String name) {
+    public Activity(String comment, Timestamp start, Timestamp end, int hour, int capacity, int proNumber, String days, String name) {
         super(comment);
         this.start = start;
         this.end = end;
@@ -34,7 +33,7 @@ public class Activity extends UuidGymClass {
         this.days = days;
         this.name = name;
 
-        this.inscriptions = new ArrayList<>(Arrays.asList(inscriptions));
+        this.inscriptions = new ArrayList<>();
     }
 
     public String getName() {

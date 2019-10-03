@@ -80,9 +80,9 @@ public class Prototype {
         return new ArrayList<>();
     }
 
-    public void createActivity(String comment, Timestamp start, Timestamp end, int hour, int capacity, int proNumber, Boolean[] days, String name) {
+    public void createActivity(String comment, Timestamp start, Timestamp end, int hour, int capacity, int proNumber, String days, String name) {
         ArrayList<Activity> list = readRepository();
-        list.add(new Activity(comment, start, end, hour, capacity, proNumber, days, new Integer[0], name));
+        list.add(new Activity(comment, start, end, hour, capacity, proNumber, days, name));
 
         try {
             new ObjectOutputStream(new FileOutputStream("./RepertoireDesServices.txt")).writeObject(list);
@@ -150,7 +150,7 @@ public class Prototype {
         list.add(new Activity("Good for any aspiring Jedi!",
                 new Timestamp(System.currentTimeMillis()+100000), new Timestamp(System.currentTimeMillis()+1000000),
                 13, 20, existingProfessionnals.get(0).getUuid(),
-                new Boolean[]{true, false, false, true, false, true, true}, new Integer[]{0,1}, "Sword Training"));
+                "Lundi, Mardi", "Sword Training"));
 
 
         for(Activity a: readAndFilterRepository( (Activity a) -> a.getInscriptions().size() < a.getCapacity())) {
@@ -181,10 +181,15 @@ public class Prototype {
     public Object meta_marshallType(String str, String type, String componentType) {
         if(type.startsWith("[")) {
             String[] arr = str.split(",");
-            Object[] typeArr = new Object[arr.length];
+
+            Object[] objArr = new Object[arr.length];
+            switch (componentType) {
+                case "java.lang.Boolean":
+                    objArr = new Boolean[arr.length];
+            }
 
             for(int i=0; i<arr.length; i++) {
-                typeArr[i] = meta_marshallType(arr[i], componentType, null);
+                objArr[i] = meta_marshallType(arr[i], componentType, null);
             }
 
             return typeArr;
@@ -193,10 +198,9 @@ public class Prototype {
         switch (type) {
             case "int":
                 return Integer.parseInt(str);
-            case "String":
-                return str;
-            case "Timestamp":
+            case "java.sql.Timestamp":
                 return new Timestamp(Long.parseLong(str));
+            case "java.lang.Boolean"
             default:
                 return str;
         }
