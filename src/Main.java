@@ -69,77 +69,86 @@ public class Main {
 
         // create a scanner so we can read the command-line input
         Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Bienvenue à l'interface de #GYM. Que voulez-vous faire?\n" +
-                "Choisissez l'une des options suivantes en ÉCRIVANT SA LETTRE puis APPUYEZ SUR ENTER:\n" +
-                "[A] : inscrire un nouveau membre\n" +
-                "[B] : inscrire un nouveau professionnel\n" +
-                "[C] : inscrire un membre a un cours\n" +
-                "[D] : faire accéder un membre au gym\n" +
-                "[E] : inscrire un nouveau cours au programme\n" +
-                "[F] : Consulter les activités\n" +
-                "[G] : Consulter les inscriptions\n" +
-                "[H] : Confirmer la présence d'un membre a un cours");
-        String agentResponse = scanner.next();
-        switch (agentResponse){
-            case "A":
-            case "[A]":
-            case "a":
-            case "[a]":
-                helpMessage(0, "prenom nom telephone addresse_email addresse genre anniversaire commentaire");
-                pt.meta_callByString("enrollClient", scanner.next());
-                break;
-            case "B":
-            case "[B]":
-            case "b":
-            case "[b]": { // TODO : ajouter une question sur son domaine professionnel
-                helpMessage(1,"name,surname,phone, email, address, gender, birthdate, comment");
-                pt.meta_callByString("enrollClient", scanner.next());
-                break; }
-            case "C":
-            case "[C]":
-            case "c":
-            case "[c]":
-                helpMessage(2,"clientID idService date comment");
-                pt.meta_callByString("enrollIntoActivity", scanner.next());
-                break;
-            case "D":
-            case "[D]":
-            case "d":
-            case "[d]":
-                helpMessage(3, "clientID");
-                pt.meta_callByString("accessGym", scanner.next());
-                break;
-            case "E":
-            case "[E]":
-            case "e":
-            case "[e]":
-                helpMessage(4, "commentaire date_debut date_fin heure nbr_max_d'utilisateurs professionelID jours_offerts nom_du_cours");
-                pt.meta_callByString("createActivity", scanner.next());
-                break;
-            case "F":
-            case "[F]":
-            case "f":
-            case "[f]":
-                System.out.println("vous avez bien selectionne : consulter les activites");
-                pt.consultActivities();
-                break;
-            case "G":
-            case "[G]":
-            case "g":
-            case "[g]":
-                System.out.println("vous avez bien selectionne : consulter les inscriptions\n" +
-                        "veuillez entrer le numero du professionnel qui veut les consulter.");
-                pt.meta_callByString("consultInscriptions", scanner.next());
-                break;
-            case "H":
-            case "[H]":
-            case "h":
-            case "[h]":
-                System.out.println("vous avez bien selectionne : confirmer la presence d'un membre\n" +
-                        "veuillez entrer le numero unique du client");
-                pt.meta_callByString("confirmAttendance", scanner.next());
-                break;
+        System.out.println("Bienvenue à l'interface de #GYM. Que voulez-vous faire?\n");
+        while(true){
+            System.out.println(
+                    "Choisissez l'une des options suivantes en ÉCRIVANT SA LETTRE puis APPUYEZ SUR ENTER:\n" +
+                    "[A] : inscrire un nouveau membre\n" +
+                    "[B] : inscrire un nouveau professionnel\n" +
+                    "[C] : inscrire un membre a un cours\n" +
+                    "[D] : faire accéder un membre au gym\n" +
+                    "[E] : inscrire un nouveau cours au programme\n" +
+                    "[F] : Consulter les activités\n" +
+                    "[G] : Consulter les inscriptions\n" +
+                    "[H] : Confirmer la présence d'un membre a un cours\n"+
+                    "[I] : POUR SORTIR DU LOGICIEL");
+            switch (scanner.next()) {
+                case "A":
+                case "[A]":
+                case "a":
+                case "[a]":
+                    helpMessage(0, "prenom nom telephone addresse_email addresse genre anniversaire commentaire");
+                    pt.meta_callByString("enrollClient", scanner.next());
+                    break;
+                case "B":
+                case "[B]":
+                case "b":
+                case "[b]": { // TODO : ajouter une question sur son domaine professionnel
+                    helpMessage(1, "prenom nom telephone addresse_email addresse genre anniversaire commentaire");
+                    pt.meta_callByString("enrollProfessionnal", scanner.next());
+                    break;
+                }
+                case "C":
+                case "[C]":
+                case "c":
+                case "[c]":
+                    helpMessage(2, "clientID idService date comment");
+                    pt.meta_callByString("enrollIntoActivity", scanner.next());
+                    break;
+                case "D":
+                case "[D]":
+                case "d":
+                case "[d]":
+                    helpMessage(3, "clientID");
+                    pt.meta_callByString("accessGym", scanner.next());
+                    break;
+                case "E":
+                case "[E]":
+                case "e":
+                case "[e]":
+                    helpMessage(4, "commentaire date_debut date_fin heure nbr_max_d'utilisateurs professionelID jours_offerts nom_du_cours");
+                    pt.meta_callByString("createActivity", scanner.next());
+                    break;
+                case "F":
+                case "[F]":
+                case "f":
+                case "[f]":
+                    System.out.println("vous avez bien selectionne : consulter les activites");
+                    pt.consultActivities();
+                    break;
+                case "G":
+                case "[G]":
+                case "g":
+                case "[g]":
+                    System.out.println("vous avez bien selectionne : consulter les inscriptions\n" +
+                            "veuillez entrer le numero du professionnel qui veut les consulter.");
+                    pt.meta_callByString("consultInscriptions", scanner.next());
+                    break;
+                case "H":
+                case "[H]":
+                case "h":
+                case "[h]":
+                    System.out.println("vous avez bien selectionne : confirmer la presence d'un membre\n" +
+                            "veuillez entrer le numero unique du client");
+                    pt.meta_callByString("confirmAttendance", scanner.next());
+                    break;
+                case "I":
+                case "[I]":
+                case "i":
+                case "[i]":
+                    System.out.println("EXITING #GYM");
+                    return;
+            }
         }
     }
 
