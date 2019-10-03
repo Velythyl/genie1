@@ -157,29 +157,12 @@ public class Prototype {
      * @param type
      * @return
      */
-    public Object meta_marshallType(String str, String type, String componentType) {
-        if(type.startsWith("[")) {
-            String[] arr = str.split(",");
-
-            Object[] objArr = new Object[arr.length];
-            switch (componentType) {
-                case "java.lang.Boolean":
-                    objArr = new Boolean[arr.length];
-            }
-
-            for(int i=0; i<arr.length; i++) {
-                objArr[i] = meta_marshallType(arr[i], componentType, null);
-            }
-
-            return typeArr;
-        }
-
+    public Object meta_marshallType(String str, String type) {
         switch (type) {
             case "int":
                 return Integer.parseInt(str);
             case "java.sql.Timestamp":
                 return new Timestamp(Long.parseLong(str));
-            case "java.lang.Boolean":
             default:
                 return str;
         }
@@ -187,32 +170,24 @@ public class Prototype {
 
     /**
      * Calls a function by string. Splits on tabs!
-     * @param arr
+     * @param params
      * @return
      */
-    public Object meta_callByString(String arr) {
-        String[] array = arr.split("\t");
+    public Object meta_callByString(String commandName, String params) {
+        String[] array = params.split(";");
 
         try {
             Method t = meta_getMethodByName(array[0]);
 
             Object[] castParams = new Object[array.length-1];
             for(int i=0; i<array.length-1; i++) {
-                Class paramType = t.getParameterTypes()[i];
-                String subType = paramType.getComponentType() == null ? null : paramType.getComponentType().getName();
-
-                castParams[i] = meta_marshallType(array[i+1], paramType.getName(), subType);
+                castParams[i] = meta_marshallType(array[i+1], t.getParameterTypes()[i].getName());
             }
-            //TODO after any operation save system state on disc
 
             return t.invoke(this, castParams);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
+        } catch (ClassNotFoundException | IllegalAccessException | InvocationTargetException e) {}
+
+        System.out.println("Quelque chose s'est mal passé. Êtes-vous certains d'avoir bien tapé votre commande?");
 
         return null;
     }
