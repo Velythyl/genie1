@@ -76,8 +76,10 @@ public class Main {
                 "[B] : inscrire un nouveau professionnel\n" +
                 "[C] : inscrire un membre a un cours\n" +
                 "[D] : faire accéder un membre au gym\n" +
-                "[E] : inscrire un nouveau cours au programme\n");
-
+                "[E] : inscrire un nouveau cours au programme\n" +
+                "[F] : Consulter les activités\n" +
+                "[G] : Consulter les inscriptions\n" +
+                "[H] : Confirmer la présence d'un membre a un cours");
         String agentResponse = scanner.next();
         switch (agentResponse){
             case "A":
@@ -114,6 +116,29 @@ public class Main {
             case "[e]":
                 helpMessage(4, "commentaire date_debut date_fin heure nbr_max_d'utilisateurs professionelID jours_offerts nom_du_cours");
                 pt.meta_callByString("createActivity", scanner.next());
+                break;
+            case "F":
+            case "[F]":
+            case "f":
+            case "[f]":
+                System.out.println("vous avez bien selectionne : consulter les activites");
+                pt.consultActivities();
+                break;
+            case "G":
+            case "[G]":
+            case "g":
+            case "[g]":
+                System.out.println("vous avez bien selectionne : consulter les inscriptions\n" +
+                        "veuillez entrer le numero du professionnel qui veut les consulter.");
+                pt.meta_callByString("consultInscriptions", scanner.next());
+                break;
+            case "H":
+            case "[H]":
+            case "h":
+            case "[h]":
+                System.out.println("vous avez bien selectionne : confirmer la presence d'un membre\n" +
+                        "veuillez entrer le numero unique du client");
+                pt.meta_callByString("confirmAttendance", scanner.next());
                 break;
         }
     }
