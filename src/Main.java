@@ -83,38 +83,11 @@ public class Main {
             case "A":
             case "[A]":
             case "a":
-            case "[a]": {
-                System.out.println("vous avez choisi : inscrire un nouveau membre");
-                System.out.println("veuillez écrire son nom:");
-                String name = scanner.next();
-
-                System.out.println("veuillez écrire son nom de famille:");
-                String surname = scanner.next();
-
-                System.out.println("veuillez écrire son numéro de téléphone:");
-                String phone = scanner.next();
-
-                System.out.println("veuillez écrire son addresse courriel:");
-                String email = scanner.next();
-
-                System.out.println("veuillez écrire son addresse physique:");
-                String address = scanner.next();
-
-                System.out.println("veuillez indique son genre: Homme [h],Femme [f], autre [a]");
-                String gender = scanner.next();
-
-                System.out.println("birthdate?:");
-                scanner.next();
-                Timestamp birthdate = new Timestamp(41234123); // not important lol
-
-                System.out.println("comment?");
-                String comment = scanner.next();
-
-                enrollClient(name,surname,phone, email, address, gender, birthdate, comment);
-
-                System.out.println("client enregistré dans le système");
-
-                break; }
+            case "[a]":
+                helpMessage(1);
+                System.out.println("prenom nom telephone addresse_email addresse genre "
+                        + "anniversaire commentaire");
+                break;
             case "B":
             case "[B]":
             case "b":
@@ -171,5 +144,16 @@ public class Main {
                 System.out.println("vous avez choisi : inscrire un nouveau cours au programme");
                 break;
         }
+    }
+
+    public static void helpMessage(int x){
+        String[] cu = {"inscrire un nouveau membre",
+                "inscrire un nouveau professionnel",
+                "inscrire un membre a un cours",
+                "faire accéder un membre au gym",
+                "inscrire un nouveau cours au programme"};
+
+        System.out.println("vous avez choisi " + cu[x] +
+                "Appuyez ensuite sur entree.");
     }
 }

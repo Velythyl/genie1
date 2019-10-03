@@ -14,27 +14,6 @@ public class Prototype {
     private ArrayList<Activity> existingActivities;
 
     public Prototype() {
-        existingClients = new ArrayList<>();
-        existingProfessionnals = new ArrayList<>();
-        existingActivities = new ArrayList<>();
-
-        existingClients.add(new Client("Yoda", "N/A", "451-219-2131",
-                "yoda_best_jedi@oldrepublic.org", "1 Master's Council ave.", "guy",
-                new Timestamp(System.currentTimeMillis()), "Is allergic to latex"));
-        Client suspended = new Client("Bob", "Bobert", "313-414-4531", "bobinne@bob.com",
-                "3431 rue des Boberts", "male", new Timestamp(System.currentTimeMillis()-700000),
-                null);
-        suspended.setSuspended(true);
-        existingClients.add(suspended);
-
-        existingProfessionnals.add(new Professionnal("Obi Wan", "Kenobi", "451-219-9999",
-                "kenobae@oldrepublic.org", "1 Master's Council ave.", "Homme",
-                new Timestamp(System.currentTimeMillis()+700000), null));
-
-        /*existingActivities.add(new Activity("Good for any aspiring Jedi!",
-                new Timestamp(System.currentTimeMillis()+100000), new Timestamp(System.currentTimeMillis()+1000000),
-                13, 20, existingProfessionnals.get(0).getUuid(),
-                new boolean[]{true, false, false, true, false, true, true}));*/
     }
 
     public Client findClient(int uuid) {
@@ -55,7 +34,7 @@ public class Prototype {
 
         return "Numéro invalide";
     }
-
+    // TODO on va le serialiser sur un arraylist etc.
     public String enrollClient(String name, String surname, String phone, String email, String address, String gender,
                                       Timestamp birthdate, String comment) {
 
@@ -200,7 +179,7 @@ public class Prototype {
                 return Integer.parseInt(str);
             case "java.sql.Timestamp":
                 return new Timestamp(Long.parseLong(str));
-            case "java.lang.Boolean"
+            case "java.lang.Boolean":
             default:
                 return str;
         }
