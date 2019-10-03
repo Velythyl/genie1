@@ -9,86 +9,100 @@ import java.util.Scanner;
 import java.util.function.Predicate;
 
 public class Prototype {
-    private ArrayList<Client> existingClients;
-    private ArrayList<Professionnal> existingProfessionnals;
-    private ArrayList<Activity> existingActivities;
+    public Prototype() {}
 
-    public Prototype() {
-        existingClients = new ArrayList<>();
-        existingProfessionnals = new ArrayList<>();
-        existingActivities = new ArrayList<>();
-
-        existingClients.add(new Client("Yoda", "N/A", "451-219-2131",
-                "yoda_best_jedi@oldrepublic.org", "1 Master's Council ave.", "guy",
-                new Timestamp(System.currentTimeMillis()), "Is allergic to latex"));
-        Client suspended = new Client("Bob", "Bobert", "313-414-4531", "bobinne@bob.com",
-                "3431 rue des Boberts", "male", new Timestamp(System.currentTimeMillis()-700000),
-                null);
-        suspended.setSuspended(true);
-        existingClients.add(suspended);
-
-        existingProfessionnals.add(new Professionnal("Obi Wan", "Kenobi", "451-219-9999",
-                "kenobae@oldrepublic.org", "1 Master's Council ave.", "Homme",
-                new Timestamp(System.currentTimeMillis()+700000), null));
-
-        /*existingActivities.add(new Activity("Good for any aspiring Jedi!",
-                new Timestamp(System.currentTimeMillis()+100000), new Timestamp(System.currentTimeMillis()+1000000),
-                13, 20, existingProfessionnals.get(0).getUuid(),
-                new boolean[]{true, false, false, true, false, true, true}));*/
-    }
-
-    public Client findClient(int uuid) {
-        for(Client cl: existingClients) {
-            if(cl.getUuid() == uuid) return cl;
-        }
-
-        return null;
-    }
-
-    public String accessGym(int uuid) {
-        for(Client cl: existingClients) {
+    public void accessGym(int uuid) {
+        for(Client cl: readClients()) {
             if(cl.getUuid() == uuid) {
-                if(cl.isSuspended()) return "Membre suspendu";
-                else return "Validé";
+                if(cl.isSuspended()) System.out.println("Membre suspendu");
+                else System.out.println("Validé");
+                return;
             }
         }
 
-        return "Numéro invalide";
+        System.out.println("Numéro invalide");
     }
 
-    public String enrollClient(String name, String surname, String phone, String email, String address, String gender,
+    public void enrollClient(String name, String surname, String phone, String email, String address, String gender,
                                       Timestamp birthdate, String comment) {
 
+        ArrayList<Client> list = readClients();
         Client newClient = new Client(name, surname, phone, email, address, gender, birthdate, comment);
 
-        for(Client cl: existingClients) {
-            if(cl.equals(newClient)) return "Utilisateur existe déjà";
+        for(Client cl: list) {
+            if(cl.equals(newClient)) {
+                System.out.println("Utilisateur existe déjà");
+                return;
+            }
         }
 
-        existingClients.add(newClient);
-        return "Inscription réussie";
+        list.add(newClient);
+        saveClients(list);
+        System.out.println("Inscription réussie");
+    }
+
+    public void enrollProfessionnal(String name, String surname, String phone, String email, String address, String gender,
+                                      Timestamp birthdate, String comment) {
+        ArrayList<Professionnal> list = readProfessionnals();
+        Professionnal newPro = new Professionnal(name, surname, phone, email, address, gender, birthdate, comment);
+
+        for(Professionnal cl: list) {
+            if(cl.equals(newPro)) {
+                System.out.println("Utilisateur existe déjà");
+                return;
+            }
+        }
+
+        list.add(newPro);
+        saveProfessionnals(list);
+        System.out.println("Inscription réussie");
+    }
+
+    public <T> ArrayList<T> readList(String file) {
+        try(ObjectInputStream obji = new ObjectInputStream(new FileInputStream(file))) {
+            return (ArrayList<T>) obji.readObject();
+
+        } catch (ClassNotFoundException | IOException e) {}
+
+        return new ArrayList<>();
     }
 
     public ArrayList<Activity> readRepository() {
-        try(ObjectInputStream obji = new ObjectInputStream(new FileInputStream("./RepertoireDesServices.txt"))) {
-            return (ArrayList<Activity>) obji.readObject();
+        return readList("./RepertoireDesServices.txt");
+    }
 
-        } catch (ClassNotFoundException | IOException e) {
+    public ArrayList<Client> readClients() {
+        return readList("./Clients.txt");
+    }
+
+    public ArrayList<Professionnal> readProfessionnals() {
+        return readList("./Professionnals.txt");
+    }
+
+    public void saveActivities(ArrayList<Activity> list) {
+        saveList(list, "./RepertoireDesServices.txt");
+    }
+
+    public void saveClients(ArrayList<Client> list) {
+        saveList(list, "./Clients.txt");
+    }
+
+    public void saveProfessionnals(ArrayList<Professionnal> list) {
+        saveList(list, "./Professionnals.txt");
+    }
+
+    public void saveList(ArrayList list, String file) {
+        try {
+            new ObjectOutputStream(new FileOutputStream(file)).writeObject(list);
+        } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return new ArrayList<>();
     }
 
     public void createActivity(String comment, Timestamp start, Timestamp end, int hour, int capacity, int proNumber, String days, String name) {
         ArrayList<Activity> list = readRepository();
         list.add(new Activity(comment, start, end, hour, capacity, proNumber, days, name));
-
-        try {
-            new ObjectOutputStream(new FileOutputStream("./RepertoireDesServices.txt")).writeObject(list);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        saveActivities(list);
 
         System.out.println("Validé");
     }
@@ -135,6 +149,7 @@ public class Prototype {
 
             if(resp.toLowerCase().equals("y")) {
                 list.get(0).enroll(clientUuid, onDate, comment);
+                saveActivities(list);
                 System.out.println("Validé");
             } else {
                 System.out.println("Vous n’êtes pas inscrits");
@@ -146,13 +161,6 @@ public class Prototype {
     }
 
     public void consultActivities(){
-        ArrayList<Activity> list = new ArrayList<>();
-        list.add(new Activity("Good for any aspiring Jedi!",
-                new Timestamp(System.currentTimeMillis()+100000), new Timestamp(System.currentTimeMillis()+1000000),
-                13, 20, existingProfessionnals.get(0).getUuid(),
-                "Lundi, Mardi", "Sword Training"));
-
-
         for(Activity a: readAndFilterRepository( (Activity a) -> a.getInscriptions().size() < a.getCapacity())) {
             System.out.println(a);
         }
@@ -183,7 +191,7 @@ public class Prototype {
             case "int":
                 return Integer.parseInt(str);
             case "java.sql.Timestamp":
-                return new Timestamp(Long.parseLong(str));
+                return new Timestamp(Long.parseLong("831984971"));  //TODO temp for prototype
             default:
                 return str;
         }
