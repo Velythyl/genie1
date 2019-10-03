@@ -153,7 +153,7 @@ public class Main {
         System.out.println("vous avez choisi " + cu[x] +
                 "\nEntrez les informations suivantes separees de \";\"\n" +
                 text + "\nAppuyez ensuite sur entree." +
-                "\nformat des dates : jj/mm/yyyy\n" +
+                "\nformat des dates : jj/mm/yyyy\n" + // TODO : changer l'ordre
                 "heures : hh:mm");
     }
 }
