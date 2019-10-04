@@ -138,8 +138,11 @@ public class Main {
                 case "[H]":
                 case "h":
                 case "[h]":
-                    System.out.println("vous avez bien selectionne : confirmer la presence d'un membre\n" +
-                            "veuillez entrer le numero unique du client");
+                    System.out.println("vous avez bien selectionne : confirmer la presence d'un membre");
+                    System.out.println("Voici la liste des activités:");
+                    pt.readAllFromRepository();
+                    helpMessage(5, "clientID serviceID comment");
+                    System.out.println("Veuillez entrer le numero unique du client");
                     pt.meta_callByString("confirmAttendance", scanner.next());
                     break;
                 case "I":
@@ -157,7 +160,8 @@ public class Main {
                 "inscrire un nouveau professionnel",
                 "inscrire un membre a un cours",
                 "faire accéder un membre au gym",
-                "inscrire un nouveau cours au programme"};
+                "inscrire un nouveau cours au programme",
+                ""};
 
         System.out.println("vous avez choisi " + cu[x] +
                 "\nEntrez les informations suivantes separees de \";\"\n" +

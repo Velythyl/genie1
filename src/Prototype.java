@@ -106,6 +106,10 @@ public class Prototype {
         System.out.println("Validé");
     }
 
+    public ArrayList<Activity> readAllFromRepository() {
+        return readAndFilterRepository( (Activity a) -> true);
+    }
+
     public ArrayList<Activity> readAndFilterRepository(Predicate<Activity> filter) {
         ArrayList<Activity> fullList = readRepository();
         ArrayList<Activity> list = new ArrayList<>();
