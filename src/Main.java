@@ -60,7 +60,6 @@ public class Main {
                 case "[a]":{
                     helpMessage(0);
                     ArrayList<String> list = new ArrayList<>();
-                    System.out.println("vous avez choisi : inscrire un nouveau membre");
                     System.out.println("veuillez écrire son nom:");
                     list.add(scanner.next());
 
@@ -85,14 +84,9 @@ public class Main {
                     System.out.println("commentaire?");
                     list.add(scanner.next());
 
-                    StringBuilder sb = new StringBuilder();
-                    for (String s : list)
-                    {
-                        sb.append(s);
-                        sb.append("\t");
-                    }
+                    String elems = String.join("\t", list);
 
-                    pt.meta_callByString("enrollClient", list.toString());
+                    pt.meta_callByString("enrollClient", elems);
                     break;
                 }
                 case "B":
@@ -126,14 +120,9 @@ public class Main {
                     System.out.println("commentaire?");
                     list.add(scanner.next());
 
-                    StringBuilder sb = new StringBuilder();
-                    for (String s : list)
-                    {
-                        sb.append(s);
-                        sb.append("\t");
-                    }
+                    String elems = String.join("\t", list);
 
-                    pt.meta_callByString("enrollProfessionnal", sb.toString());
+                    pt.meta_callByString("enrollProfessionnal", elems);
                     break;
                 }
                 case "C":
@@ -156,14 +145,9 @@ public class Main {
                     System.out.println("veuillez inscrire un commentaire");
                     list.add(scanner.next());
 
-                    StringBuilder sb = new StringBuilder();
-                    for (String s : list)
-                    {
-                        sb.append(s);
-                        sb.append("\t");
-                    }
+                    String elems = String.join("\t", list);
 
-                    pt.meta_callByString("enrollIntoActivity", scanner.next());
+                    pt.meta_callByString("enrollIntoActivity", elems);
                     break;
                 }
                 case "D":
@@ -197,14 +181,9 @@ public class Main {
                     System.out.println("veuillez inscrire le nom du cours");
                     list.add(scanner.next());
 
-                    StringBuilder sb = new StringBuilder();
-                    for (String s : list)
-                    {
-                        sb.append(s);
-                        sb.append("\t");
-                    }
+                    String elems = String.join("\t", list);
 
-                    pt.meta_callByString("createActivity", sb.toString());
+                    pt.meta_callByString("createActivity", elems);
                     break;
                 }
                 case "F":
@@ -238,14 +217,9 @@ public class Main {
                     System.out.println("veuillez entrer un commentaire");
                     list.add(scanner.next());
 
-                    StringBuilder sb = new StringBuilder();
-                    for (String s : list)
-                    {
-                        sb.append(s);
-                        sb.append("\t");
-                    }
+                    String elems = String.join("\t", list);
 
-                    pt.meta_callByString("confirmAttendance", sb.toString());
+                    pt.meta_callByString("confirmAttendance", elems);
                     break;
                 case "I":
                 case "[I]":

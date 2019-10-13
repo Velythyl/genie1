@@ -56,6 +56,7 @@ public class Prototype {
         list.add(newPro);
         saveProfessionnals(list);
         System.out.println("Inscription réussie");
+        System.out.println(newPro.getUuid());
     }
 
     public <T> ArrayList<T> readList(String file) {
@@ -207,8 +208,9 @@ public class Prototype {
      * @return
      */
     public Object meta_callByString(String commandName, String params) {
-        String[] array = params.split(";");
+        String[] array = params.split("\t");
 
+        System.out.println(array);
         try {
             Method t = meta_getMethodByName(commandName);
 
