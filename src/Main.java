@@ -88,6 +88,7 @@ public class Main {
                 case "[A]":
                 case "a":
                 case "[a]":
+                    Array
                     helpMessage(0, "prenom nom telephone addresse_email addresse genre anniversaire commentaire");
                     pt.meta_callByString("enrollClient", scanner.next());
                     break;
