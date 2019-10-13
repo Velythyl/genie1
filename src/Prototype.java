@@ -38,7 +38,7 @@ public class Prototype {
         list.add(newClient);
         saveClients(list);
         System.out.println("Inscription réussie");
-        System.out.println("the client id is " + newClient.getUuid());
+        System.out.println("Numero unique du nouveau client = " + newClient.getUuid());
     }
 
     public void enrollProfessionnal(String name, String surname, String phone, String email, String address, String gender,
