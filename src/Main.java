@@ -48,7 +48,7 @@ public class Main {
                             "[B] : inscrire un nouveau professionnel\n" +
                             "[C] : inscrire un membre a un cours\n" +
                             "[D] : faire accéder un membre au gym\n" +
-                            "[E] : inscrire un nouveau cours au programme\n" +
+                            "[E] : inscrire une nouvelle seance/activité\n" +
                             "[F] : Consulter les activités\n" +
                             "[G] : Consulter les inscriptions\n" +
                             "[H] : Confirmer la présence d'un membre a un cours\n"+
@@ -132,7 +132,6 @@ public class Main {
                     helpMessage(2);
 
                     ArrayList<String> list = new ArrayList<>();
-                    System.out.println("vous avez choisi : inscrire un membre a un cours");
                     System.out.println("veuillez écrire son ID:");
                     list.add(scanner.next());
 
@@ -148,6 +147,7 @@ public class Main {
                     String elems = String.join("\t", list);
 
                     pt.meta_callByString("enrollIntoActivity", elems);
+
                     break;
                 }
                 case "D":
@@ -207,9 +207,8 @@ public class Main {
                 case "[h]":
                     System.out.println("vous avez bien selectionne : confirmer la presence d'un membre");
                     System.out.println("Voici la liste des activités:");
-                    pt.readAllFromRepository();
+                    pt.consultActivities();
                     ArrayList<String> list = new ArrayList<>();
-                    helpMessage(5);
                     System.out.println("Veuillez entrer le numero unique du client");
                     list.add(scanner.next());
                     System.out.println("Veuillez entrer le ID de l'activite");

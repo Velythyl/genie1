@@ -136,8 +136,8 @@ public class Prototype {
         }
     }
 
-    public void enrollIntoActivity(int clientUuid, int serviceUuid, Timestamp onDate, String comment) {
-        ArrayList<Activity> list = readAndFilterRepository( (Activity a) -> a.getUuid() == serviceUuid );
+    public void enrollIntoActivity(int clientUuid, int serviceUuid, Timestamp onDate, String comment) throws IOException {
+        /*ArrayList<Activity> list = readAndFilterRepository( (Activity a) -> a.getUuid() == serviceUuid );
 
         if(list.size() == 0) {
             System.out.println("Code invalide!");
@@ -162,7 +162,16 @@ public class Prototype {
 
         } else {
             System.out.println("L’activité est pleine");
-        }
+        }*/
+        System.out.println("VOICI LA LISTE DES ACTIVITES CORRESPONDANT AU FILTRE\n" +
+                "1 - zumba\n" +
+                "2 - yoga\n" +
+                "3 - boxe\n" +
+                "selectionnez une activite en ecrivant son chiffre puis en appuyant sur ENTER");
+        System.in.read();
+        System.out.println("pour confirmer appuyez sur ENTER");
+        System.in.read();
+        System.out.println("Validé");
     }
 
     public void consultActivities(){
@@ -210,7 +219,6 @@ public class Prototype {
     public Object meta_callByString(String commandName, String params) {
         String[] array = params.split("\t");
 
-        System.out.println(array);
         try {
             Method t = meta_getMethodByName(commandName);
 
