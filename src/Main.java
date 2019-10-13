@@ -1,3 +1,4 @@
+import java.sql.SQLOutput;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -7,27 +8,6 @@ public class Main {
     static ArrayList<Client> existingClients = new ArrayList<>();
     static ArrayList<Professionnal> existingProfessionnals = new ArrayList<>();
     static ArrayList<Activity> existingActivities = new ArrayList<>();
-
-    public void initPrototype() {
-        existingClients.add(new Client("Yoda", "N/A", "451-219-2131",
-                "yoda_best_jedi@oldrepublic.org", "1 Master's Council ave.", "guy",
-                new Timestamp(System.currentTimeMillis()), "Is allergic to latex"));
-        Client suspended = new Client("Bob", "Bobert", "313-414-4531", "bobinne@bob.com",
-                "3431 rue des Boberts", "male", new Timestamp(System.currentTimeMillis()-700000),
-                null);
-        suspended.setSuspended(true);
-        existingClients.add(suspended);
-
-        existingProfessionnals.add(new Professionnal("Obi Wan", "Kenobi", "451-219-9999",
-                "kenobae@oldrepublic.org", "1 Master's Council ave.", "Homme",
-                new Timestamp(System.currentTimeMillis()+700000), null));
-
-        /*
-        existingActivities.add(new Activity("Good for any aspiring Jedi!",
-                new Timestamp(System.currentTimeMillis()+100000), new Timestamp(System.currentTimeMillis()+1000000),
-                13, 20, existingProfessionnals.get(0).getUuid(),
-                new boolean[]{true, false, false, true, false, true, true}));*/
-    }
 
     public static Client findClient(int uuid) {
         for(Client cl: existingClients) {
@@ -45,16 +25,6 @@ public class Main {
         else return "Validé";
     }
 
-    public static String enrollClient(String name, String surname, String phone, String email, String address, String gender,
-                                      Timestamp birthdate, String comment) {
-
-        for(Client cl: existingClients) {
-            if(cl.getName().equals(name) && cl.getSurname().equals(surname) && cl.getEmail().equals(email)) return "Utilisateur existe déjà";
-        }
-
-        existingClients.add(new Client(name, surname, phone, email, address, gender, birthdate, comment));
-        return "Inscription réussie";
-    }
     /**
      * inscription au gym: inscription name surname phone email address isMale(boolean) millisTimestamp comment
      * @param args
@@ -74,53 +44,169 @@ public class Main {
         while(true){
             System.out.println(
                     "Choisissez l'une des options suivantes en ÉCRIVANT SA LETTRE\npuis APPUYEZ SUR ENTER:\n" +
-                    "[A] : inscrire un nouveau membre\n" +
-                    "[B] : inscrire un nouveau professionnel\n" +
-                    "[C] : inscrire un membre a un cours\n" +
-                    "[D] : faire accéder un membre au gym\n" +
-                    "[E] : inscrire un nouveau cours au programme\n" +
-                    "[F] : Consulter les activités\n" +
-                    "[G] : Consulter les inscriptions\n" +
-                    "[H] : Confirmer la présence d'un membre a un cours\n"+
-                    "[I] : POUR SORTIR DU LOGICIEL");
+                            "[A] : inscrire un nouveau membre\n" +
+                            "[B] : inscrire un nouveau professionnel\n" +
+                            "[C] : inscrire un membre a un cours\n" +
+                            "[D] : faire accéder un membre au gym\n" +
+                            "[E] : inscrire un nouveau cours au programme\n" +
+                            "[F] : Consulter les activités\n" +
+                            "[G] : Consulter les inscriptions\n" +
+                            "[H] : Confirmer la présence d'un membre a un cours\n"+
+                            "[I] : POUR SORTIR DU LOGICIEL");
             switch (scanner.next()) {
                 case "A":
                 case "[A]":
                 case "a":
-                case "[a]":
-                    Array
-                    helpMessage(0, "prenom nom telephone addresse_email addresse genre anniversaire commentaire");
-                    pt.meta_callByString("enrollClient", scanner.next());
+                case "[a]":{
+                    helpMessage(0);
+                    ArrayList<String> list = new ArrayList<>();
+                    System.out.println("vous avez choisi : inscrire un nouveau membre");
+                    System.out.println("veuillez écrire son nom:");
+                    list.add(scanner.next());
+
+                    System.out.println("veuillez écrire son nom de famille:");
+                    list.add(scanner.next());
+
+                    System.out.println("veuillez écrire son numéro de téléphone:");
+                    list.add(scanner.next());
+
+                    System.out.println("veuillez écrire son addresse courriel:");
+                    list.add(scanner.next());
+
+                    System.out.println("veuillez écrire son addresse physique:");
+                    list.add(scanner.next());
+
+                    System.out.println("veuillez indique son genre: Homme [h],Femme [f], autre [a]");
+                    list.add(scanner.next());
+
+                    System.out.println("sa date de fete?:");
+                    list.add(scanner.next());
+
+                    System.out.println("commentaire?");
+                    list.add(scanner.next());
+
+                    StringBuilder sb = new StringBuilder();
+                    for (String s : list)
+                    {
+                        sb.append(s);
+                        sb.append("\t");
+                    }
+
+                    pt.meta_callByString("enrollClient", list.toString());
                     break;
+                }
                 case "B":
                 case "[B]":
                 case "b":
                 case "[b]": {
-                    helpMessage(1, "prenom nom telephone addresse_email addresse genre anniversaire commentaire");
-                    pt.meta_callByString("enrollProfessionnal", scanner.next());
+                    helpMessage(1);
+                    ArrayList<String> list = new ArrayList<>();
+                    System.out.println("vous avez choisi : inscrire un nouveau professionnel");
+                    System.out.println("veuillez écrire son nom:");
+                    list.add(scanner.next());
+
+                    System.out.println("veuillez écrire son nom de famille:");
+                    list.add(scanner.next());
+
+                    System.out.println("veuillez écrire son numéro de téléphone:");
+                    list.add(scanner.next());
+
+                    System.out.println("veuillez écrire son addresse courriel:");
+                    list.add(scanner.next());
+
+                    System.out.println("veuillez écrire son addresse physique:");
+                    list.add(scanner.next());
+
+                    System.out.println("veuillez indique son genre: Homme [h],Femme [f], autre [a]");
+                    list.add(scanner.next());
+
+                    System.out.println("sa date de fete?:");
+                    list.add(scanner.next());
+
+                    System.out.println("commentaire?");
+                    list.add(scanner.next());
+
+                    StringBuilder sb = new StringBuilder();
+                    for (String s : list)
+                    {
+                        sb.append(s);
+                        sb.append("\t");
+                    }
+
+                    pt.meta_callByString("enrollProfessionnal", sb.toString());
                     break;
                 }
                 case "C":
                 case "[C]":
                 case "c":
-                case "[c]":
-                    helpMessage(2, "clientID idService date comment");
+                case "[c]":{
+                    helpMessage(2);
+
+                    ArrayList<String> list = new ArrayList<>();
+                    System.out.println("vous avez choisi : inscrire un membre a un cours");
+                    System.out.println("veuillez écrire son ID:");
+                    list.add(scanner.next());
+
+                    System.out.println("veuillez écrire le code de l'activite:");
+                    list.add(scanner.next());
+
+                    System.out.println("veuillez inscrire la date");
+                    list.add(scanner.next());
+
+                    System.out.println("veuillez inscrire un commentaire");
+                    list.add(scanner.next());
+
+                    StringBuilder sb = new StringBuilder();
+                    for (String s : list)
+                    {
+                        sb.append(s);
+                        sb.append("\t");
+                    }
+
                     pt.meta_callByString("enrollIntoActivity", scanner.next());
                     break;
+                }
                 case "D":
                 case "[D]":
                 case "d":
                 case "[d]":
-                    helpMessage(3, "clientID");
+                    helpMessage(3);
+                    System.out.println("veuillez inscrire l'ID du client.");
                     pt.meta_callByString("accessGym", scanner.next());
                     break;
                 case "E":
                 case "[E]":
                 case "e":
-                case "[e]":
-                    helpMessage(4, "commentaire date_debut date_fin heure nbr_max_d'utilisateurs professionelID jours_offerts nom_du_cours");
-                    pt.meta_callByString("createActivity", scanner.next());
+                case "[e]": {
+                    helpMessage(4);
+                    ArrayList<String> list = new ArrayList<>();
+                    System.out.println("veuillez inscrire un commentaire");
+                    list.add(scanner.next());
+                    System.out.println("veuillez inscrire la date de debut");
+                    list.add(scanner.next());
+                    System.out.println("veuillez inscrire la date de fin");
+                    list.add(scanner.next());
+                    System.out.println("veuillez inscrire l'heure du cours.");
+                    list.add(scanner.next());
+                    System.out.println("veuillez inscrire le nombre max d'utilisateurs");
+                    list.add(scanner.next());
+                    System.out.println("veuillez inscrire l'ID du professionnel qui donnera ce cours");
+                    list.add(scanner.next());
+                    System.out.println("veuillez inscrire le numero des jours de la semaine ou il sera offert\n exemple: 037 = dimanche , mardi, samedi");
+                    list.add(scanner.next());
+                    System.out.println("veuillez inscrire le nom du cours");
+                    list.add(scanner.next());
+
+                    StringBuilder sb = new StringBuilder();
+                    for (String s : list)
+                    {
+                        sb.append(s);
+                        sb.append("\t");
+                    }
+
+                    pt.meta_callByString("createActivity", sb.toString());
                     break;
+                }
                 case "F":
                 case "[F]":
                 case "f":
@@ -143,9 +229,23 @@ public class Main {
                     System.out.println("vous avez bien selectionne : confirmer la presence d'un membre");
                     System.out.println("Voici la liste des activités:");
                     pt.readAllFromRepository();
-                    helpMessage(5, "clientID serviceID comment");
+                    ArrayList<String> list = new ArrayList<>();
+                    helpMessage(5);
                     System.out.println("Veuillez entrer le numero unique du client");
-                    pt.meta_callByString("confirmAttendance", scanner.next());
+                    list.add(scanner.next());
+                    System.out.println("Veuillez entrer le ID de l'activite");
+                    list.add(scanner.next());
+                    System.out.println("veuillez entrer un commentaire");
+                    list.add(scanner.next());
+
+                    StringBuilder sb = new StringBuilder();
+                    for (String s : list)
+                    {
+                        sb.append(s);
+                        sb.append("\t");
+                    }
+
+                    pt.meta_callByString("confirmAttendance", sb.toString());
                     break;
                 case "I":
                 case "[I]":
@@ -159,7 +259,7 @@ public class Main {
         }
     }
 
-    public static void helpMessage(int x, String text){
+    public static void helpMessage(int x){
         String[] cu = {"inscrire un nouveau membre",
                 "inscrire un nouveau professionnel",
                 "inscrire un membre a un cours",
@@ -167,10 +267,6 @@ public class Main {
                 "inscrire un nouveau cours au programme",
                 ""};
 
-        System.out.println("vous avez choisi " + cu[x] +
-                "\nEntrez les informations suivantes separees de \";\"\n" +
-                text + "\nAppuyez ensuite sur entree." /*+
-                "\nformat des dates : jj/mm/yyyy\n" + // TODO : changer l'ordre
-                "heures : hh:mm"*/);
+        System.out.println("vous avez choisi " + cu[x]);
     }
 }
