@@ -1,6 +1,7 @@
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.IOException;
 
 public class Main {
     static ArrayList<Client> existingClients = new ArrayList<>();
@@ -58,7 +59,7 @@ public class Main {
      * inscription au gym: inscription name surname phone email address isMale(boolean) millisTimestamp comment
      * @param args
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         Prototype pt = new Prototype();
         //System.out.println(pt.meta_callByString("createActivity","commentaire\t0319413\t31874313\t21\t30\t0\ttrue,true,true,false,true,true,false\tJedi Diplomacy"));
@@ -72,7 +73,7 @@ public class Main {
         System.out.println("Bienvenue à l'interface de #GYM. Que voulez-vous faire?\n");
         while(true){
             System.out.println(
-                    "Choisissez l'une des options suivantes en ÉCRIVANT SA LETTRE puis APPUYEZ SUR ENTER:\n" +
+                    "Choisissez l'une des options suivantes en ÉCRIVANT SA LETTRE\npuis APPUYEZ SUR ENTER:\n" +
                     "[A] : inscrire un nouveau membre\n" +
                     "[B] : inscrire un nouveau professionnel\n" +
                     "[C] : inscrire un membre a un cours\n" +
@@ -93,7 +94,7 @@ public class Main {
                 case "B":
                 case "[B]":
                 case "b":
-                case "[b]": { // TODO : ajouter une question sur son domaine professionnel
+                case "[b]": {
                     helpMessage(1, "prenom nom telephone addresse_email addresse genre anniversaire commentaire");
                     pt.meta_callByString("enrollProfessionnal", scanner.next());
                     break;
@@ -152,6 +153,8 @@ public class Main {
                     System.out.println("EXITING #GYM");
                     return;
             }
+            System.out.printf("Pour continuer appuyer n'importe quelle touche.");
+            System.in.read();
         }
     }
 
@@ -165,8 +168,8 @@ public class Main {
 
         System.out.println("vous avez choisi " + cu[x] +
                 "\nEntrez les informations suivantes separees de \";\"\n" +
-                text + "\nAppuyez ensuite sur entree." +
+                text + "\nAppuyez ensuite sur entree." /*+
                 "\nformat des dates : jj/mm/yyyy\n" + // TODO : changer l'ordre
-                "heures : hh:mm");
+                "heures : hh:mm"*/);
     }
 }
