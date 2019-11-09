@@ -5,26 +5,6 @@ import java.util.Scanner;
 import java.io.IOException;
 
 public class Main {
-    static ArrayList<Client> existingClients = new ArrayList<>();
-    static ArrayList<Professionnal> existingProfessionnals = new ArrayList<>();
-    static ArrayList<Activity> existingActivities = new ArrayList<>();
-
-    public static Client findClient(int uuid) {
-        for(Client cl: existingClients) {
-            if(cl.getUuid() == uuid) return cl;
-        }
-
-        return null;
-    }
-
-    public static String accessGym(int uuid) {
-        Client cl = findClient(uuid);
-
-        if(cl == null) return "Numéro invalide";
-        else if(cl.isSuspended()) return "Membre suspendu";
-        else return "Validé";
-    }
-
     /**
      * inscription au gym: inscription name surname phone email address isMale(boolean) millisTimestamp comment
      * @param args
