@@ -10,13 +10,17 @@ public class Main {
      * @param args
      */
     public static void main(String[] args) throws IOException {
-
         Prototype pt = new Prototype();
         //System.out.println(pt.meta_callByString("createActivity","commentaire\t0319413\t31874313\t21\t30\t0\ttrue,true,true,false,true,true,false\tJedi Diplomacy"));
         //System.out.println(pt.meta_callByString("accessGym\t0"));
         //pt.consultActivities();
         //pt.consultInscriptions(2);
 
+        //int t = Integer.MAX_VALUE;
+        //Activity test = new Activity("bla", new Timestamp(0), new Timestamp(0), new Hours("9:21"), 20, 2, new Days("0:0:0:0:0:0:1"), "Gratin", 21.3);
+        //System.out.println(test);
+        //test = new Activity("bla", new Timestamp(0), new Timestamp(0), new Hours("9:21"), 20, 2, new Days("0:0:0:0:0:0:1"), "Gratin", 21.3);
+        //System.out.println(test);
 
         // create a scanner so we can read the command-line input
         Scanner scanner = new Scanner(System.in);
@@ -33,7 +37,7 @@ public class Main {
                             "[G] : Consulter les inscriptions\n" +
                             "[H] : Confirmer la présence d'un membre a un cours\n"+
                             "[I] : POUR SORTIR DU LOGICIEL");
-            switch (scanner.next()) {
+            switch (scanner.nextLine()) {
                 case "A":
                 case "[A]":
                 case "a":
@@ -41,28 +45,28 @@ public class Main {
                     helpMessage(0);
                     ArrayList<String> list = new ArrayList<>();
                     System.out.println("veuillez écrire son nom:");
-                    list.add(scanner.next());
+                    list.add(scanner.nextLine());
 
                     System.out.println("veuillez écrire son nom de famille:");
-                    list.add(scanner.next());
+                    list.add(scanner.nextLine());
 
                     System.out.println("veuillez écrire son numéro de téléphone:");
-                    list.add(scanner.next());
+                    list.add(scanner.nextLine());
 
                     System.out.println("veuillez écrire son addresse courriel:");
-                    list.add(scanner.next());
+                    list.add(scanner.nextLine());
 
                     System.out.println("veuillez écrire son addresse physique:");
-                    list.add(scanner.next());
+                    list.add(scanner.nextLine());
 
                     System.out.println("veuillez indique son genre: Homme [h],Femme [f], autre [a]");
-                    list.add(scanner.next());
+                    list.add(scanner.nextLine());
 
                     System.out.println("sa date de fete?:");
-                    list.add(scanner.next());
+                    list.add(scanner.nextLine());
 
                     System.out.println("commentaire?");
-                    list.add(scanner.next());
+                    list.add(scanner.nextLine());
 
                     String elems = String.join("\t", list);
 
@@ -77,28 +81,28 @@ public class Main {
                     ArrayList<String> list = new ArrayList<>();
                     System.out.println("vous avez choisi : inscrire un nouveau professionnel");
                     System.out.println("veuillez écrire son nom:");
-                    list.add(scanner.next());
+                    list.add(scanner.nextLine());
 
                     System.out.println("veuillez écrire son nom de famille:");
-                    list.add(scanner.next());
+                    list.add(scanner.nextLine());
 
                     System.out.println("veuillez écrire son numéro de téléphone:");
-                    list.add(scanner.next());
+                    list.add(scanner.nextLine());
 
                     System.out.println("veuillez écrire son addresse courriel:");
-                    list.add(scanner.next());
+                    list.add(scanner.nextLine());
 
                     System.out.println("veuillez écrire son addresse physique:");
-                    list.add(scanner.next());
+                    list.add(scanner.nextLine());
 
                     System.out.println("veuillez indique son genre: Homme [h],Femme [f], autre [a]");
-                    list.add(scanner.next());
+                    list.add(scanner.nextLine());
 
                     System.out.println("sa date de fete?:");
-                    list.add(scanner.next());
+                    list.add(scanner.nextLine());
 
                     System.out.println("commentaire?");
-                    list.add(scanner.next());
+                    list.add(scanner.nextLine());
 
                     String elems = String.join("\t", list);
 
@@ -113,16 +117,16 @@ public class Main {
 
                     ArrayList<String> list = new ArrayList<>();
                     System.out.println("veuillez écrire son ID:");
-                    list.add(scanner.next());
+                    list.add(scanner.nextLine());
 
                     System.out.println("veuillez écrire le code de l'activite:");
-                    list.add(scanner.next());
+                    list.add(scanner.nextLine());
 
                     System.out.println("veuillez inscrire la date");
-                    list.add(scanner.next());
+                    list.add(scanner.nextLine());
 
                     System.out.println("veuillez inscrire un commentaire");
-                    list.add(scanner.next());
+                    list.add(scanner.nextLine());
 
                     String elems = String.join("\t", list);
 
@@ -136,7 +140,7 @@ public class Main {
                 case "[d]":
                     helpMessage(3);
                     System.out.println("veuillez inscrire l'ID du client.");
-                    pt.meta_callByString("accessGym", scanner.next());
+                    pt.meta_callByString("accessGym", scanner.nextLine());
                     break;
                 case "E":
                 case "[E]":
@@ -145,21 +149,23 @@ public class Main {
                     helpMessage(4);
                     ArrayList<String> list = new ArrayList<>();
                     System.out.println("veuillez inscrire un commentaire");
-                    list.add(scanner.next());
+                    list.add(scanner.nextLine());
                     System.out.println("veuillez inscrire la date de debut");
-                    list.add(scanner.next());
+                    list.add(scanner.nextLine());
                     System.out.println("veuillez inscrire la date de fin");
-                    list.add(scanner.next());
+                    list.add(scanner.nextLine());
                     System.out.println("veuillez inscrire l'heure du cours.");
-                    list.add(scanner.next());
+                    list.add(scanner.nextLine());
                     System.out.println("veuillez inscrire le nombre max d'utilisateurs");
-                    list.add(scanner.next());
+                    list.add(scanner.nextLine());
                     System.out.println("veuillez inscrire l'ID du professionnel qui donnera ce cours");
-                    list.add(scanner.next());
-                    System.out.println("veuillez inscrire le numero des jours de la semaine ou il sera offert\n exemple: 037 = dimanche , mardi, samedi");
-                    list.add(scanner.next());
+                    list.add(scanner.nextLine());
+                    System.out.println("veuillez inscrire le numero des jours de la semaine ou il sera offert");
+                    list.add(scanner.nextLine());
                     System.out.println("veuillez inscrire le nom du cours");
-                    list.add(scanner.next());
+                    list.add(scanner.nextLine());
+                    System.out.println("veuillez inscrire le prix du cours");
+                    list.add(scanner.nextLine());
 
                     String elems = String.join("\t", list);
 
@@ -179,7 +185,7 @@ public class Main {
                 case "[g]":
                     System.out.println("vous avez bien selectionne : consulter les inscriptions\n" +
                             "veuillez entrer le numero du professionnel qui veut les consulter.");
-                    pt.meta_callByString("consultInscriptions", scanner.next());
+                    pt.meta_callByString("consultInscriptions", scanner.nextLine());
                     break;
                 case "H":
                 case "[H]":
@@ -190,11 +196,11 @@ public class Main {
                     pt.consultActivities();
                     ArrayList<String> list = new ArrayList<>();
                     System.out.println("Veuillez entrer le numero unique du client");
-                    list.add(scanner.next());
+                    list.add(scanner.nextLine());
                     System.out.println("Veuillez entrer le ID de l'activite");
-                    list.add(scanner.next());
+                    list.add(scanner.nextLine());
                     System.out.println("veuillez entrer un commentaire");
-                    list.add(scanner.next());
+                    list.add(scanner.nextLine());
 
                     String elems = String.join("\t", list);
 

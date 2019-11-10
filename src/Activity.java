@@ -1,30 +1,21 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Activity extends UuidGymClass {
     private Timestamp start, end;    //start and end of activity's offering
-    private int hour, capacity, proNumber;
-    private String days; //7-sized array
+    private int capacity, proNumber;
+    private Hours hour;
+    private Days days; //7-sized array
     private ArrayList<Integer> inscriptions;    //uuid of clients
     private String name;
+    private double price;
 
-    /**
-     *
-     * @param comment
-     * @param start
-     * @param end
-     * @param hour
-     * @param capacity
-     * @param proNumber
-     * @param days
-     */
-    public Activity(String comment, Timestamp start, Timestamp end, int hour, int capacity, int proNumber, String days, String name) {
-        super(comment);
+    public Activity(String comment, Timestamp start, Timestamp end, Hours hour, int capacity, int proNumber, Days days, String name, double price) {
+        super(comment, 7);
         this.start = start;
         this.end = end;
         this.hour = hour;
@@ -32,6 +23,7 @@ public class Activity extends UuidGymClass {
         this.proNumber = proNumber;
         this.days = days;
         this.name = name;
+        this.price = price;
 
         this.inscriptions = new ArrayList<>();
     }
@@ -79,7 +71,7 @@ public class Activity extends UuidGymClass {
                 ", hour=" + hour +
                 ", capacity=" + capacity +
                 ", proNumber=" + proNumber +
-                ", days=" + (days == null ? null : Arrays.asList(days)) +
+                ", days=" + days.toString() +
                 ", inscriptions=" + inscriptions +
                 ", name='" + name + '\'' +
                 "} " + super.toString();
@@ -109,11 +101,11 @@ public class Activity extends UuidGymClass {
         this.end = end;
     }
 
-    public int getHour() {
+    public Hours getHour() {
         return hour;
     }
 
-    public void setHour(int hour) {
+    public void setHour(Hours hour) {
         this.hour = hour;
     }
 
@@ -133,11 +125,19 @@ public class Activity extends UuidGymClass {
         this.proNumber = proNumber;
     }
 
-    public String getDays() {
+    public Days getDays() {
         return days;
     }
 
-    public void setDays(String days) {
+    public void setDays(Days days) {
         this.days = days;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }
