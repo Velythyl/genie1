@@ -10,7 +10,7 @@ public class Activity extends UuidGymClass {
     private int capacity, proNumber;
     private Hours hour;
     private Days days; //7-sized array
-    private ArrayList<Integer> inscriptions;    //uuid of clients
+    private ArrayList<Client> inscriptions;    //uuid of clients
     private String name;
     private double price;
 
@@ -36,11 +36,11 @@ public class Activity extends UuidGymClass {
         this.name = name;
     }
 
-    public void enroll(int clientUuid, Timestamp date, String comment) {
-        this.inscriptions.add(clientUuid);
+    public void enroll(Client client, Timestamp date, String comment) {
+        this.inscriptions.add(client);
 
         try(FileWriter fw = new FileWriter(new File("./Inscriptions.txt"), true)) {
-            fw.write(new Inscription(comment, this.proNumber, clientUuid, this.getUuid(), date).toString());
+            fw.write(new Inscription(comment, this.proNumber, client.getUuid(), this.getUuid(), date).toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -55,9 +55,7 @@ public class Activity extends UuidGymClass {
     }
 
     public boolean isEnrolled(int clientUuid) {
-        for(Integer i: this.inscriptions) {
-            if(i == clientUuid) return true;
-        }
+        for(Client i: this.inscriptions) if(i.getUuid() == clientUuid) return true;
 
         return false;
     }
@@ -77,11 +75,11 @@ public class Activity extends UuidGymClass {
                 "} " + super.toString();
     }
 
-    public ArrayList<Integer> getInscriptions() {
+    public ArrayList<Client> getInscriptions() {
         return inscriptions;
     }
 
-    public void setInscriptions(ArrayList<Integer> inscriptions) {
+    public void setInscriptions(ArrayList<Client> inscriptions) {
         this.inscriptions = inscriptions;
     }
 

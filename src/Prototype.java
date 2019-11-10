@@ -2,10 +2,7 @@ import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.function.Predicate;
 
 public class Prototype {
@@ -14,7 +11,7 @@ public class Prototype {
     void accessGym(int uuid) {
         for(Client cl: readClients()) {
             if(cl.getUuid() == uuid) {
-                if(cl.isSuspended()) System.out.println("Membre suspendu");
+                if(cl.isSuspended()) System.out.println("Membre suspendu: payez votre compte, profiteurs.");
                 else System.out.println("Validé");
                 return;
             }
@@ -236,11 +233,23 @@ public class Prototype {
         }
     }
 
-    void enrollIntoActivity(int clientUuid, int serviceUuid, Timestamp onDate, String comment) throws IOException {
-        /*ArrayList<Activity> list = readAndFilterRepository( (Activity a) -> a.getUuid() == serviceUuid );
+    void enrollIntoActivity(int clientUuid, int serviceUuid, Timestamp onDate, String comment) {
+        ArrayList<Activity> list = readAndFilterRepository( (Activity a) -> a.getUuid() == serviceUuid );
 
         if(list.size() == 0) {
             System.out.println("Code invalide!");
+            return;
+        }
+
+        Client c = null;
+        for(Client cl: readClients()) {
+            if(cl.getUuid() == clientUuid) {
+                c = cl;
+                break;
+            }
+        }
+        if(c == null) {
+            System.out.println("Ce client n'existe pas!");
             return;
         }
 
@@ -253,24 +262,56 @@ public class Prototype {
             scanner.close();
 
             if(resp.toLowerCase().equals("y")) {
-                list.get(0).enroll(clientUuid, onDate, comment);
+                a.enroll(c, onDate, comment);
+                list = readRepository();
+                list.add(a);
+
                 saveActivities(list);
-                System.out.println("Validé");
+                System.out.println("Validé. Vous devrez payer ce montant: "+a.getPrice());
             } else {
                 System.out.println("Vous n’êtes pas inscrits");
             }
 
         } else {
             System.out.println("L’activité est pleine");
-        }*/
-        System.out.println("VOICI LA LISTE DES ACTIVITES CORRESPONDANT AU FILTRE\n" +
-                "1 - zumba\n" +
-                "2 - yoga\n" +
-                "3 - boxe\n" +
-                "selectionnez une activite en ecrivant son chiffre puis en appuyant sur ENTER");
-        System.in.read();
-        System.out.println("pour confirmer appuyez sur ENTER");
-        System.in.read();
+        }
+    }
+
+    void printTEFs(Timestamp endDate) {
+        for(Professionnal p: readProfessionnals()) {
+            File f = new File("./TEFS/"+p.getUuid()+".tef");
+            f.getParentFile().mkdirs();
+            try {
+                FileWriter writer = new FileWriter(f);
+                writer.write(p.getTEF(endDate));
+                writer.close();
+            } catch (IOException e) {
+                System.out.println("Quelque chose s'est mal passé. Sortie de la procédure de TEF.");
+                return;
+            }
+        }
+
+        System.out.println("Validé");
+    }
+
+    void printReport(Timestamp endDate) {
+        String report = "Name\tNumber\tPay\n";
+
+        for(Professionnal p: readProfessionnals()) {
+            report += p.getReportLine(endDate)+"\n";
+        }
+
+        try {
+            File f = new File("report.tsv");
+            f.getParentFile().mkdirs();
+            FileWriter writer = new FileWriter(f);
+            writer.write(report);
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("Quelque chose s'est mal passé. Sortie de la procédure de TEF.");
+            return;
+        }
+
         System.out.println("Validé");
     }
 
