@@ -32,11 +32,8 @@ public class Professionnal extends Entity {
         long previousSatLong = today.with( TemporalAdjusters.previous( DayOfWeek.SATURDAY ) ).toEpochDay();
         Timestamp lastSat = new Timestamp(previousSatLong);
 
-        ArrayList<Activity> list = (ArrayList<Activity>) activities.clone();
-        Collections.reverse(list);
-
         ArrayList<Activity> goodList = new ArrayList<>();
-        for(Activity a: list) {
+        for(Activity a: activities) {
             if(!a.getEnd().after(lastSat)) continue;
 
             long nb_days = (endDate.getTime() - lastSat.getTime())/86400000;    // nb de millis dans un jour
