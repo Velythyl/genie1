@@ -1,3 +1,4 @@
+import java.sql.Array;
 import java.sql.SQLOutput;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -5,6 +6,85 @@ import java.util.Scanner;
 import java.io.IOException;
 
 public class Main {
+    private static String[] options = {
+            "inscrire/modifer/supprimer membre\n",
+            "inscrire/modifer/supprimer professionnel\n",
+            "inscrire un membre a un cours\n",
+            "faire accéder un membre au gym\n",
+            "inscrire/modifer/supprimer une nouvelle seance/activité\n",
+            "Consulter les activités\n",
+            "Consulter les inscriptions\n",
+            "Confirmer la présence d'un membre a un cours\n",
+            "sortir du logiciel"
+    };
+
+    private static String[] keys = {
+            "[A]",
+            "[B]",
+            "[C]",
+            "[D]",
+            "[E]",
+            "[F]",
+            "[G]",
+            "[H]",
+            "[Q]",
+    };
+
+    public static void printMenu() {
+        for(int i=0; i<keys.length; i++) System.out.println(keys[i]+"\t"+options[i]);
+    }
+
+    public static int addModOrDel(Scanner scanner) {
+        System.out.println("Voulez vous ajouter [1], modifier [2], ou supprimer [3]?");
+        String choice = scanner.nextLine().toLowerCase();
+        if(choice.length() != 3) choice = "["+choice+"]";
+
+        for(int i=1; i<4; i++){
+            if(choice.equals("["+i+"]")) return i;
+        }
+
+        return -1;
+    }
+
+    public static String[] entityFields = {
+            "name",
+            "surname",
+            "phone",
+            "email",
+            "address",
+            "gender",
+            "birthdate",
+            "comment"
+    };
+    public static ArrayList<String> askEntityInfo(Scanner scanner) {
+        ArrayList<String> list = new ArrayList<>();
+        System.out.println("veuillez écrire son nom:");
+        list.add(scanner.nextLine());
+
+        System.out.println("veuillez écrire son nom de famille:");
+        list.add(scanner.nextLine());
+
+        System.out.println("veuillez écrire son numéro de téléphone:");
+        list.add(scanner.nextLine());
+
+        System.out.println("veuillez écrire son addresse courriel:");
+        list.add(scanner.nextLine());
+
+        System.out.println("veuillez écrire son addresse physique:");
+        list.add(scanner.nextLine());
+
+        System.out.println("veuillez indique son genre: Homme [h],Femme [f], autre [a]");
+        list.add(scanner.nextLine());
+
+        System.out.println("sa date de fete?:");
+        list.add(scanner.nextLine());
+
+        System.out.println("commentaire?");
+        list.add(scanner.nextLine());
+
+        return list;
+    }
+
     /**
      * inscription au gym: inscription name surname phone email address isMale(boolean) millisTimestamp comment
      * @param args
@@ -26,95 +106,70 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Bienvenue à l'interface de #GYM. Que voulez-vous faire?\n");
         while(true){
-            System.out.println(
-                    "Choisissez l'une des options suivantes en ÉCRIVANT SA LETTRE\npuis APPUYEZ SUR ENTER:\n" +
-                            "[A] : inscrire un nouveau membre\n" +
-                            "[B] : inscrire un nouveau professionnel\n" +
-                            "[C] : inscrire un membre a un cours\n" +
-                            "[D] : faire accéder un membre au gym\n" +
-                            "[E] : inscrire une nouvelle seance/activité\n" +
-                            "[F] : Consulter les activités\n" +
-                            "[G] : Consulter les inscriptions\n" +
-                            "[H] : Confirmer la présence d'un membre a un cours\n"+
-                            "[I] : POUR SORTIR DU LOGICIEL");
-            switch (scanner.nextLine()) {
-                case "A":
-                case "[A]":
-                case "a":
-                case "[a]":{
-                    helpMessage(0);
-                    ArrayList<String> list = new ArrayList<>();
-                    System.out.println("veuillez écrire son nom:");
-                    list.add(scanner.nextLine());
+            printMenu();
+            int choice = translateChoice(scanner.nextLine());
+            helpMessage(choice);
 
-                    System.out.println("veuillez écrire son nom de famille:");
-                    list.add(scanner.nextLine());
+            switch (choice) {
+                case 0: {
+                    int subchoice = addModOrDel(scanner);
 
-                    System.out.println("veuillez écrire son numéro de téléphone:");
-                    list.add(scanner.nextLine());
+                    if(subchoice == 3) {
+                        System.out.println("Quel est l'identifiant du client à supprimer?");
+                        String id = scanner.nextLine();
+                        pt.meta_callByString("deleteClient", id);
+                        break;
+                    }
 
-                    System.out.println("veuillez écrire son addresse courriel:");
-                    list.add(scanner.nextLine());
 
-                    System.out.println("veuillez écrire son addresse physique:");
-                    list.add(scanner.nextLine());
+                    if(subchoice == 2) {
+                        System.out.println("Quel est l'identifiant du client?");
+                        String id = scanner.nextLine();
+                        System.out.println("Quoi modifier? (Simplement faire ENTER lorsque vous ne voulez pas changer la valeur.");
+                        ArrayList<String> list = askEntityInfo(scanner);
+                        for(int i=0; i<list.size(); i++) {
+                            list.set(i, list.get(i).equals("") ? "❎": list.get(i));
+                        }
+                        pt.modifyClient(Integer.parseInt(id), entityFields, (String[]) list.toArray());
+                        break;
+                    }
 
-                    System.out.println("veuillez indique son genre: Homme [h],Femme [f], autre [a]");
-                    list.add(scanner.nextLine());
-
-                    System.out.println("sa date de fete?:");
-                    list.add(scanner.nextLine());
-
-                    System.out.println("commentaire?");
-                    list.add(scanner.nextLine());
-
+                    ArrayList<String> list = askEntityInfo(scanner);
                     String elems = String.join("\t", list);
 
                     pt.meta_callByString("enrollClient", elems);
                     break;
                 }
-                case "B":
-                case "[B]":
-                case "b":
-                case "[b]": {
-                    helpMessage(1);
-                    ArrayList<String> list = new ArrayList<>();
-                    System.out.println("vous avez choisi : inscrire un nouveau professionnel");
-                    System.out.println("veuillez écrire son nom:");
-                    list.add(scanner.nextLine());
+                case 1: {
+                    int subchoice = addModOrDel(scanner);
 
-                    System.out.println("veuillez écrire son nom de famille:");
-                    list.add(scanner.nextLine());
+                    if(subchoice == 3) {
+                        System.out.println("Quel est l'identifiant du professionnel à supprimer?");
+                        String id = scanner.nextLine();
+                        pt.meta_callByString("deleteProfessionnal", id);
+                        break;
+                    }
 
-                    System.out.println("veuillez écrire son numéro de téléphone:");
-                    list.add(scanner.nextLine());
 
-                    System.out.println("veuillez écrire son addresse courriel:");
-                    list.add(scanner.nextLine());
+                    if(subchoice == 2) {
+                        System.out.println("Quel est l'identifiant du professionnel?");
+                        String id = scanner.nextLine();
+                        System.out.println("Quoi modifier? (Simplement faire ENTER lorsque vous ne voulez pas changer la valeur.");
+                        ArrayList<String> list = askEntityInfo(scanner);
+                        for(int i=0; i<list.size(); i++) {
+                            list.set(i, list.get(i).equals("") ? "❎": list.get(i));
+                        }
+                        pt.modifyClient(Integer.parseInt(id), entityFields, (String[]) list.toArray());
+                        break;
+                    }
 
-                    System.out.println("veuillez écrire son addresse physique:");
-                    list.add(scanner.nextLine());
-
-                    System.out.println("veuillez indique son genre: Homme [h],Femme [f], autre [a]");
-                    list.add(scanner.nextLine());
-
-                    System.out.println("sa date de fete?:");
-                    list.add(scanner.nextLine());
-
-                    System.out.println("commentaire?");
-                    list.add(scanner.nextLine());
-
+                    ArrayList<String> list = askEntityInfo(scanner);
                     String elems = String.join("\t", list);
 
                     pt.meta_callByString("enrollProfessionnal", elems);
                     break;
                 }
-                case "C":
-                case "[C]":
-                case "c":
-                case "[c]":{
-                    helpMessage(2);
-
+                case 2:{
                     ArrayList<String> list = new ArrayList<>();
                     System.out.println("veuillez écrire son ID:");
                     list.add(scanner.nextLine());
@@ -134,19 +189,11 @@ public class Main {
 
                     break;
                 }
-                case "D":
-                case "[D]":
-                case "d":
-                case "[d]":
-                    helpMessage(3);
+                case 3:
                     System.out.println("veuillez inscrire l'ID du client.");
                     pt.meta_callByString("accessGym", scanner.nextLine());
                     break;
-                case "E":
-                case "[E]":
-                case "e":
-                case "[e]": {
-                    helpMessage(4);
+                case 4: {
                     ArrayList<String> list = new ArrayList<>();
                     System.out.println("veuillez inscrire un commentaire");
                     list.add(scanner.nextLine());
@@ -172,26 +219,14 @@ public class Main {
                     pt.meta_callByString("createActivity", elems);
                     break;
                 }
-                case "F":
-                case "[F]":
-                case "f":
-                case "[f]":
-                    System.out.println("vous avez bien selectionne : consulter les activites");
+                case 5:
                     pt.consultActivities();
                     break;
-                case "G":
-                case "[G]":
-                case "g":
-                case "[g]":
-                    System.out.println("vous avez bien selectionne : consulter les inscriptions\n" +
-                            "veuillez entrer le numero du professionnel qui veut les consulter.");
+                case 6:
+                    System.out.println("Veuillez entrer le numero du professionnel qui veut les consulter.");
                     pt.meta_callByString("consultInscriptions", scanner.nextLine());
                     break;
-                case "H":
-                case "[H]":
-                case "h":
-                case "[h]":
-                    System.out.println("vous avez bien selectionne : confirmer la presence d'un membre");
+                case 7:
                     System.out.println("Voici la liste des activités:");
                     pt.consultActivities();
                     ArrayList<String> list = new ArrayList<>();
@@ -206,26 +241,29 @@ public class Main {
 
                     pt.meta_callByString("confirmAttendance", elems);
                     break;
-                case "I":
-                case "[I]":
-                case "i":
-                case "[i]":
-                    System.out.println("EXITING #GYM");
+                case 8:
                     return;
+                case -1:
+                    System.out.println("Entrée inconnue. Veuillez réessayer.");
+                    break;
             }
             System.out.printf("Pour continuer appuyer n'importe quelle touche.");
             System.in.read();
         }
     }
 
-    public static void helpMessage(int x){
-        String[] cu = {"inscrire un nouveau membre",
-                "inscrire un nouveau professionnel",
-                "inscrire un membre a un cours",
-                "faire accéder un membre au gym",
-                "inscrire un nouveau cours au programme",
-                ""};
+    public static int translateChoice(String choice) {
+        choice = choice.toLowerCase();
+        if(choice.length() == 1) choice = "["+choice+"]";
 
-        System.out.println("vous avez choisi " + cu[x]);
+        for(int i=0; i<keys.length; i++) {
+            if(keys[i].equals(choice)) return i;
+        }
+
+        return -1;
+    }
+
+    public static void helpMessage(int x){
+        System.out.println("Input: "+keys[x]+". Vous avez choisi: " + options[x]);
     }
 }
