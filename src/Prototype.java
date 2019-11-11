@@ -349,6 +349,8 @@ public class Prototype {
             String f = fields[i];
             String v = values[i];
 
+            if(v.equals("❎")) continue;
+
             for(Field df: declaredFields) {
                 if(df.getName().equals(f)) {
                     df.setAccessible(true);
@@ -358,7 +360,7 @@ public class Prototype {
                         e.printStackTrace();
                     }
 
-                    continue;
+                    break;
                 }
             }
         }
