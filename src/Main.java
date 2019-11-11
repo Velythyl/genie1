@@ -17,7 +17,7 @@ public class Main {
         //pt.consultInscriptions(2);
 
         //int t = Integer.MAX_VALUE;
-        //Activity test = new Activity("bla", new Timestamp(0), new Timestamp(0), new Hours("9:21"), 20, 2, new Days("0:0:0:0:0:0:1"), "Gratin", 21.3);
+
         //System.out.println(test);
         //test = new Activity("bla", new Timestamp(0), new Timestamp(0), new Hours("9:21"), 20, 2, new Days("0:0:0:0:0:0:1"), "Gratin", 21.3);
         //System.out.println(test);

@@ -283,7 +283,8 @@ public class Prototype {
             f.getParentFile().mkdirs();
             try {
                 FileWriter writer = new FileWriter(f);
-                writer.write(p.getTEF(endDate));
+                String tef = p.getTEF(endDate);
+                writer.write(tef);
                 writer.close();
             } catch (IOException e) {
                 System.out.println("Quelque chose s'est mal passé. Sortie de la procédure de TEF.");
