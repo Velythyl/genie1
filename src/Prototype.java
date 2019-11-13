@@ -1,4 +1,3 @@
-import javax.xml.crypto.Data;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -86,33 +85,19 @@ public class Prototype {
         }
 
         Activity a = new Activity(comment, start, end, hour, capacity, proNumber, days, name, price);
-        p.addActivities(a);
+        p.addActivity(a);
+        ds.addActivity(a);
 
         System.out.println("Validé");
     }
 
-    ArrayList<Activity> readAllFromRepository() {
-        return ds.getActivities();
-    }
-
-    private ArrayList<Activity> readAndFilterRepository(Predicate<Activity> filter) {
-        ArrayList<Activity> fullList = ds.getActivities();
-        ArrayList<Activity> list = new ArrayList<>();
-
-        fullList.forEach( (Activity a) -> {
-            if(filter.test(a)) list.add(a);
-        });
-
-        return list;
-    }
-
     void confirmAttendance(int clientUuid, int serviceUuid, String comment) {
-        ArrayList<Activity> list = readAndFilterRepository( (Activity a) -> a.getUuid() == serviceUuid );
+        Activity a = ds.getActivity(serviceUuid);
 
-        if(list.size() == 0) {
+        if(a == null) {
             System.out.println("Code invalide!");
-        } else if(list.get(0).isEnrolled(clientUuid)) {
-            list.get(0).confirmAttendance(clientUuid, comment);
+        } else if(a.isEnrolled(clientUuid)) {
+            a.confirmAttendance(clientUuid, comment);
             System.out.println("Validé!");
         } else {
             System.out.println("Vous n'êtes pas inscrits à cette activité!");
@@ -191,13 +176,15 @@ public class Prototype {
     }
 
     void consultActivities(){
-        for(Activity a: readAndFilterRepository( (Activity a) -> a.getInscriptions().size() < a.getCapacity())) {
-            System.out.println(a);
-        }
+        ArrayList<Activity> fullList = ds.getActivities();
+
+        fullList.forEach( (Activity a) -> {
+            if(a.getInscriptions().size() < a.getCapacity()) System.out.println(a);
+        });
     }
 
     void consultInscriptions(int proUuid) {
-        for(Activity a: readAndFilterRepository((Activity a) -> a.getProNumber() == proUuid)) {
+        for(Activity a: ds.getProfessionnal(proUuid).getActivities()) {
             System.out.println(""+a.getName()+": "+a.getInscriptions());
         }
     }
@@ -273,8 +260,7 @@ public class Prototype {
                 String[] bigSmol = str.split(" ");
                 String[] bigs = bigSmol[0].split("-");
                 String smols = bigSmol.length > 1 ? bigSmol[1] : "00:00:00";
-
-
+                
                 List<String> reversed = Arrays.asList(bigs);
                 Collections.reverse(reversed);
                 String good = String.join("-", reversed)+" "+smols;

@@ -33,7 +33,7 @@ public class DataStore implements Serializable {
         return getOrDelByID(list, id, false);
     }
 
-    private  <T extends UuidGymClass> T getOrDelByID(ArrayList<T> list, int id, boolean del) {
+    private <T extends UuidGymClass> T getOrDelByID(ArrayList<T> list, int id, boolean del) {
         for(int i=0; i<list.size(); i++) {
             T t = list.get(i);
             if(t.getUuid() == id) {
@@ -47,7 +47,7 @@ public class DataStore implements Serializable {
         return null;
     }
 
-    private  <T> void addToList(ArrayList<T> list, T t) {
+    private <T> void addToList(ArrayList<T> list, T t) {
         list.add(t);
         saveDS();
     }

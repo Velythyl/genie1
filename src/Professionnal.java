@@ -15,7 +15,7 @@ public class Professionnal extends Entity {
         super(name, surname, phone, email, address, gender, birthdate, comment);
     }
 
-    public void addActivities(Activity activity) {
+    public void addActivity(Activity activity) {
         this.activities.add(activity);
     }
 
