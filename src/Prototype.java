@@ -184,7 +184,9 @@ public class Prototype {
     }
 
     void consultInscriptions(int proUuid) {
-        for(Activity a: ds.getProfessionnal(proUuid).getActivities()) {
+        Professionnal p = ds.getProfessionnal(proUuid);
+        ArrayList<Activity> as = p.getActivities();
+        for(Activity a: as) {
             System.out.println(""+a.getName()+": "+a.getInscriptions());
         }
     }
@@ -260,7 +262,8 @@ public class Prototype {
                 String[] bigSmol = str.split(" ");
                 String[] bigs = bigSmol[0].split("-");
                 String smols = bigSmol.length > 1 ? bigSmol[1] : "00:00:00";
-                
+
+
                 List<String> reversed = Arrays.asList(bigs);
                 Collections.reverse(reversed);
                 String good = String.join("-", reversed)+" "+smols;
