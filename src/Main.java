@@ -69,9 +69,6 @@ public class Main {
                                     "comment"
                             };
                             String[] list = clientPrompt().split("\t");
-                            for(int i=0; i<list.length; i++) {
-                                list[i] = list[i].equals("NC") ? "❎": list[i];
-                            }
                             pt.modifyClient(ID, entityFields, list);
                             break;
                         } else if (choice.equals("3")) {
@@ -116,9 +113,6 @@ public class Main {
                                 "comment"
                         };
                         String[] list = clientPrompt().split("\t");
-                        for(int i=0; i<list.length; i++) {
-                            list[i] = list[i].equals("NC") ? "❎": list[i];
-                        }
                         pt.modifyProfessionnal(ID, entityFields, list);
                         break;
                     } else if (choice.equals("3")) {
@@ -167,52 +161,7 @@ public class Main {
                 case "E":
                 case "[E]":
                 case "e":
-                case "[e]": {
-                    helpMessage(4);
-
-                    addModifSupressMessage();
-                    String choice = scanner.nextLine();
-
-                    if(choice.equals("1")) {
-                        pt.meta_callByString("createActivity", activityPrompt();
-                        break;
-                    } else if (choice.equals("2")) {
-                        System.out.println("vous avez choisi option 2 : modifier activité.\nMaintenant, écrivez le ID de l'activité que vous voulez modifier puis appuyez sur ENTER");
-                        int ID = Integer.parseInt(scanner.nextLine());
-                        System.out.println("Maintenant tous les fields requis vont vous être demandés.\n" +
-                                "SI VOUS NE VOULEZ PAS MODIFIER UN CHAMP ÉCRIVEZ SIMPLEMENT NC\n" +
-                                "Pour procéder, appuyez sur ENTER");
-                        System.in.read();
-                        String[] entityFields = {
-                                "name",
-                                "surname",
-                                "phone",
-                                "email",
-                                "address",
-                                "gender",
-                                "birthdate",
-                                "comment"
-                        };
-                        String[] list = clientPrompt().split("\t");
-                        for(int i=0; i<list.length; i++) {
-                            list[i] = list[i].equals("NC") ? "❎": list[i];
-                        }
-                        pt.modifyProfessionnal(ID, entityFields, list);
-                        break;
-                    } else if (choice.equals("3")) {
-                        System.out.println("you chose option 3 write the ID of the client to delete, then press ENTER");
-                        String id = scanner.next();
-                        pt.deleteProfessionnal(Integer.parseInt(id));
-                        break;
-                    } else {
-                        System.out.println("invalid option (1, 2 or 3) press ENTER to continue");
-                    }
-                    break;
-
-
-                    pt.meta_callByString("createActivity", elems);
-                    break;
-                }
+                case "[e]":
                 case "F":
                 case "[F]":
                 case "f":

@@ -57,16 +57,12 @@ public class DataStore implements Serializable {
     }
 
     public Client getClient(int id) {
-        return getById(clients, id);
-    }
-
-    public void setClients(ArrayList<Client> clients) {
-        this.clients = clients;
-        saveDS();
+        Client c = getById(clients, id);
+        return c;
     }
 
     public void delClient(int id) {
-        getOrDelByID(clients, id, true);
+        Client c = getOrDelByID(clients, id, true);
     }
 
     public void addClient(Client c) {
@@ -78,16 +74,12 @@ public class DataStore implements Serializable {
     }
 
     public Professionnal getProfessionnal(int id) {
-        return getById(professionnals, id);
-    }
-
-    public void setProfessionnals(ArrayList<Professionnal> professionnals) {
-        this.professionnals = professionnals;
-        saveDS();
+        Professionnal p = getById(professionnals, id);
+        return p;
     }
 
     public void delProfessionnal(int id) {
-        getOrDelByID(professionnals, id, true);
+        Professionnal p = getOrDelByID(professionnals, id, true);
     }
 
     public void addProfessionnal(Professionnal p){
@@ -99,16 +91,12 @@ public class DataStore implements Serializable {
     }
 
     public Activity getActivity(int id) {
-        return getById(activities, id);
-    }
-
-    public void setActivities(ArrayList<Activity> activities) {
-        this.activities = activities;
-        saveDS();
+        Activity a = getById(activities, id);
+        return a;
     }
 
     public void delActivity(int id) {
-        getOrDelByID(activities, id, true);
+        Activity a = getOrDelByID(activities, id, true);
     }
 
     public void addActivity(Activity a){
