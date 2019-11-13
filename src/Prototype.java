@@ -1,3 +1,4 @@
+import javax.xml.crypto.Data;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -6,171 +7,68 @@ import java.util.*;
 import java.util.function.Predicate;
 
 public class Prototype {
-    public Prototype() {}
+    DataStore ds;
+    public Prototype() {
+        ds = new DataStore();
+    }
 
     void accessGym(int uuid) {
-        for(Client cl: readClients()) {
-            if(cl.getUuid() == uuid) {
-                if(cl.isSuspended()) System.out.println("Membre suspendu: payez votre compte, profiteurs.");
-                else System.out.println("Validé");
-                return;
-            }
+        Client c = ds.getClient(uuid);
+
+        if(c.getUuid() == uuid) {
+            if(c.isSuspended()) System.out.println("Membre suspendu: payez votre compte, profiteurs.");
+            else System.out.println("Validé");
+            return;
         }
 
         System.out.println("Numéro invalide");
     }
 
     void enrollClient(String name, String surname, String phone, String email, String address, String gender, Timestamp birthdate, String comment) {
-        ArrayList<Client> list = readClients();
         Client newClient = new Client(name, surname, phone, email, address, gender, birthdate, comment);
+        ds.addClient(newClient);
 
-        for(Client cl: list) {
-            if(cl.equals(newClient)) {
-                System.out.println("Utilisateur existe déjà");
-                return;
-            }
-        }
-
-        list.add(newClient);
-        saveClients(list);
         System.out.println("Inscription réussie");
         System.out.println("Numero unique du nouveau client = " + newClient.getUuid());
     }
 
     void modifyClient(int id, String[] fields, String[] values) {
-        ArrayList<Client> list = readClients();
-        for(Client c: list) {
-            if(c.getUuid() == id) {
-                meta_modify(c, fields, values);
-            }
-        }
-        saveClients(list);
+        Client c = ds.getClient(id);
+        meta_modify(c, fields, values);
     }
 
-    void modifyService(int id, String[] fields, String[] values) {
-        ArrayList<Activity> list = readRepository();
-        for(Activity c: list) {
-            if(c.getUuid() == id) {
-                meta_modify(c, fields, values);
-            }
-        }
-        saveActivities(list);
+    void modifyActivity(int id, String[] fields, String[] values) {
+        Activity c = ds.getActivity(id);
+        meta_modify(c, fields, values);
     }
 
     void modifyProfessionnal(int id, String[] fields, String[] values) {
-        ArrayList<Professionnal> list = readProfessionnals();
-        for(Professionnal c: list) {
-            if(c.getUuid() == id) {
-                meta_modify(c, fields, values);
-            }
-        }
-        saveProfessionnals(list);
-    }
-
-    private <T> ArrayList<T> deleteFromList(int id, ArrayList<T> list) {
-        ArrayList<T> goodList = new ArrayList<>();
-        for(T c: list) {
-            UuidGymClass u = (UuidGymClass) c;
-            if(u.getUuid() != id) {
-                goodList.add(c);
-            }
-        }
-        return goodList;
+        Professionnal c = ds.getProfessionnal(id);
+        meta_modify(c, fields, values);
     }
 
     void deleteClient(int id) {
-        saveClients(deleteFromList(id, readClients()));
+        ds.delClient(id);
     }
 
     void deleteProfessionnal(int id) {
-        saveProfessionnals(deleteFromList(id, readProfessionnals()));
+        ds.delProfessionnal(id);
     }
 
     void deleteActivity(int id) {
-        saveActivities(deleteFromList(id, readRepository()));
+        ds.delActivity(id);
     }
 
     void enrollProfessionnal(String name, String surname, String phone, String email, String address, String gender,
                                       Timestamp birthdate, String comment) {
-        ArrayList<Professionnal> list = readProfessionnals();
         Professionnal newPro = new Professionnal(name, surname, phone, email, address, gender, birthdate, comment);
+        ds.addProfessionnal(newPro);
 
-        for(Professionnal cl: list) {
-            if(cl.equals(newPro)) {
-                System.out.println("Utilisateur existe déjà");
-                return;
-            }
-        }
-
-        list.add(newPro);
-        saveProfessionnals(list);
         System.out.println("Inscription réussie");
-        System.out.println(newPro.getUuid());
-    }
-
-    private <T> ArrayList<T> readList(String file) {
-        try(ObjectInputStream obji = new ObjectInputStream(new FileInputStream(file))) {
-            return (ArrayList<T>) obji.readObject();
-
-        } catch (ClassNotFoundException | IOException e) {}
-
-        return new ArrayList<>();
-    }
-
-    private ArrayList<Activity> readRepository() {
-        return readList("./RepertoireDesServices.txt");
-    }
-
-    private ArrayList<Client> readClients() {
-        return readList("./Clients.txt");
-    }
-
-    private ArrayList<Professionnal> readProfessionnals() {
-        return readList("./Professionnals.txt");
-    }
-
-    private void saveActivities(ArrayList<Activity> list) {
-        ArrayList<Professionnal> proList = readProfessionnals();
-        for(Activity a: list) {
-            for(Professionnal p: proList) {
-                if(a.getProNumber() == p.getUuid()) {
-
-                    ArrayList<Activity> proActivities = p.getActivities();
-
-                    for(int i=0; i<proActivities.size(); i++) {
-                        if(proActivities.get(i).getUuid() == a.getUuid()) {
-                            proActivities.set(i, a);
-                        }
-                    }
-
-                    p.setActivities(proActivities);
-                }
-            }
-        }
-
-        saveProfessionnals(proList);
-        saveList(list, "./RepertoireDesServices.txt");
-    }
-
-    private void saveClients(ArrayList<Client> list) {
-        saveList(list, "./Clients.txt");
-    }
-
-    private void saveProfessionnals(ArrayList<Professionnal> list) {
-        saveList(list, "./Professionnals.txt");
-    }
-
-    private void saveList(ArrayList list, String file) {
-        try {
-            new ObjectOutputStream(new FileOutputStream(file)).writeObject(list);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        System.out.println("Numero unique du nouveau client = " + newPro.getUuid());
     }
 
     void createActivity(String comment, Timestamp start, Timestamp end, Hours hour, int capacity, int proNumber, Days days, String name, double price) {
-        ArrayList<Activity> list = readRepository();
-
         if(capacity > 30) {
             System.out.println("Une activité ne peut avoir plus de 30 de capacitié");
             return;
@@ -181,36 +79,24 @@ public class Prototype {
             return;
         }
 
-        Activity a = new Activity(comment, start, end, hour, capacity, proNumber, days, name, price);
-
-        boolean found = false;
-        ArrayList<Professionnal> proList = readProfessionnals();
-        for(Professionnal cl: proList) {
-            if(cl.getUuid() == proNumber) { //TODO add activity to pro
-                found = true;
-                cl.addActivities(a);
-                continue;
-            }
-        }
-        if(!found) {
+        Professionnal p = ds.getProfessionnal(proNumber);
+        if(p == null) {
             System.out.println("Ce pro n'existe pas.");
             return;
         }
 
-        list.add(a);
-
-        saveProfessionnals(proList);
-        saveActivities(list);
+        Activity a = new Activity(comment, start, end, hour, capacity, proNumber, days, name, price);
+        p.addActivities(a);
 
         System.out.println("Validé");
     }
 
     ArrayList<Activity> readAllFromRepository() {
-        return readAndFilterRepository( (Activity a) -> true);
+        return ds.getActivities();
     }
 
     private ArrayList<Activity> readAndFilterRepository(Predicate<Activity> filter) {
-        ArrayList<Activity> fullList = readRepository();
+        ArrayList<Activity> fullList = ds.getActivities();
         ArrayList<Activity> list = new ArrayList<>();
 
         fullList.forEach( (Activity a) -> {
@@ -234,26 +120,19 @@ public class Prototype {
     }
 
     void enrollIntoActivity(int clientUuid, int serviceUuid, Timestamp onDate, String comment) {
-        ArrayList<Activity> list = readAndFilterRepository( (Activity a) -> a.getUuid() == serviceUuid );
+        Activity a = ds.getActivity(serviceUuid);
 
-        if(list.size() == 0) {
+        if(a == null) {
             System.out.println("Code invalide!");
             return;
         }
 
-        Client c = null;
-        for(Client cl: readClients()) {
-            if(cl.getUuid() == clientUuid) {
-                c = cl;
-                break;
-            }
-        }
+        Client c = ds.getClient(clientUuid);
         if(c == null) {
             System.out.println("Ce client n'existe pas!");
             return;
         }
 
-        Activity a = list.get(0);
         if(a.getInscriptions().size() < a.getCapacity()) {
             System.out.println("Êtes-vous certains? Y/AnyKey");
 
@@ -263,10 +142,7 @@ public class Prototype {
 
             if(resp.toLowerCase().equals("y")) {
                 a.enroll(c, onDate, comment);
-                list = readRepository();
-                list.add(a);
-
-                saveActivities(list);
+                ds.saveDS();
                 System.out.println("Validé. Vous devrez payer ce montant: "+a.getPrice());
             } else {
                 System.out.println("Vous n’êtes pas inscrits");
@@ -278,7 +154,7 @@ public class Prototype {
     }
 
     void printTEFs(Timestamp endDate) {
-        for(Professionnal p: readProfessionnals()) {
+        for(Professionnal p: ds.getProfessionnals()) {
             File f = new File("./TEFS/"+p.getUuid()+".tef");
             f.getParentFile().mkdirs();
             try {
@@ -298,9 +174,7 @@ public class Prototype {
     void printReport(Timestamp endDate) {
         String report = "Name\tNumber\tPay\n";
 
-        for(Professionnal p: readProfessionnals()) {
-            report += p.getReportLine(endDate)+"\n";
-        }
+        for(Professionnal p: ds.getProfessionnals()) report += p.getReportLine(endDate)+"\n";
 
         try {
             File f = new File("report.tsv");
@@ -340,7 +214,12 @@ public class Prototype {
     }
 
     //https://blog.sevagas.com/Modify-any-Java-class-field-using-reflection
-    private void meta_modify(GymClass instance, String[] fields, String[] values) {
+    public void meta_modify(GymClass instance, String[] fields, String[] values) {
+        if(instance == null) {
+            System.out.println("Cet ID n'est pas valide.");
+            return;
+        }
+
         Class clas = instance.getClass();
 
         List<Field> declaredFields = meta_getAllFields(new ArrayList<>(), clas);
@@ -349,7 +228,7 @@ public class Prototype {
             String f = fields[i];
             String v = values[i];
 
-            if(v.equals("❎")) continue;
+            if(v.equals("NC")) continue;
 
             for(Field df: declaredFields) {
                 if(df.getName().equals(f)) {
@@ -364,6 +243,8 @@ public class Prototype {
                 }
             }
         }
+
+        ds.saveDS();
     }
 
     private Method meta_getMethodByName(String name) throws ClassNotFoundException {
