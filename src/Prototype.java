@@ -156,8 +156,9 @@ public class Prototype {
         System.out.println("Validé");
     }
 
-    void printReport(Timestamp endDate) {
+    void printReport() {
         String report = "Name\tNumber\tPay\n";
+        Timestamp endDate = new Timestamp(System.currentTimeMillis());
 
         for(Professionnal p: ds.getProfessionnals()) report += p.getReportLine(endDate)+"\n";
 

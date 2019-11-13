@@ -38,7 +38,8 @@ public class Main {
                             "[F] : Consulter les activités/séances\n" +
                             "[G] : Consulter les inscriptions\n" +
                             "[H] : Confirmer la présence d'un membre a un cours/séance/activité\n"+
-                            "[I] : SORTIR DU LOGICIEL");
+                            "[I] : Imprimer le rapport\n" +
+                            "[J] : SORTIR DU LOGICIEL");
             switch (scanner.nextLine()) {
                 case "A":
                 case "[A]":
@@ -239,6 +240,14 @@ public class Main {
                 case "[I]":
                 case "i":
                 case "[i]":
+                    System.out.println("voici le rapport comptable\n");
+                    pt.printReport();
+                    break;
+
+                case "J":
+                case "[J]":
+                case "j":
+                case "[j]":
                     System.out.println("EXITING #GYM");
                     return;
             }
