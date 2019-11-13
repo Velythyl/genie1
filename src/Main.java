@@ -31,14 +31,14 @@ public class Main {
             System.out.println(
                     "Choisissez l'une des options suivantes en ÉCRIVANT SA LETTRE\npuis APPUYEZ SUR ENTER:\n" +
                             "[A] : ajouter/modifier/supprimer un membre\n" +
-                            "[B] : inscrire un nouveau professionnel\n" +
+                            "[B] : ajouter/modifier/supprimer un nouveau professionnel\n" +
                             "[C] : inscrire un membre a un cours\n" +
                             "[D] : faire accéder un membre au gym\n" +
-                            "[E] : inscrire une nouvelle seance/activité\n" +
-                            "[F] : Consulter les activités\n" +
+                            "[E] : ajouter/modifier/supprimer une nouvelle seance/activité\n" +
+                            "[F] : Consulter les activités/séances\n" +
                             "[G] : Consulter les inscriptions\n" +
-                            "[H] : Confirmer la présence d'un membre a un cours\n"+
-                            "[I] : POUR SORTIR DU LOGICIEL");
+                            "[H] : Confirmer la présence d'un membre a un cours/séance/activité\n"+
+                            "[I] : SORTIR DU LOGICIEL");
             switch (scanner.nextLine()) {
                 case "A":
                 case "[A]":
@@ -77,7 +77,7 @@ public class Main {
                             pt.deleteClient(Integer.parseInt(id));
                             break;
                         } else {
-                            System.out.println("please enter a valid option (1, 2 or 3) then press ENTER");
+                            System.out.println("option invalide (1, 2 or 3) appuyez sur ENTER pour continuer");
                         }
                     }
                     break;
@@ -116,12 +116,12 @@ public class Main {
                         pt.modifyProfessionnal(ID, entityFields, list);
                         break;
                     } else if (choice.equals("3")) {
-                        System.out.println("you chose option 3 write the ID of the client to delete, then press ENTER");
+                        System.out.println("Vous avez choisi option 3\n écrivez le ID du professionel a supprimer puis appuyez sur ENTER");
                         String id = scanner.next();
                         pt.deleteProfessionnal(Integer.parseInt(id));
                         break;
                     } else {
-                        System.out.println("invalid option (1, 2 or 3) press ENTER to continue");
+                        System.out.println("option invalide (1, 2 or 3) appuyez sur ENTER pour continuer");
                     }
                     break;
                 }
@@ -138,7 +138,7 @@ public class Main {
                     System.out.println("veuillez écrire le code de l'activite:");
                     list.add(scanner.nextLine());
 
-                    System.out.println("veuillez inscrire la date: JJ-MM-AAAA");
+                    System.out.println("veuillez inscrire la date a laquelle il va participer a l'activité: JJ-MM-AAAA");
                     list.add(scanner.nextLine());
 
                     System.out.println("veuillez inscrire un commentaire");
@@ -161,7 +161,46 @@ public class Main {
                 case "E":
                 case "[E]":
                 case "e":
-                case "[e]":
+                case "[e]": {
+                    helpMessage(4);
+
+                    addModifSupressMessage();
+                    String choice = scanner.nextLine();
+
+                    if(choice.equals("1")) {
+                        pt.meta_callByString("createActivity", activityPrompt());
+                        break;
+                    } else if (choice.equals("2")) {
+                        System.out.println("vous avez choisi option 2 : modifier activité.\nÉcrivez le ID de l'activité que vous voulez modifier puis appuyez sur ENTER");
+                        int ID = Integer.parseInt(scanner.nextLine());
+                        System.out.println("Maintenant tous les fields requis vont vous être demandés.\n" +
+                                "SI VOUS NE VOULEZ PAS MODIFIER UN CHAMP ÉCRIVEZ SIMPLEMENT NC\n" +
+                                "Pour procéder, appuyez sur ENTER");
+                        System.in.read();
+                        String[] entityFields = {
+                                "comment",
+                                "start",
+                                "end",
+                                "hour",
+                                "capacity",
+                                "proNumber",
+                                "days",
+                                "name",
+                                "price"
+                        };
+                        String[] list = activityPrompt().split("\t");
+                        pt.modifyActivity(ID, entityFields, list);
+                        break;
+                    } else if (choice.equals("3")) {
+                        System.out.println("Vous avez choisi option 3\n écrivez le ID du professionel a supprimer puis appuyez sur ENTER");
+                        String id = scanner.next();
+                        pt.deleteProfessionnal(Integer.parseInt(id));
+                        break;
+                    } else {
+                        System.out.println("option invalide (1, 2 or 3) appuyez sur ENTER pour continuer");
+                    }
+                    break;
+                }
                 case "F":
                 case "[F]":
                 case "f":
@@ -185,11 +224,11 @@ public class Main {
                     System.out.println("Voici la liste des activités:");
                     pt.consultActivities();
                     ArrayList<String> list = new ArrayList<>();
-                    System.out.println("Veuillez entrer le numero unique du client");
+                    System.out.println("numero unique du membre");
                     list.add(scanner.nextLine());
-                    System.out.println("Veuillez entrer le ID de l'activite");
+                    System.out.println("ID de l'activité");
                     list.add(scanner.nextLine());
-                    System.out.println("veuillez entrer un commentaire");
+                    System.out.println("commentaire");
                     list.add(scanner.nextLine());
 
                     String elems = String.join("\t", list);
@@ -252,21 +291,32 @@ public class Main {
     }
 
     public static String activityPrompt(){
+        String[] jours = new String[]{"samedi", "dimanche", "lundi", "mardi", "mecredi", "jeudi", "vendredi"};
         ArrayList<String> list = new ArrayList<>();
         System.out.println("commentaire");
         list.add(scanner.nextLine());
-        System.out.println("date de debut");
+        System.out.println("date de debut: JJ-MM-AAAA");
         list.add(scanner.nextLine());
-        System.out.println("date de fin");
+        System.out.println("date de fin: JJ-MM-AAAA");
         list.add(scanner.nextLine());
-        System.out.println("heure du cours.");
+        System.out.println("heure du cours. HH:MM");
         list.add(scanner.nextLine());
         System.out.println("nombre max d'utilisateurs");
         list.add(scanner.nextLine());
         System.out.println("ID du professionnel qui donnera ce cours");
         list.add(scanner.nextLine());
-        System.out.println("numero des jours de la semaine ou il sera offert");
-        list.add(scanner.nextLine());
+        ArrayList<String> list2 = new ArrayList<>();
+        for(int i=0; i<7; i++){
+            System.out.println("le cours aura-t-il lieu le" + jours[i] + "? y = oui , n = no");
+            if (scanner.nextLine().equals("n")){
+                list2.add("0");
+            } else {
+                list2.add("1");
+            }
+            if(i==6) continue;
+            list2.add(":");
+        }
+        list.add(String.join("",list2));
         System.out.println("veuillez inscrire le nom du cours");
         list.add(scanner.nextLine());
         System.out.println("veuillez inscrire le prix du cours");
