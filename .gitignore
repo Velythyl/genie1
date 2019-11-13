@@ -1,3 +1,5 @@
 genie-dev-1.iml
 .idea
 out
+*.class
+*.bak*
