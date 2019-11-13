@@ -62,17 +62,17 @@ public class Activity extends UuidGymClass {
 
     @Override
     public String toString() {
+        String hour2 = hour.toString().split(" ")[1];
+        hour2 = hour2.split(":")[0] + " " + hour2.split(":")[1];
 
-        return "Activity{" +
-                "start=" + start +
-                ", end=" + end +
-                ", hour=" + hour +
-                ", capacity=" + capacity +
-                ", proNumber=" + proNumber +
-                ", days=" + days.toString() +
-                ", inscriptions=" + inscriptions +
-                ", name='" + name + '\'' +
-                "} " + super.toString();
+        return name + ": ID=" + getUuid() + " " +
+                "début:" + start.toString().split(" ")[0] +
+                ", fin:" + end.toString().split(" ")[0] +
+                ", heure:" + hour2 +
+                ", capacité:" + capacity +
+                ", IDduPro:" + proNumber +
+                ", Jours:[" + days.toString() + "]" +
+                ", inscriptions:" + inscriptions.size() + " clients";
     }
 
     public ArrayList<Client> getInscriptions() {

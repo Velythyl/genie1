@@ -64,7 +64,7 @@ public class Prototype {
         ds.addProfessionnal(newPro);
 
         System.out.println("Inscription réussie");
-        System.out.println("Numero unique du nouveau client = " + newPro.getUuid());
+        System.out.println("Numero unique du nouveau professionnel = " + newPro.getUuid());
     }
 
     void createActivity(String comment, Timestamp start, Timestamp end, Hours hour, int capacity, int proNumber, Days days, String name, double price) {
