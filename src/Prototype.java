@@ -138,7 +138,8 @@ public class Prototype {
         }
     }
 
-    void printTEFs(Timestamp endDate) {
+    void printTEFs() {
+        Timestamp endDate = new Timestamp(System.currentTimeMillis());
         for(Professionnal p: ds.getProfessionnals()) {
             File f = new File("./TEFS/"+p.getUuid()+".tef");
             f.getParentFile().mkdirs();
@@ -164,7 +165,6 @@ public class Prototype {
 
         try {
             File f = new File("report.tsv");
-            f.getParentFile().mkdirs();
             FileWriter writer = new FileWriter(f);
             writer.write(report);
             writer.close();

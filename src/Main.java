@@ -39,7 +39,8 @@ public class Main {
                             "[G] : Consulter les inscriptions\n" +
                             "[H] : Confirmer la présence d'un membre a un cours/séance/activité\n"+
                             "[I] : Imprimer le rapport\n" +
-                            "[J] : SORTIR DU LOGICIEL");
+                            "[J] : procedure comptable ( on sait que c'est pas dans les CU mais pour vos tests)\n" +
+                            "[K] : SORTIR DU LOGICIEL");
             switch (scanner.nextLine()) {
                 case "A":
                 case "[A]":
@@ -240,14 +241,20 @@ public class Main {
                 case "[I]":
                 case "i":
                 case "[i]":
-                    System.out.println("voici le rapport comptable\n");
-                    pt.printReport();
+                    System.out.println("le rapport comptable est maintenant imprime dans le fichier report.tsv .\n");
+                    pt.printTEFs();
                     break;
-
                 case "J":
                 case "[J]":
                 case "j":
                 case "[j]":
+                    System.out.println("le rapport TEF est maintenant imprime dans le dossier TEFS.\n");
+                    pt.printReport();
+                    break;
+                case "K":
+                case "[K]":
+                case "k":
+                case "[k]":
                     System.out.println("EXITING #GYM");
                     return;
             }
