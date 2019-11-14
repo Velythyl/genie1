@@ -57,7 +57,8 @@ public class Professionnal extends Entity {
     }
 
     public String getTEF(Timestamp endDate) {
-        return "NAME: "+this.getName()+". NUMBER: "+this.getUuid()+". PAY: "+this.getWeekPay(endDate);
+        String tmp = this.getUuidStr();
+        return "NAME: "+this.getName()+". NUMBER: "+tmp+". PAY: "+this.getWeekPay(endDate);
     }
 
     public String getReportLine(Timestamp endDate) {

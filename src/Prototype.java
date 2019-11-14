@@ -157,6 +157,11 @@ public class Prototype {
         System.out.println("Validé");
     }
 
+    void printAccounting() {
+        printReport();
+        printTEFs();
+    }
+
     void printReport() {
         String report = "Name\tNumber\tPay\n";
         Timestamp endDate = new Timestamp(System.currentTimeMillis());

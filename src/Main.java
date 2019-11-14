@@ -250,7 +250,7 @@ public class Main {
                     case "j":
                     case "[j]":
                         System.out.println("le rapport TEF est maintenant imprime dans le dossier TEFS.\nle rapport comptable est maintenant imprime dans le fichier report.tsv .\n");
-                        pt.printReport();
+                        pt.printAccounting();
                         break;
                     case "K":
                     case "[K]":

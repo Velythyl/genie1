@@ -27,18 +27,20 @@ public abstract class UuidGymClass extends GymClass {
         return uuid;
     }
 
-    @Override
-    public String toString() {
+    public String getUuidStr() {
         String num = Integer.toString(uuid);
         int len = num.length();
 
         String pad = "";
         while(pad.length() < (maxUuidLength - len)) pad += "0";
 
-        pad += num;
+        return pad + num;
+    }
 
+    @Override
+    public String toString() {
         return "UuidGymClass{" +
-                "uuid=" + pad +
+                "uuid=" + getUuidStr() +
                 "} " + super.toString();
     }
 }
