@@ -122,8 +122,7 @@ public class Prototype {
             System.out.println("Êtes-vous certains? Y/AnyKey");
 
             Scanner scanner = new Scanner(System.in);
-            String resp = scanner.next();
-            scanner.close();
+            String resp = scanner.nextLine();
 
             if(resp.toLowerCase().equals("y")) {
                 a.enroll(c, onDate, comment);
