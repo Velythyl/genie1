@@ -85,5 +85,11 @@ public abstract class Entity extends UuidGymClass {
         this.birthdate = birthdate;
     }
 
-
+    @Override
+    public String toString() {
+        return name + '\'' +
+                " " + surname + '\'' +
+                ", uuID=" + getUuidStr() +
+                ",\n";
+    }
 }

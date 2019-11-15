@@ -17,4 +17,5 @@ public class Client extends Entity {
         isSuspended = suspended;
     }
 
+
 }

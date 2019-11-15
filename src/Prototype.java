@@ -198,7 +198,11 @@ public class Prototype {
         Professionnal p = ds.getProfessionnal(proUuid);
         ArrayList<Activity> as = p.getActivities();
         for(Activity a: as) {
-            System.out.println(""+a.getName()+": "+a.getInscriptions());
+            System.out.println("activité : "+a.getName()+": ");
+            ArrayList<Client> cList = a.getInscriptions();
+            for(int i=0; i<cList.size(); i++){
+                System.out.println("---" + cList.get(i).toString());
+            }
         }
     }
 

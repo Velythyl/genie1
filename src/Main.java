@@ -132,10 +132,14 @@ public class Main {
                     case "[c]":{
                         helpMessage(2);
 
+
+
                         ArrayList<String> list = new ArrayList<>();
-                        System.out.println("veuillez écrire son ID:");
+                        System.out.println("veuillez écrire le ID du membre:");
                         list.add(scannermain.nextLine());
 
+                        System.out.println("Voici la liste des activités:");
+                        pt.consultActivities();
                         System.out.println("veuillez écrire le code de l'activite:");
                         list.add(scannermain.nextLine());
 
