@@ -24,8 +24,6 @@ public class Professionnal extends Entity {
         return this.activities;
     }
 
-    public void setActivities(ArrayList<Activity> list) { this.activities = list; }
-
     public ArrayList<Activity> getWeekActivities(Timestamp endDate) {
         //https://stackoverflow.com/questions/9307884/retrieve-current-weeks-mondays-date
         ZoneId zoneId = ZoneId.of( "America/Montreal" );

@@ -166,7 +166,13 @@ public class Prototype {
         String report = "Name\tNumber\tPay\n";
         Timestamp endDate = new Timestamp(System.currentTimeMillis());
 
-        for(Professionnal p: ds.getProfessionnals()) report += p.getReportLine(endDate)+"\n";
+        double payTotal = 0;
+        for(Professionnal p: ds.getProfessionnals()) {
+            report += p.getReportLine(endDate) +"\n";
+            payTotal += p.getWeekPay(endDate);
+        }
+
+        report += "TOTAL\t-1\t"+payTotal;
 
         try {
             File f = new File("report.tsv");
