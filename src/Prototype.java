@@ -67,7 +67,8 @@ public class Prototype {
         System.out.println("Numero unique du nouveau professionnel = " + newPro.getUuid());
     }
 
-    void createActivity(String comment, Timestamp start, Timestamp end, Hours hour, int capacity, int proNumber, Days days, String name, double price) {
+    //TODO ajouter type dans les questions! type c'est genre "zumba", "polo", "boxe", etc
+    void createActivity(String comment, String type, Timestamp start, Timestamp end, Hours hour, int capacity, int proNumber, Days days, String name, double price) {
         if(capacity > 30) {
             System.out.println("Une activité ne peut avoir plus de 30 de capacitié");
             return;
@@ -84,7 +85,9 @@ public class Prototype {
             return;
         }
 
-        Activity a = new Activity(comment, start, end, hour, capacity, proNumber, days, name, price);
+        int uuid = ds.generateActivityID(p.getUuidStr(), type);
+
+        Activity a = new Activity(comment, start, end, hour, capacity, proNumber, days, name, price, uuid);
         p.addActivity(a);
         ds.addActivity(a);
 

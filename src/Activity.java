@@ -1,6 +1,4 @@
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,7 +12,7 @@ public class Activity extends UuidGymClass {
     private String name;
     private double price;
 
-    public Activity(String comment, Timestamp start, Timestamp end, Hours hour, int capacity, int proNumber, Days days, String name, double price) {
+    public Activity(String comment, Timestamp start, Timestamp end, Hours hour, int capacity, int proNumber, Days days, String name, double price, int uuid) {
         super(comment, 7);
         this.start = start;
         this.end = end;
@@ -26,6 +24,7 @@ public class Activity extends UuidGymClass {
         this.price = price;
 
         this.inscriptions = new ArrayList<>();
+        this.uuid = uuid;   //bypasses the uuid genned in UuidGymClass, but uses it's toString etc.
     }
 
     public String getName() {

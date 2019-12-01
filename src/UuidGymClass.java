@@ -1,5 +1,5 @@
 public abstract class UuidGymClass extends GymClass {
-    private int uuid;    //unique id
+    protected int uuid;    //unique id
     private int maxUuidLength;
     private static int nextUuid = 0;
 
@@ -28,13 +28,7 @@ public abstract class UuidGymClass extends GymClass {
     }
 
     public String getUuidStr() {
-        String num = Integer.toString(uuid);
-        int len = num.length();
-
-        String pad = "";
-        while(pad.length() < (maxUuidLength - len)) pad += "0";
-
-        return pad + num;
+        return StringUtils.pad(uuid, maxUuidLength);
     }
 
     @Override
