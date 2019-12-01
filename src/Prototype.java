@@ -11,24 +11,46 @@ public class Prototype {
         ds = new DataStore();
     }
 
-    void accessGym(int uuid) {
+    //MAINTENANT ACCESSGYM c'est un truc de QRCODE!
+    void accessGym() {
+        boolean canEnter = logInFromApp(QRUtils.readQR()); //Meme traitement que accessGym!
+
+        //TODO interface vers le tourniquet :)
+
+
+        //TODO mettre dans le rapport qu'en ce moment on fait juste call logInFromApp pcq on a pas access a l'API du tourniquet
+    }
+
+    //TODO dans l'interface juste renommer accessGym pour logInFromApp, ça fait la même chose !
+    boolean logInFromApp(int uuid) {
         Client c = ds.getClient(uuid);
 
         if(c.getUuid() == uuid) {
             if(c.isSuspended()) System.out.println("Membre suspendu: payez votre compte, profiteurs.");
-            else System.out.println("Validé");
-            return;
+            else {
+                System.out.println("Validé");
+                return true;
+            }
+
         }
 
         System.out.println("Numéro invalide");
+        return false;
     }
 
     void enrollClient(String name, String surname, String phone, String email, String address, String gender, Timestamp birthdate, String comment) {
+        if(!email.endsWith("@facebook.com")) {
+            System.out.println("Votre addresse email n'est pas une addresse facebook valide. Veuillez reessayer.");
+            return;
+        }
+
         Client newClient = new Client(name, surname, phone, email, address, gender, birthdate, comment);
         ds.addClient(newClient);
 
         System.out.println("Inscription réussie");
+        System.out.println("Nom du client = "+newClient.getUuidStr());
         System.out.println("Numero unique du nouveau client = " + newClient.getUuid());
+        System.out.println("Le code QR du client a été écrit sur le fichier QRCODE.jpg");
     }
 
     void modifyClient(int id, String[] fields, String[] values) {
