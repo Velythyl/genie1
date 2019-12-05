@@ -2,7 +2,23 @@ import java.util.ArrayList;
 
 //NOTE: on utilise Timestamp partout par souci de convention au lieu de java.util.Date
 public abstract class Entity extends GymClass implements UuidGymClass {
-    private String name, surname, phone, city, address, province, postalCode, email;
+    private String name;
+    private String surname;
+    private String phone;
+    private String city;
+    private String address;
+    private String province;
+    private String postalCode;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    private String email;
 
     private UUID9 uuid;
     private static int nextUuid = 0;
@@ -17,11 +33,10 @@ public abstract class Entity extends GymClass implements UuidGymClass {
         return this.activities;
     }
 
-    public Entity(String name, String surname, String phone, String address,String province, String city, String postalCode, String comment, String email) {
+    public Entity(String name, String phone, String address,String province, String city, String postalCode, String comment, String email) {
         super(comment);
 
         this.name = name;
-        this.surname = surname;
         this.phone = phone;
         this.address = address;
         this.email = email;
@@ -105,8 +120,7 @@ public abstract class Entity extends GymClass implements UuidGymClass {
 
     @Override
     public String toString() {
-        return name + '\'' +
-                " " + surname + '\'' +
+        return name +
                 ", uuID=" + getUuid() +
                 ",\n";
     }

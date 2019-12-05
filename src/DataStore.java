@@ -68,11 +68,13 @@ public class DataStore implements Serializable {
      *
      * (We must also save the DS everytime this method is accessed to preserve its usefulness...)
      *
-     * @param proNumber The String representation (so begining with padded zeros) of a pro number
+     * @param proUUID The String representation (so begining with padded zeros) of a pro number
      * @param activity  The activity type
      * @return  The activity ID as an int.
      */
-    public int generateActivityID(String proNumber, String activity) {
+    public int generateActivityID(UUID9 proUUID, String activity) {
+        String proNumber = proUUID.toString();
+
         String lastTwoProNb = proNumber.substring(proNumber.length() - 2);
 
         //Commence par lire la liste des activites, et on y cherche l'activite pour savoir le code a assigner.

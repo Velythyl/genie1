@@ -35,7 +35,7 @@ public class Activity extends GymClass implements UuidGymClass {
 
     private boolean payPerClient;
 
-    public Activity(String comment, Stamp start, Stamp end, Hours hour, int capacity, UUID9 proNumber, Week week, String name, double price, boolean payPerClient) {
+    public Activity(String comment, Stamp start, Stamp end, Hours hour, int capacity, UUID9 proNumber, Week week, String name, double price, boolean payPerClient, String type) {
         super(comment);
         this.start = start;
         this.end = end;
@@ -50,7 +50,7 @@ public class Activity extends GymClass implements UuidGymClass {
         this.attendances = new ArrayList<>();
 
         DataStore ds = DataStore.getInstance();
-        ds.generateActivityID(p.getUuidStr(), type);
+        ds.generateActivityID(proNumber, type);
 
         this.payPerClient = payPerClient;
     }
@@ -94,8 +94,8 @@ public class Activity extends GymClass implements UuidGymClass {
         }
     }
 
-    public boolean isEnrolled(int clientUuid) {
-        for(Client i: this.inscriptions) if(i.getUuid() == clientUuid) return true;
+    public boolean isEnrolled(UUID clientUuid) {
+        for(Client i: this.inscriptions) if(i.getUuid().equals(clientUuid)) return true;
 
         return false;
     }

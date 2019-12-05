@@ -56,7 +56,7 @@ public class Main {
                                     break label;
                                 case "2":
                                     System.out.println("vous avez choisi option 2 : modifier client.\nMaintenant, écrivez le ID du client que vous voulez modifier puis appuyez sur ENTER");
-                                    int ID = Integer.parseInt(scannermain.nextLine());
+                                    UUID9 ID = (UUID9) Prototype.meta_marshallType(scannermain.nextLine(), "UUID9");
                                     System.out.println("Maintenant tous les fields requis vont vous être demandés.\n" +
                                             "SI VOUS NE VOULEZ PAS MODIFIER UN CHAMP ÉCRIVEZ SIMPLEMENT NC\n" +
                                             "pour proceder, appuyez sur ENTER");
@@ -77,7 +77,7 @@ public class Main {
                                 case "3":
                                     System.out.println("you chose option 3 write the ID of the client to delete, then press ENTER");
                                     String id = scannermain.next();
-                                    pt.deleteClient(Integer.parseInt(id));
+                                    pt.meta_callByString("deleteClient", id);
                                     break label;
                                 default:
                                     System.out.println("option invalide (1, 2 or 3) appuyez sur ENTER pour continuer");
@@ -102,7 +102,7 @@ public class Main {
                                 break label1;
                             case "2":
                                 System.out.println("vous avez choisi option 2 : modifier professionel.\nMaintenant, écrivez le ID du professionel que vous voulez modifier puis appuyez sur ENTER");
-                                int ID = Integer.parseInt(scannermain.nextLine());
+                                UUID9 ID = (UUID9) Prototype.meta_marshallType(scannermain.nextLine(), "UUID9");
                                 System.out.println("Maintenant tous les fields requis vont vous être demandés.\n" +
                                         "SI VOUS NE VOULEZ PAS MODIFIER UN CHAMP ÉCRIVEZ SIMPLEMENT NC\n" +
                                         "Pour procéder, appuyez sur ENTER");
@@ -123,7 +123,7 @@ public class Main {
                             case "3":
                                 System.out.println("Vous avez choisi option 3\n écrivez le ID du professionel a supprimer puis appuyez sur ENTER");
                                 String id = scannermain.next();
-                                pt.deleteProfessionnal(Integer.parseInt(id));
+                                pt.meta_callByString("deleteProfessionnal", id);
                                 break label1;
                             default:
                                 System.out.println("option invalide (1, 2 or 3) appuyez sur ENTER pour continuer");
@@ -183,7 +183,7 @@ public class Main {
                                 break label1;
                             case "2":
                                 System.out.println("vous avez choisi option 2 : modifier activité.\nÉcrivez le ID de l'activité que vous voulez modifier puis appuyez sur ENTER");
-                                int ID = Integer.parseInt(scannermain.nextLine());
+                                UUID7 ID = (UUID7) Prototype.meta_marshallType(scannermain.nextLine(), "UUID7");
                                 System.out.println("Maintenant tous les fields requis vont vous être demandés.\n" +
                                         "SI VOUS NE VOULEZ PAS MODIFIER UN CHAMP ÉCRIVEZ SIMPLEMENT NC\n" +
                                         "Pour procéder, appuyez sur ENTER");
@@ -205,7 +205,7 @@ public class Main {
                             case "3":
                                 System.out.println("Vous avez choisi option 3\n écrivez le ID de l'activité a supprimer puis appuyez sur ENTER");
                                 String id = scannermain.next();
-                                pt.deleteActivity(Integer.parseInt(id));
+                                pt.meta_callByString("deleteActivity", id);
                                 break label1;
                             default:
                                 System.out.println("option invalide (1, 2 or 3) appuyez sur ENTER pour continuer");

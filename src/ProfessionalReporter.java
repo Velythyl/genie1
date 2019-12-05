@@ -8,14 +8,14 @@ public class ProfessionalReporter extends EntityReporter {
 
         String report = this.getReportHeader(professionnal);
 
-        ArrayList<Activity> weekActs = ActivityAccounting.getWeekActivities(professionnal.getActivities());
+        ArrayList<Activity> weekActs = Reporter.getWeekActivities(professionnal.getActivities());
         for(Activity a: weekActs) {
 
             report += "ACTIVITY CODE: "+a.getUuid()+"\n";
-            if(a.isPayPerClient()) report += "THIS ACTIVITY IS PAY-PER-CLIENT. PAY: "+(ActivityAccounting.getWeekPrice(a) * ACTIVITY_PERCENTAGE_PAID_TO_PRO) +"\n";
+            if(a.isPayPerClient()) report += "THIS ACTIVITY IS PAY-PER-CLIENT. PAY: "+(Reporter.getWeekPrice(a) * ACTIVITY_PERCENTAGE_PAID_TO_PRO) +"\n";
             else report += "THIS ACTIVITY IS PAY-PER-CLIENT. \n";
 
-            for(Attendance att: ActivityAccounting.getWeekAttendances(a.getAttendances())) {
+            for(Attendance att: Reporter.getWeekAttendances(a.getAttendances())) {
                 String date = att.getCreationStamp().toString();
 
                 report += "ACTIVITY DATE: "+date.split(" ")[0]+"\n";
@@ -33,6 +33,6 @@ public class ProfessionalReporter extends EntityReporter {
     public static String getTEF(Professionnal professionnal) {
         return "NAME: "+professionnal.getName()+"\n" +
                 "NUMBER: "+professionnal.getUuid()+"\n" +
-                "PAY: " + ActivityAccounting.getWeekPrice(professionnal.getActivities());
+                "PAY: " + Reporter.getWeekPrice(professionnal.getActivities());
     }
 }

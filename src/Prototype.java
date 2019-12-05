@@ -12,18 +12,8 @@ public class Prototype {
         ds = DataStore.getInstance();
     }
 
-    //MAINTENANT ACCESSGYM c'est un truc de QRCODE!
-    void accessGym() {
-        boolean canEnter = logInFromApp(QRUtils.readQR()); //Meme traitement que accessGym!
-
-        //TODO interface vers le tourniquet :)
-
-
-        //TODO mettre dans le rapport qu'en ce moment on fait juste call logInFromApp pcq on a pas access a l'API du tourniquet
-    }
-
     //TODO dans l'interface juste renommer accessGym pour logInFromApp, ça fait la même chose !
-    boolean logInFromApp(UUID9 uuid) {
+    boolean acessGym(UUID9 uuid) {
         Client c = ds.getClient(uuid);
 
         if(c.getUuid() == uuid) {
@@ -39,13 +29,13 @@ public class Prototype {
         return false;
     }
 
-    void enrollClient(String name, String surname, String phone, String address, String province, String city, String postalCode, String comment, String email) {
+    void enrollClient(String name, String phone, String address, String province, String city, String postalCode, String comment, String email) {
         if(!email.endsWith("@facebook.com")) {
             System.out.println("Votre addresse email n'est pas une addresse facebook valide. Veuillez reessayer.");
             return;
         }
 
-        Client newClient = new Client(name, surname, phone, address, province, city, postalCode, comment, email);
+        Client newClient = new Client(name, phone, address, province, city, postalCode, comment, email);
         ds.addClient(newClient);
 
         System.out.println("Inscription réussie");
@@ -81,8 +71,8 @@ public class Prototype {
         ds.delActivity(id);
     }
 
-    void enrollProfessionnal(String name, String surname, String phone, String address,String province, String city, String postalCode, String comment, String email) {
-        Professionnal newPro = new Professionnal(name, surname, phone, address, province, city, postalCode, comment, email);
+    void enrollProfessionnal(String name, String phone, String address,String province, String city, String postalCode, String comment, String email) {
+        Professionnal newPro = new Professionnal(name, phone, address, province, city, postalCode, comment, email);
         ds.addProfessionnal(newPro);
 
         System.out.println("Inscription réussie");
@@ -90,14 +80,14 @@ public class Prototype {
     }
 
     //TODO ajouter type dans les questions! type c'est genre "zumba", "polo", "boxe", etc
-    void createActivity(String comment, String type, Timestamp start, Timestamp end, Hours hour, int capacity, UUID9 proNumber, Week week, String name, double price) {
+    void createActivity(String comment, Stamp start, Stamp end, Hours hour, int capacity, UUID9 proNumber, Week week, String name, double price, boolean payPerClient, String type) {
         if(capacity > 30) {
             System.out.println("Une activité ne peut avoir plus de 30 de capacitié");
             return;
         }
 
-        if(price > 100.0) {
-            System.out.println("Une activité ne peut être plus chère que 100$");
+        if(price > 999.99) {
+            System.out.println("Une activité ne peut être plus chère que 999.99$");
             return;
         }
 
@@ -107,9 +97,7 @@ public class Prototype {
             return;
         }
 
-        int uuid = ds.generateActivityID(p.getUuidStr(), type);
-
-        Activity a = new Activity(comment, start, end, hour, capacity, proNumber, week, name, price, uuid);
+        Activity a = new Activity(comment, start, end, hour, capacity, proNumber, week, name, price, payPerClient, type);
         p.addActivity(a);
         ds.addActivity(a);
 
@@ -272,20 +260,6 @@ public class Prototype {
         throw new ClassNotFoundException();
     }
 
-    private void meta_uuidTester(String str, int maxUuidLength) throws Exception {
-        if(str.length() > maxUuidLength) {
-            System.out.println("La longueur de cet ID '"+str+"' doit être plus petite que "+maxUuidLength);
-            throw new Exception("UUID");
-        }
-
-        try {
-            int test = Integer.parseInt(str);
-        } catch (NumberFormatException e) {
-            System.out.println("Cet ID '"+str+"' n'est pas un chiffre!");
-            throw new Exception("UUID");
-        }
-    }
-
     /**
      * Tries to make str into type
      *
@@ -293,7 +267,7 @@ public class Prototype {
      * @param type
      * @return
      */
-    private static Object meta_marshallType(String str, String type) throws Exception {
+    public static Object meta_marshallType(String str, String type) throws Exception {
         switch (type) {
             case "int":
                 return Integer.parseInt(str);
