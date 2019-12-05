@@ -1,4 +1,3 @@
-import java.sql.Time;
 import java.sql.Timestamp;
 
 //NOTE: on utilise Timestamp partout par souci de convention au lieu de java.util.Date

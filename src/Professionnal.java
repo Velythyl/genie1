@@ -1,12 +1,9 @@
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
 
 public class Professionnal extends Entity {
     private ArrayList<Activity> activities;

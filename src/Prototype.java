@@ -1,9 +1,10 @@
-import java.io.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.sql.Timestamp;
 import java.util.*;
-import java.util.function.Predicate;
 
 public class Prototype {
     DataStore ds;
@@ -225,8 +226,8 @@ public class Prototype {
         for(Activity a: as) {
             System.out.println("activité : "+a.getName()+": ");
             ArrayList<Client> cList = a.getInscriptions();
-            for(int i=0; i<cList.size(); i++){
-                System.out.println("---" + cList.get(i).toString());
+            for (Client client : cList) {
+                System.out.println("---" + client.toString());
             }
         }
     }
