@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class ClientAction extends Action {
     @Override
-    public void generateReport(ArrayList<Activity> activities) {
-
+    public String generateReport(ArrayList<Activity> activities) {
+        return null;
     }
 }
