@@ -30,7 +30,22 @@ public class ProfessionalAction extends Action {
                 "POSTAL CODE: "+ professionnal.getPostalCode() + "\n";
     }
 
-    public String getProServicesForTEF(){
-        return null;
+    public String getProServicesForTEF(Timestamp endDate, Professionnal professionnal){
+        ArrayList<Activity> activities = Action.getWeekActivities(endDate, professionnal.getActivities());
+        ArrayList<String> stringArrayList = new ArrayList<>();
+        StringBuilder stringBuilder = new StringBuilder();
+
+        // get week activities pi on va get les attendances pi
+        // TODO booleen sur les activites qui dit si cest payé par inscription ou pas
+        for( Activity event : activities){
+
+
+        }
+
+        // montant a payer activity.getPrice
+    }
+
+    public static double getActivityPay(Activity activity){
+        
     }
 }

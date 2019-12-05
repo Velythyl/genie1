@@ -36,6 +36,29 @@ public abstract class Action {
         return goodList;
     }
 
+    // sur la liste d'attendances d'un activite foreach activite getWeekEvent des attendance ca va te donner la liste dattendance
+    // cette activite la semaine pi apres ca taura toutes les infos pour faire le rapport
+    // foreach event au rapport fait tel tel affaire pi activité pi attendant vont etendre events
+    public static ArrayList<Activity> getWeekEvents(Timestamp endDate, ArrayList<Event> events) {
+        //https://stackoverflow.com/questions/9307884/retrieve-current-weeks-mondays-date
+        ZoneId zoneId = ZoneId.of( "America/Montreal" );
+        LocalDate today = LocalDate.now( zoneId );
+        long previousSatLong = today.with( TemporalAdjusters.previous( DayOfWeek.SATURDAY ) ).atStartOfDay(zoneId).toInstant().toEpochMilli();
+        Timestamp lastSat = new Timestamp(previousSatLong);
+
+        ArrayList<Activity> goodList = new ArrayList<>();
+        for(Activity a: activities) {
+            if(!a.getEnd().after(lastSat)) continue;
+
+            long nb_days = (endDate.getTime() - lastSat.getTime())/86400000;    // nb de millis dans un jour
+            for(int i=0; i<nb_days; i++) {
+                if(a.getDays().getDays()[i]) goodList.add(a);
+            }
+        }
+
+        return goodList;
+    }
+
     /*
     public static String createReportString(DataStore ds) {
 
