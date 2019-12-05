@@ -1,4 +1,6 @@
-import java.io.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.sql.Timestamp;
@@ -79,9 +81,8 @@ public class Prototype {
         ds.delActivity(id);
     }
 
-    void enrollProfessionnal(String name, String surname, String phone, String email, String address, String gender,
-                                      Stamp birthdate, String comment) {
-        Professionnal newPro = new Professionnal(name, surname, phone, email, address, gender, birthdate, comment);
+    void enrollProfessionnal(String name, String surname, String phone, String address,String province, String city, String postalCode, String comment) {
+        Professionnal newPro = new Professionnal(name, surname, phone, address,province, city, postalCode, comment);
         ds.addProfessionnal(newPro);
 
         System.out.println("Inscription réussie");
@@ -168,7 +169,7 @@ public class Prototype {
             f.getParentFile().mkdirs();
             try {
                 FileWriter writer = new FileWriter(f);
-                String tef = p.getTEF(endDate);
+                String tef = ProfessionalAction.getProInfosForTEF(endDate, p); // TODO add the other part
                 writer.write(tef);
                 writer.close();
             } catch (IOException e) {
@@ -186,17 +187,7 @@ public class Prototype {
     }
 
     void printReport() {
-        String report = "Name\tNumber\tPay\n";
-        Timestamp endDate = new Timestamp(System.currentTimeMillis());
-
-        double payTotal = 0;
-        for(Professionnal p: ds.getProfessionnals()) {
-            report += p.getReportLine(endDate) +"\n";
-            payTotal += p.getWeekPay(endDate);
-        }
-
-        report += "TOTAL\t-1\t"+payTotal;
-
+        String report = ""; // Action.createReportString(ds); TODO WIP
         try {
             File f = new File("report.tsv");
             FileWriter writer = new FileWriter(f);
@@ -224,8 +215,8 @@ public class Prototype {
         for(Activity a: as) {
             System.out.println("activité : "+a.getName()+": ");
             ArrayList<Client> cList = a.getInscriptions();
-            for(int i=0; i<cList.size(); i++){
-                System.out.println("---" + cList.get(i).toString());
+            for (Client client : cList) {
+                System.out.println("---" + client.toString());
             }
         }
     }

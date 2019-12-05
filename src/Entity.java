@@ -1,23 +1,49 @@
+//NOTE: on utilise Timestamp partout par souci de convention au lieu de java.util.Date
 public abstract class Entity extends GymClass implements UuidGymClass {
-    private String name, surname, phone, email, address, gender;
-    private Stamp birthdate;
+    private String name, surname, phone, city, address, province, postalCode;
 
     private UUID9 uuid;
     private static int nextUuid = 0;
 
-    public Entity(String name, String surname, String phone, String email, String address, String gender, Stamp birthdate, String comment) {
+    public Entity(String name, String surname, String phone, String address,String province, String city, String postalCode, String comment) {
         super(comment);
 
         this.name = name;
         this.surname = surname;
         this.phone = phone;
-        this.email = email;
         this.address = address;
-        this.gender = gender;
-        this.birthdate = birthdate;
 
         this.uuid = new UUID9(nextUuid);
         nextUuid++;
+
+        this.city = city;
+        this.province = province;
+        this.postalCode = postalCode;
+    }
+    // nom surnom numero ville addresse province code postal TODO changer le ui pi enlever toute squi est pas ces affaires la
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
 
     /**
@@ -28,7 +54,7 @@ public abstract class Entity extends GymClass implements UuidGymClass {
      * @return
      */
     public boolean equals(Entity obj) {
-        return obj.getName().equals(this.getName()) && obj.getSurname().equals(this.getSurname()) && obj.getBirthdate().equals(this.getBirthdate());
+        return obj.getName().equals(this.getName()) && obj.getSurname().equals(this.getSurname());
     }
 
     public String getName() {
@@ -55,36 +81,12 @@ public abstract class Entity extends GymClass implements UuidGymClass {
         this.phone = phone;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getAddress() {
         return address;
     }
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public Stamp getBirthdate() {
-        return birthdate;
-    }
-
-    public void setBirthdate(Stamp birthdate) {
-        this.birthdate = birthdate;
     }
 
     @Override

@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.io.IOException;
 
 public class Main {
     /**
@@ -9,7 +8,7 @@ public class Main {
      */
     public static Scanner scannermain;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Prototype pt = new Prototype();
         //System.out.println(pt.meta_callByString("createActivity","commentaire\t0319413\t31874313\t21\t30\t0\ttrue,true,true,false,true,true,false\tJedi Diplomacy"));
         //System.out.println(pt.meta_callByString("accessGym\t0"));
@@ -40,6 +39,7 @@ public class Main {
                                 "[I] : Imprimer le rapport\n" +
                                 "[J] : procedure comptable ( on sait que c'est pas dans les CU mais pour vos tests)\n" +
                                 "[K] : SORTIR DU LOGICIEL");
+                label1:
                 switch (scannermain.nextLine()) {
                     case "A":
                     case "[A]":
@@ -48,37 +48,40 @@ public class Main {
                         helpMessage(0);
                         addModifSupressMessage();
                         String choice = scannermain.nextLine();
+                        label:
                         while(true) {
-                            if (choice.equals("1")) {
-                                pt.meta_callByString("enrollClient", clientPrompt());
-                                break;
-                            } else if (choice.equals("2")) {
-                                System.out.println("vous avez choisi option 2 : modifier client.\nMaintenant, écrivez le ID du client que vous voulez modifier puis appuyez sur ENTER");
-                                int ID = Integer.parseInt(scannermain.nextLine());
-                                System.out.println("Maintenant tous les fields requis vont vous être demandés.\n" +
-                                        "SI VOUS NE VOULEZ PAS MODIFIER UN CHAMP ÉCRIVEZ SIMPLEMENT NC\n" +
-                                        "pour proceder, appuyez sur ENTER");
-                                System.in.read();
-                                String[] entityFields = {
-                                        "name",
-                                        "surname",
-                                        "phone",
-                                        "email",
-                                        "address",
-                                        "gender",
-                                        "birthdate",
-                                        "comment"
-                                };
-                                String[] list = clientPrompt().split("\t");
-                                pt.modifyClient(ID, entityFields, list);
-                                break;
-                            } else if (choice.equals("3")) {
-                                System.out.println("you chose option 3 write the ID of the client to delete, then press ENTER");
-                                String id = scannermain.next();
-                                pt.deleteClient(Integer.parseInt(id));
-                                break;
-                            } else {
-                                System.out.println("option invalide (1, 2 or 3) appuyez sur ENTER pour continuer");
+                            switch (choice) {
+                                case "1":
+                                    pt.meta_callByString("enrollClient", clientPrompt());
+                                    break label;
+                                case "2":
+                                    System.out.println("vous avez choisi option 2 : modifier client.\nMaintenant, écrivez le ID du client que vous voulez modifier puis appuyez sur ENTER");
+                                    int ID = Integer.parseInt(scannermain.nextLine());
+                                    System.out.println("Maintenant tous les fields requis vont vous être demandés.\n" +
+                                            "SI VOUS NE VOULEZ PAS MODIFIER UN CHAMP ÉCRIVEZ SIMPLEMENT NC\n" +
+                                            "pour proceder, appuyez sur ENTER");
+                                    System.in.read();
+                                    String[] entityFields = {
+                                            "name",
+                                            "surname",
+                                            "phone",
+                                            "email",
+                                            "address",
+                                            "gender",
+                                            "birthdate",
+                                            "comment"
+                                    };
+                                    String[] list = clientPrompt().split("\t");
+                                    pt.modifyClient(ID, entityFields, list);
+                                    break label;
+                                case "3":
+                                    System.out.println("you chose option 3 write the ID of the client to delete, then press ENTER");
+                                    String id = scannermain.next();
+                                    pt.deleteClient(Integer.parseInt(id));
+                                    break label;
+                                default:
+                                    System.out.println("option invalide (1, 2 or 3) appuyez sur ENTER pour continuer");
+                                    break;
                             }
                         }
                         break;
@@ -93,36 +96,38 @@ public class Main {
                         addModifSupressMessage();
                         String choice = scannermain.nextLine();
 
-                        if(choice.equals("1")) {
-                            pt.meta_callByString("enrollProfessionnal", clientPrompt());
-                            break;
-                        } else if (choice.equals("2")) {
-                            System.out.println("vous avez choisi option 2 : modifier professionel.\nMaintenant, écrivez le ID du professionel que vous voulez modifier puis appuyez sur ENTER");
-                            int ID = Integer.parseInt(scannermain.nextLine());
-                            System.out.println("Maintenant tous les fields requis vont vous être demandés.\n" +
-                                    "SI VOUS NE VOULEZ PAS MODIFIER UN CHAMP ÉCRIVEZ SIMPLEMENT NC\n" +
-                                    "Pour procéder, appuyez sur ENTER");
-                            System.in.read();
-                            String[] entityFields = {
-                                    "name",
-                                    "surname",
-                                    "phone",
-                                    "email",
-                                    "address",
-                                    "gender",
-                                    "birthdate",
-                                    "comment"
-                            };
-                            String[] list = clientPrompt().split("\t");
-                            pt.modifyProfessionnal(ID, entityFields, list);
-                            break;
-                        } else if (choice.equals("3")) {
-                            System.out.println("Vous avez choisi option 3\n écrivez le ID du professionel a supprimer puis appuyez sur ENTER");
-                            String id = scannermain.next();
-                            pt.deleteProfessionnal(Integer.parseInt(id));
-                            break;
-                        } else {
-                            System.out.println("option invalide (1, 2 or 3) appuyez sur ENTER pour continuer");
+                        switch (choice) {
+                            case "1":
+                                pt.meta_callByString("enrollProfessionnal", clientPrompt());
+                                break label1;
+                            case "2":
+                                System.out.println("vous avez choisi option 2 : modifier professionel.\nMaintenant, écrivez le ID du professionel que vous voulez modifier puis appuyez sur ENTER");
+                                int ID = Integer.parseInt(scannermain.nextLine());
+                                System.out.println("Maintenant tous les fields requis vont vous être demandés.\n" +
+                                        "SI VOUS NE VOULEZ PAS MODIFIER UN CHAMP ÉCRIVEZ SIMPLEMENT NC\n" +
+                                        "Pour procéder, appuyez sur ENTER");
+                                System.in.read();
+                                String[] entityFields = {
+                                        "name",
+                                        "surname",
+                                        "phone",
+                                        "email",
+                                        "address",
+                                        "gender",
+                                        "birthdate",
+                                        "comment"
+                                };
+                                String[] list = clientPrompt().split("\t");
+                                pt.modifyProfessionnal(ID, entityFields, list);
+                                break label1;
+                            case "3":
+                                System.out.println("Vous avez choisi option 3\n écrivez le ID du professionel a supprimer puis appuyez sur ENTER");
+                                String id = scannermain.next();
+                                pt.deleteProfessionnal(Integer.parseInt(id));
+                                break label1;
+                            default:
+                                System.out.println("option invalide (1, 2 or 3) appuyez sur ENTER pour continuer");
+                                break;
                         }
                         break;
                     }
@@ -172,37 +177,39 @@ public class Main {
                         addModifSupressMessage();
                         String choice = scannermain.nextLine();
 
-                        if(choice.equals("1")) {
-                            pt.meta_callByString("createActivity", activityPrompt());
-                            break;
-                        } else if (choice.equals("2")) {
-                            System.out.println("vous avez choisi option 2 : modifier activité.\nÉcrivez le ID de l'activité que vous voulez modifier puis appuyez sur ENTER");
-                            int ID = Integer.parseInt(scannermain.nextLine());
-                            System.out.println("Maintenant tous les fields requis vont vous être demandés.\n" +
-                                    "SI VOUS NE VOULEZ PAS MODIFIER UN CHAMP ÉCRIVEZ SIMPLEMENT NC\n" +
-                                    "Pour procéder, appuyez sur ENTER");
-                            System.in.read();
-                            String[] entityFields = {
-                                    "comment",
-                                    "start",
-                                    "end",
-                                    "hour",
-                                    "capacity",
-                                    "proNumber",
-                                    "days",
-                                    "name",
-                                    "price"
-                            };
-                            String[] list = activityPrompt().split("\t");
-                            pt.modifyActivity(ID, entityFields, list);
-                            break;
-                        } else if (choice.equals("3")) {
-                            System.out.println("Vous avez choisi option 3\n écrivez le ID de l'activité a supprimer puis appuyez sur ENTER");
-                            String id = scannermain.next();
-                            pt.deleteActivity(Integer.parseInt(id));
-                            break;
-                        } else {
-                            System.out.println("option invalide (1, 2 or 3) appuyez sur ENTER pour continuer");
+                        switch (choice) {
+                            case "1":
+                                pt.meta_callByString("createActivity", activityPrompt());
+                                break label1;
+                            case "2":
+                                System.out.println("vous avez choisi option 2 : modifier activité.\nÉcrivez le ID de l'activité que vous voulez modifier puis appuyez sur ENTER");
+                                int ID = Integer.parseInt(scannermain.nextLine());
+                                System.out.println("Maintenant tous les fields requis vont vous être demandés.\n" +
+                                        "SI VOUS NE VOULEZ PAS MODIFIER UN CHAMP ÉCRIVEZ SIMPLEMENT NC\n" +
+                                        "Pour procéder, appuyez sur ENTER");
+                                System.in.read();
+                                String[] entityFields = {
+                                        "comment",
+                                        "start",
+                                        "end",
+                                        "hour",
+                                        "capacity",
+                                        "proNumber",
+                                        "days",
+                                        "name",
+                                        "price"
+                                };
+                                String[] list = activityPrompt().split("\t");
+                                pt.modifyActivity(ID, entityFields, list);
+                                break label1;
+                            case "3":
+                                System.out.println("Vous avez choisi option 3\n écrivez le ID de l'activité a supprimer puis appuyez sur ENTER");
+                                String id = scannermain.next();
+                                pt.deleteActivity(Integer.parseInt(id));
+                                break label1;
+                            default:
+                                System.out.println("option invalide (1, 2 or 3) appuyez sur ENTER pour continuer");
+                                break;
                         }
                         break;
                     }
@@ -261,7 +268,7 @@ public class Main {
                         System.out.println("EXITING #GYM");
                         return;
                 }
-                System.out.printf("Pour continuer, appuyez sur ENTER");
+                System.out.print("Pour continuer, appuyez sur ENTER");
                 System.in.read();
             } catch (Exception ignored) {
                 System.out.println("Une erreur est survenue. Veuillez réessayer.");
