@@ -188,17 +188,7 @@ public class Prototype {
     }
 
     void printReport() {
-        String report = "Name\tNumber\tPay\n";
-        Timestamp endDate = new Timestamp(System.currentTimeMillis());
-
-        double payTotal = 0;
-        for(Professionnal p: ds.getProfessionnals()) {
-            report += p.getReportLine(endDate) +"\n";
-            payTotal += p.getWeekPay(endDate);
-        }
-
-        report += "TOTAL\t-1\t"+payTotal;
-
+        String report = ReportManager.createReportString(ds);
         try {
             File f = new File("report.tsv");
             FileWriter writer = new FileWriter(f);
