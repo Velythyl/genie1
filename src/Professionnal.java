@@ -1,8 +1,4 @@
 import java.sql.Timestamp;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 
 public class Professionnal extends Entity {
@@ -21,28 +17,9 @@ public class Professionnal extends Entity {
         return this.activities;
     }
 
-    public ArrayList<Activity> getWeekActivities(Timestamp endDate) {
-        //https://stackoverflow.com/questions/9307884/retrieve-current-weeks-mondays-date
-        ZoneId zoneId = ZoneId.of( "America/Montreal" );
-        LocalDate today = LocalDate.now( zoneId );
-        long previousSatLong = today.with( TemporalAdjusters.previous( DayOfWeek.SATURDAY ) ).atStartOfDay(zoneId).toInstant().toEpochMilli();
-        Timestamp lastSat = new Timestamp(previousSatLong);
-
-        ArrayList<Activity> goodList = new ArrayList<>();
-        for(Activity a: activities) {
-            if(!a.getEnd().after(lastSat)) continue;
-
-            long nb_days = (endDate.getTime() - lastSat.getTime())/86400000;    // nb de millis dans un jour
-            for(int i=0; i<nb_days; i++) {
-                if(a.getDays().getDays()[i]) goodList.add(a);
-            }
-        }
-
-        return goodList;
-    }
 
     public double getWeekPay(Timestamp endDate) {
-        return getWeekPay(getWeekActivities(endDate));
+        return getWeekPay(ReportManager.getWeekActivities(endDate, activities));
     }
 
     public double getWeekPay(ArrayList<Activity> list) {

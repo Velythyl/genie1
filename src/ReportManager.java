@@ -1,4 +1,9 @@
 import java.sql.Timestamp;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
 
 public abstract class ReportManager {
     // generate reports
@@ -12,6 +17,28 @@ public abstract class ReportManager {
     //     - cette liste la , pour toute les clients, toutes prof etc
 
     // sortir les trucs qui creent le string quon va ecrire pi mettre dans report manager
+
+
+    public static ArrayList<Activity> getWeekActivities(Timestamp endDate, ArrayList<Activity> activities) {
+        //https://stackoverflow.com/questions/9307884/retrieve-current-weeks-mondays-date
+        ZoneId zoneId = ZoneId.of( "America/Montreal" );
+        LocalDate today = LocalDate.now( zoneId );
+        long previousSatLong = today.with( TemporalAdjusters.previous( DayOfWeek.SATURDAY ) ).atStartOfDay(zoneId).toInstant().toEpochMilli();
+        Timestamp lastSat = new Timestamp(previousSatLong);
+
+        ArrayList<Activity> goodList = new ArrayList<>();
+        for(Activity a: activities) {
+            if(!a.getEnd().after(lastSat)) continue;
+
+            long nb_days = (endDate.getTime() - lastSat.getTime())/86400000;    // nb de millis dans un jour
+            for(int i=0; i<nb_days; i++) {
+                if(a.getDays().getDays()[i]) goodList.add(a);
+            }
+        }
+
+        return goodList;
+    }
+
     public static String createReportString(DataStore ds) {
 
         String report = "Name\tNumber\tPay\n";
@@ -26,6 +53,9 @@ public abstract class ReportManager {
         report += "TOTAL\t-1\t" + payTotal;
         return report;
     }
+
+    public abstract void generateReport();
+
 
 
 }
