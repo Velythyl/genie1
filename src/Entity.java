@@ -1,20 +1,42 @@
-import java.sql.Timestamp;
-
 //NOTE: on utilise Timestamp partout par souci de convention au lieu de java.util.Date
 public abstract class Entity extends UuidGymClass {
-    private String name, surname, phone, email, address, gender;
-    private Timestamp birthdate;
+    private String name, surname, phone, city, address, gender, province, postalCode;
 
-    public Entity(String name, String surname, String phone, String email, String address, String gender, Timestamp birthdate, String comment) {
+    public Entity(String name, String surname, String phone, String address,String province, String city, String postalCode, String comment) {
         super(comment);
 
         this.name = name;
         this.surname = surname;
         this.phone = phone;
-        this.email = email;
         this.address = address;
-        this.gender = gender;
-        this.birthdate = birthdate;
+        this.city = city;
+        this.province = province;
+        this.postalCode = postalCode;
+    }
+    // nom surnom numero ville addresse province code postal TODO changer le ui pi enlever toute squi est pas ces affaires la
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
 
     /**
@@ -25,7 +47,7 @@ public abstract class Entity extends UuidGymClass {
      * @return
      */
     public boolean equals(Entity obj) {
-        return obj.getName().equals(this.getName()) && obj.getSurname().equals(this.getSurname()) && obj.getBirthdate().equals(this.getBirthdate());
+        return obj.getName().equals(this.getName()) && obj.getSurname().equals(this.getSurname());
     }
 
     public String getName() {
@@ -52,14 +74,6 @@ public abstract class Entity extends UuidGymClass {
         this.phone = phone;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getAddress() {
         return address;
     }
@@ -76,13 +90,6 @@ public abstract class Entity extends UuidGymClass {
         this.gender = gender;
     }
 
-    public Timestamp getBirthdate() {
-        return birthdate;
-    }
-
-    public void setBirthdate(Timestamp birthdate) {
-        this.birthdate = birthdate;
-    }
 
     @Override
     public String toString() {

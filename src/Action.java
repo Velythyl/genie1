@@ -5,7 +5,7 @@ import java.time.ZoneId;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 
-public abstract class ReportManager {
+public abstract class Action {
     // generate reports
     // the subclasses will implement it the right way for their type
     // to access datastore : datastore.
@@ -15,9 +15,6 @@ public abstract class ReportManager {
     // 1 : prend toutes activites du datastore
     //     - applique getWeekActivities ( me laisse juste les activites qui se sont passes cette semaine
     //     - cette liste la , pour toute les clients, toutes prof etc
-
-    // sortir les trucs qui creent le string quon va ecrire pi mettre dans report manager
-
 
     public static ArrayList<Activity> getWeekActivities(Timestamp endDate, ArrayList<Activity> activities) {
         //https://stackoverflow.com/questions/9307884/retrieve-current-weeks-mondays-date
@@ -39,6 +36,7 @@ public abstract class ReportManager {
         return goodList;
     }
 
+    /*
     public static String createReportString(DataStore ds) {
 
         String report = "Name\tNumber\tPay\n";
@@ -46,16 +44,13 @@ public abstract class ReportManager {
 
         double payTotal = 0;
         for (Professionnal p : ds.getProfessionnals()) {
-            report += p.getReportLine(endDate) + "\n";
-            payTotal += p.getWeekPay(endDate);
+            report += ProfessionalAction.getReportLine(endDate, p.getActivities(), p.getName()) + "\n";
+            payTotal += ProfessionalAction.getWeekPay(endDate, p.getActivities());
         }
 
         report += "TOTAL\t-1\t" + payTotal;
         return report;
-    }
+    }*/
 
-    public abstract void generateReport();
-
-
-
+    public abstract String generateReport(ArrayList<Activity> activities);
 }

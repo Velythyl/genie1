@@ -81,9 +81,8 @@ public class Prototype {
         ds.delActivity(id);
     }
 
-    void enrollProfessionnal(String name, String surname, String phone, String email, String address, String gender,
-                                      Timestamp birthdate, String comment) {
-        Professionnal newPro = new Professionnal(name, surname, phone, email, address, gender, birthdate, comment);
+    void enrollProfessionnal(String name, String surname, String phone, String address,String province, String city, String postalCode, String comment) {
+        Professionnal newPro = new Professionnal(name, surname, phone, address,province, city, postalCode, comment);
         ds.addProfessionnal(newPro);
 
         System.out.println("Inscription réussie");
@@ -170,7 +169,7 @@ public class Prototype {
             f.getParentFile().mkdirs();
             try {
                 FileWriter writer = new FileWriter(f);
-                String tef = p.getTEF(endDate);
+                String tef = ProfessionalAction.getProInfosForTEF(endDate, p); // TODO add the other part
                 writer.write(tef);
                 writer.close();
             } catch (IOException e) {
@@ -188,7 +187,7 @@ public class Prototype {
     }
 
     void printReport() {
-        String report = ReportManager.createReportString(ds);
+        String report = ""; // Action.createReportString(ds); TODO WIP
         try {
             File f = new File("report.tsv");
             FileWriter writer = new FileWriter(f);
