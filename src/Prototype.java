@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 public class Prototype {
     DataStore ds;
     public Prototype() {
-        ds = new DataStore();
+        ds = DataStore.getInstance();
     }
 
     void accessGym(int uuid) {

@@ -6,7 +6,9 @@ public class DataStore implements Serializable {
     private ArrayList<Professionnal> professionnals;
     private ArrayList<Activity> activities;
 
-    public DataStore() {
+    private static DataStore self;
+
+    private DataStore() {
         try(ObjectInputStream obji = new ObjectInputStream(new FileInputStream("repertoire.ser"))) {
             DataStore oldStore = (DataStore) obji.readObject();
 
@@ -19,6 +21,11 @@ public class DataStore implements Serializable {
             this.professionnals = new ArrayList<>();
             this.activities = new ArrayList<>();
         }
+    }
+
+    public static DataStore getInstance() {
+        if(self == null) return new DataStore();
+        else return self;
     }
 
     public void saveDS() {
