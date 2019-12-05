@@ -42,6 +42,7 @@ public class Prototype {
         System.out.println("Nom du client = "+newClient.getName());
         System.out.println("Numero unique du nouveau client = " + newClient.getUuid());
         System.out.println("Le code QR du client a été écrit sur le fichier QRCODE.jpg");
+        QRUtils.genQR(newClient.getUuid().toString());
     }
 
     void modifyClient(UUID9 id, String[] fields, String[] values) {
