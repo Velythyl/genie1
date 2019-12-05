@@ -1,17 +1,14 @@
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
 
 public class Professionnal extends Entity {
     private ArrayList<Activity> activities;
 
-    public Professionnal(String name, String surname, String phone, String email, String address, String gender, Timestamp birthdate, String comment) {
+    public Professionnal(String name, String surname, String phone, String email, String address, String gender, Stamp birthdate, String comment) {
         super(name, surname, phone, email, address, gender, birthdate, comment);
         this.activities = new ArrayList<>();
     }
@@ -37,7 +34,7 @@ public class Professionnal extends Entity {
 
             long nb_days = (endDate.getTime() - lastSat.getTime())/86400000;    // nb de millis dans un jour
             for(int i=0; i<nb_days; i++) {
-                if(a.getDays().getDays()[i]) goodList.add(a);
+                if(a.getWeek().getDays()[i]) goodList.add(a);
             }
         }
 
@@ -55,8 +52,7 @@ public class Professionnal extends Entity {
     }
 
     public String getTEF(Timestamp endDate) {
-        String tmp = this.getUuidStr();
-        return "NAME: "+this.getName()+". NUMBER: "+tmp+". PAY: "+this.getWeekPay(endDate);
+        return "NAME: "+this.getName()+". NUMBER: "+this.getUuid()+". PAY: "+this.getWeekPay(endDate);
     }
 
     public String getReportLine(Timestamp endDate) {

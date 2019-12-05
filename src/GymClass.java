@@ -1,23 +1,15 @@
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.lang.reflect.Field;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * All gym entries seem to have a timestamp and a comment field
  */
 public abstract class GymClass implements Serializable {
     private String comment;
-    private Timestamp creationStamp;
+    private Stamp creationStamp;
 
     public GymClass(String comment) {
         this.comment = comment;
-        creationStamp = new Timestamp(System.currentTimeMillis());
+        creationStamp = new Stamp();
     }
 
     public String getComment() {
@@ -28,7 +20,7 @@ public abstract class GymClass implements Serializable {
         this.comment = comment;
     }
 
-    public Timestamp getCreationStamp() {
+    public Stamp getCreationStamp() {
         return creationStamp;
     }
 

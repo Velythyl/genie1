@@ -19,7 +19,7 @@ public class Main {
         //int t = Integer.MAX_VALUE;
 
         //System.out.println(test);
-        //test = new Activity("bla", new Timestamp(0), new Timestamp(0), new Hours("9:21"), 20, 2, new Days("0:0:0:0:0:0:1"), "Gratin", 21.3);
+        //test = new Activity("bla", new Timestamp(0), new Timestamp(0), new Hours("9:21"), 20, 2, new Week("0:0:0:0:0:0:1"), "Gratin", 21.3);
         //System.out.println(test);
 
         // create a scanner so we can read the command-line input

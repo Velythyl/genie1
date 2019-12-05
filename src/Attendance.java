@@ -1,7 +1,7 @@
 public class Attendance extends GymClass {
-    private int proNumber, clientNumber, activityNumber;
+    private UUID proNumber, clientNumber, activityNumber;
 
-    public Attendance(String comment, int proNumber, int clientNumber, int activityNumber) {
+    public Attendance(String comment, UUID9 proNumber, UUID9 clientNumber, UUID7 activityNumber) {
         super(comment);
         this.proNumber = proNumber;
         this.clientNumber = clientNumber;
@@ -21,11 +21,14 @@ public class Attendance extends GymClass {
 
     @Override
     public String toString() {
-        return "Attendance{" +
-                "proNumber=" + proNumber +
-                ", clientNumber=" + clientNumber +
-                ", activityNumber=" + activityNumber +
-                "} " + super.toString();
+        return "Inscription: " +
+                "proNumber= " + proNumber +
+                ", clientNumber= " + client.getUuid() +
+                ", activityNumber= " + this.getUuid() +
+                ", activityDate= " + date +
+                ", comment= " + comment +
+                ", creationStamp= " + new Stamp() +
+                "\n"
     }
 
     public int getProNumber() {

@@ -1,31 +1,34 @@
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
 
-public class Activity extends UuidGymClass {
+public class Activity extends GymClass implements UuidGymClass {
     private Timestamp start, end;    //start and end of activity's offering
-    private int capacity, proNumber;
+    private int capacity;
+    private UUID9 proNumber;
     private Hours hour;
-    private Days days; //7-sized array
+    private Week week; //7-sized array
     private ArrayList<Client> inscriptions;    //uuid of clients
     private String name;
     private double price;
 
-    public Activity(String comment, Timestamp start, Timestamp end, Hours hour, int capacity, int proNumber, Days days, String name, double price) {
-        super(comment, 7);
+    private UUID7 uuid;
+    private static int nextUuid = 0;
+
+    public Activity(String comment, Timestamp start, Timestamp end, Hours hour, int capacity, UUID9 proNumber, Week week, String name, double price, int uuid) {
+        super(comment);
         this.start = start;
         this.end = end;
         this.hour = hour;
         this.capacity = capacity;
         this.proNumber = proNumber;
-        this.days = days;
+        this.week = week;
         this.name = name;
         this.price = price;
 
         this.inscriptions = new ArrayList<>();
+        this.uuid = new UUID7(nextUuid);
+        nextUuid++;
     }
 
     public String getName() {
@@ -40,15 +43,31 @@ public class Activity extends UuidGymClass {
         this.inscriptions.add(client);
 
         try(FileWriter fw = new FileWriter(new File("./Inscriptions.txt"), true)) {
-            fw.write(new Inscription(comment, this.proNumber, client.getUuid(), this.getUuid(), date).toString());
+            fw.write(
+                    "Inscription: " +
+                    "proNumber= " + proNumber +
+                    ", clientNumber= " + client.getUuid() +
+                    ", activityNumber= " + this.getUuid() +
+                    ", activityDate= " + date +
+                    ", comment= " + comment +
+                    ", creationStamp= " + new Stamp() +
+                    "\n"
+            );
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void confirmAttendance(int clientUuid, String comment) {
+    public void confirmAttendance(String clientUuid, String comment) {
         try(FileWriter fw = new FileWriter(new File("./Attendances.txt"), true)) {
-            fw.write(new Attendance(comment, this.proNumber, clientUuid, this.getUuid()).toString());
+            fw.write(
+                    "Attendance: " +
+                    "proNumber= " + proNumber +
+                    ", clientNumber= " + clientUuid +
+                    ", activityNumber= " + this.uuid +
+                    ", creationStamp= " + new Stamp() +
+                    ", comment= "+comment + "\n"
+            );
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -71,7 +90,7 @@ public class Activity extends UuidGymClass {
                 ", heure:" + hour2 +
                 ", capacité:" + capacity +
                 ", IDduPro:" + proNumber +
-                ", Jours:[" + days.toString() + "]" +
+                ", Jours:[" + week.toString() + "]" +
                 ", inscriptions:" + inscriptions.size() + " clients";
     }
 
@@ -115,20 +134,20 @@ public class Activity extends UuidGymClass {
         this.capacity = capacity;
     }
 
-    public int getProNumber() {
+    public UUID9 getProNumber() {
         return proNumber;
     }
 
-    public void setProNumber(int proNumber) {
+    public void setProNumber(UUID9 proNumber) {
         this.proNumber = proNumber;
     }
 
-    public Days getDays() {
-        return days;
+    public Week getWeek() {
+        return week;
     }
 
-    public void setDays(Days days) {
-        this.days = days;
+    public void setWeek(Week week) {
+        this.week = week;
     }
 
     public double getPrice() {
@@ -137,5 +156,10 @@ public class Activity extends UuidGymClass {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    @Override
+    public UUID getUuid() {
+        return uuid;
     }
 }

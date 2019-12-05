@@ -1,14 +1,14 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Days implements Serializable {
+public class Week implements Serializable {
     private boolean[] days;
 
-    public Days() {
+    public Week() {
         days = new boolean[7];
     }
 
-    public Days(String str) {
+    public Week(String str) {
         this();
         setDays(str);
     }

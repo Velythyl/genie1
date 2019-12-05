@@ -1,17 +1,23 @@
 public class UUID {
     private String uuid;
 
-    public UUID(int value, int maxUuidLength) throws Exception {
-        this.verifyUuid(value, maxUuidLength);
-        this.uuid = 
+    public UUID(int value, int maxUuidLength) {
+        this(StringUtils.pad(value, maxUuidLength));
     }
 
-    private void verifyUuid(int uuid, int maxUuidLength) throws Exception {
-        if(Integer.toString(uuid).length() > maxUuidLength) {
-            System.out.println("UUID overflows: plus que "+maxUuidLength+" caractères.\nLe programme va maintenant se fermer.");
-            throw new Exception("UUID OVERFLOW");   //sera attrape par le gros try catch de meta_callByName
-        }
+    public UUID(String value) {
+        this.uuid = value;
     }
 
+    public String getUuid() { return uuid; }
 
+    public boolean equals(UUID obj) {
+        if(obj == null) return false;
+        else return this.uuid.equals(obj.getUuid());
+    }
+
+    @Override
+    public String toString() {
+        return this.uuid;
+    }
 }

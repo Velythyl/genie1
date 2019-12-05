@@ -1,12 +1,11 @@
-import java.sql.Time;
-import java.sql.Timestamp;
-
-//NOTE: on utilise Timestamp partout par souci de convention au lieu de java.util.Date
-public abstract class Entity extends UuidGymClass {
+public abstract class Entity extends GymClass implements UuidGymClass {
     private String name, surname, phone, email, address, gender;
-    private Timestamp birthdate;
+    private Stamp birthdate;
 
-    public Entity(String name, String surname, String phone, String email, String address, String gender, Timestamp birthdate, String comment) {
+    private UUID9 uuid;
+    private static int nextUuid = 0;
+
+    public Entity(String name, String surname, String phone, String email, String address, String gender, Stamp birthdate, String comment) {
         super(comment);
 
         this.name = name;
@@ -16,6 +15,9 @@ public abstract class Entity extends UuidGymClass {
         this.address = address;
         this.gender = gender;
         this.birthdate = birthdate;
+
+        this.uuid = new UUID9(nextUuid);
+        nextUuid++;
     }
 
     /**
@@ -77,11 +79,11 @@ public abstract class Entity extends UuidGymClass {
         this.gender = gender;
     }
 
-    public Timestamp getBirthdate() {
+    public Stamp getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(Timestamp birthdate) {
+    public void setBirthdate(Stamp birthdate) {
         this.birthdate = birthdate;
     }
 
@@ -89,7 +91,11 @@ public abstract class Entity extends UuidGymClass {
     public String toString() {
         return name + '\'' +
                 " " + surname + '\'' +
-                ", uuID=" + getUuidStr() +
+                ", uuID=" + getUuid() +
                 ",\n";
+    }
+
+    public UUID getUuid() {
+        return this.uuid;
     }
 }
