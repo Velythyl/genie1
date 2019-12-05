@@ -39,13 +39,13 @@ public class Prototype {
         return false;
     }
 
-    void enrollClient(String name, String surname, String phone, String email, String address, String gender, Timestamp birthdate, String comment) {
+    void enrollClient(String name, String surname, String phone, String address, String province, String city, String postalCode, String comment, String email) {
         if(!email.endsWith("@facebook.com")) {
             System.out.println("Votre addresse email n'est pas une addresse facebook valide. Veuillez reessayer.");
             return;
         }
 
-        Client newClient = new Client(name, surname, phone, email, address, gender, birthdate, comment);
+        Client newClient = new Client(name, surname, phone, address, province, city, postalCode, comment, email);
         ds.addClient(newClient);
 
         System.out.println("Inscription réussie");
@@ -81,8 +81,8 @@ public class Prototype {
         ds.delActivity(id);
     }
 
-    void enrollProfessionnal(String name, String surname, String phone, String address,String province, String city, String postalCode, String comment) {
-        Professionnal newPro = new Professionnal(name, surname, phone, address,province, city, postalCode, comment);
+    void enrollProfessionnal(String name, String surname, String phone, String address,String province, String city, String postalCode, String comment, String email) {
+        Professionnal newPro = new Professionnal(name, surname, phone, address, province, city, postalCode, comment, email);
         ds.addProfessionnal(newPro);
 
         System.out.println("Inscription réussie");
@@ -163,13 +163,12 @@ public class Prototype {
     }
 
     void printTEFs() {
-        Timestamp endDate = new Timestamp(System.currentTimeMillis());
         for(Professionnal p: ds.getProfessionnals()) {
             File f = new File("./TEFS/"+p.getUuid()+".tef");
             f.getParentFile().mkdirs();
             try {
                 FileWriter writer = new FileWriter(f);
-                String tef = ProfessionalAction.getProInfosForTEF(endDate, p); // TODO add the other part
+                String tef = ProfessionalReporter.getTEF(p); // TODO add the other part
                 writer.write(tef);
                 writer.close();
             } catch (IOException e) {
@@ -187,7 +186,7 @@ public class Prototype {
     }
 
     void printReport() {
-        String report = ""; // Action.createReportString(ds); TODO WIP
+        String report = ""; // Reporter.createReportString(ds); TODO WIP
         try {
             File f = new File("report.tsv");
             FileWriter writer = new FileWriter(f);

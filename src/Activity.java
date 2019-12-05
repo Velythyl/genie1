@@ -3,7 +3,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class Activity extends GymClass implements UuidGymClass {
-    private Timestamp start, end;    //start and end of activity's offering
+    private Stamp start, end;    //start and end of activity's offering
     private int capacity;
     private UUID9 proNumber;
     private Hours hour;
@@ -15,7 +15,27 @@ public class Activity extends GymClass implements UuidGymClass {
     private UUID7 uuid;
     private static int nextUuid = 0;
 
-    public Activity(String comment, Timestamp start, Timestamp end, Hours hour, int capacity, UUID9 proNumber, Week week, String name, double price, int uuid) {
+    private ArrayList<Attendance> attendances;
+
+    public ArrayList<Attendance> getAttendances() {
+        return attendances;
+    }
+
+    public void setAttendances(ArrayList<Attendance> attendances) {
+        this.attendances = attendances;
+    }
+
+    public boolean isPayPerClient() {
+        return payPerClient;
+    }
+
+    public void setPayPerClient(boolean payPerClient) {
+        this.payPerClient = payPerClient;
+    }
+
+    private boolean payPerClient;
+
+    public Activity(String comment, Stamp start, Stamp end, Hours hour, int capacity, UUID9 proNumber, Week week, String name, double price, boolean payPerClient) {
         super(comment);
         this.start = start;
         this.end = end;
@@ -27,8 +47,12 @@ public class Activity extends GymClass implements UuidGymClass {
         this.price = price;
 
         this.inscriptions = new ArrayList<>();
-        this.uuid = new UUID7(nextUuid);
-        nextUuid++;
+        this.attendances = new ArrayList<>();
+
+        DataStore ds = DataStore.getInstance();
+        ds.generateActivityID(p.getUuidStr(), type);
+
+        this.payPerClient = payPerClient;
     }
 
     public String getName() {
@@ -41,6 +65,7 @@ public class Activity extends GymClass implements UuidGymClass {
 
     public void enroll(Client client, Timestamp date, String comment) {
         this.inscriptions.add(client);
+        client.addActivity(this);
 
         try(FileWriter fw = new FileWriter(new File("./Inscriptions.txt"), true)) {
             fw.write(
@@ -58,16 +83,12 @@ public class Activity extends GymClass implements UuidGymClass {
         }
     }
 
-    public void confirmAttendance(String clientUuid, String comment) {
+    public void confirmAttendance(UUID9 clientUuid, String comment) {
+        Attendance a = new Attendance(comment, this.proNumber, clientUuid, this.getUuid(), this.price);
+        this.attendances.add(a);
+
         try(FileWriter fw = new FileWriter(new File("./Attendances.txt"), true)) {
-            fw.write(
-                    "Attendance: " +
-                    "proNumber= " + proNumber +
-                    ", clientNumber= " + clientUuid +
-                    ", activityNumber= " + this.uuid +
-                    ", creationStamp= " + new Stamp() +
-                    ", comment= "+comment + "\n"
-            );
+            fw.write(a.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -102,19 +123,19 @@ public class Activity extends GymClass implements UuidGymClass {
         this.inscriptions = inscriptions;
     }
 
-    public Timestamp getStart() {
+    public Stamp getStart() {
         return start;
     }
 
-    public void setStart(Timestamp start) {
+    public void setStart(Stamp start) {
         this.start = start;
     }
 
-    public Timestamp getEnd() {
+    public Stamp getEnd() {
         return end;
     }
 
-    public void setEnd(Timestamp end) {
+    public void setEnd(Stamp end) {
         this.end = end;
     }
 
@@ -159,7 +180,7 @@ public class Activity extends GymClass implements UuidGymClass {
     }
 
     @Override
-    public UUID getUuid() {
+    public UUID7 getUuid() {
         return uuid;
     }
 }

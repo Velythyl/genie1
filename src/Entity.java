@@ -1,17 +1,30 @@
+import java.util.ArrayList;
+
 //NOTE: on utilise Timestamp partout par souci de convention au lieu de java.util.Date
 public abstract class Entity extends GymClass implements UuidGymClass {
-    private String name, surname, phone, city, address, province, postalCode;
+    private String name, surname, phone, city, address, province, postalCode, email;
 
     private UUID9 uuid;
     private static int nextUuid = 0;
 
-    public Entity(String name, String surname, String phone, String address,String province, String city, String postalCode, String comment) {
+    private ArrayList<Activity> activities;
+
+    public void addActivity(Activity activity) {
+        this.activities.add(activity);
+    }
+
+    public ArrayList<Activity> getActivities() {
+        return this.activities;
+    }
+
+    public Entity(String name, String surname, String phone, String address,String province, String city, String postalCode, String comment, String email) {
         super(comment);
 
         this.name = name;
         this.surname = surname;
         this.phone = phone;
         this.address = address;
+        this.email = email;
 
         this.uuid = new UUID9(nextUuid);
         nextUuid++;
@@ -19,6 +32,7 @@ public abstract class Entity extends GymClass implements UuidGymClass {
         this.city = city;
         this.province = province;
         this.postalCode = postalCode;
+        this.activities = new ArrayList<>();
     }
     // nom surnom numero ville addresse province code postal TODO changer le ui pi enlever toute squi est pas ces affaires la
 

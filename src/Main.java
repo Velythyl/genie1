@@ -290,7 +290,8 @@ public class Main {
         System.out.println("voulez-vous ajouter [1], modifier [2] ou supprimer ? [3]");
     }
 
-    public static String clientPrompt(){
+    public static String clientPrompt(){    //TODO pas de genre ni date, seulement trucs qu'on retrouve dans Entity
+        //TODO tester si les grandeurs des string fournis sont ok: il faut que la province soit 2 caracteres, la ville 14 max, etc
         ArrayList<String> list = new ArrayList<>();
         System.out.println("nom:");
         list.add(scannermain.nextLine());
