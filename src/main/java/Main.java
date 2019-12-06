@@ -410,9 +410,22 @@ public class Main {
         list.add(String.join("",list2));
 
         System.out.println("veuillez inscrire le nom du cours");
-        list.add(scannermain.nextLine());
+        String className = scannermain.nextLine();
+        while (className.length()>20){
+            System.out.println("mauvais format: entrez 20 lettres maximum... \n" +
+                    "veuillez réécrire le nom du service correctement.");
+            className = scannermain.nextLine();
+        }
+        list.add(className);
+
         System.out.println("veuillez inscrire le prix du cours");
-        list.add(scannermain.nextLine());
+        double price = Double.parseDouble(scannermain.nextLine());
+        while (price>999.99){
+            System.out.println("le service doit couter moins de 999.99$ ... \n" +
+                    "veuillez réécrire le prix du cours :-> exemple : 25");
+            price = Double.parseDouble(scannermain.nextLine());
+        }
+        list.add(Double.toString(price));
 
         return String.join("\t", list);
     }
