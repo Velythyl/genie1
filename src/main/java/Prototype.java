@@ -29,7 +29,7 @@ public class Prototype {
         return false;
     }
 
-    void enrollClient(String name, String phone, String address, String province, String city, String postalCode, String comment, String email) {
+    void enrollClient(String name, String address, String province, String city, String postalCode, String comment, String email) {
         if(!email.endsWith("@facebook.com")) {
             System.out.println("Votre addresse email n'est pas une addresse facebook valide. Veuillez reessayer.");
             return;

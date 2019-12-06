@@ -22,7 +22,7 @@ public class Main {
         //System.out.println(test);
 
         // create a scanner so we can read the command-line input
-        scannermain = new Scanner(System.in); 
+        scannermain = new Scanner(System.in);
         System.out.println("Bienvenue à l'interface de #GYM. Que voulez-vous faire?\n");
         while(true){
             try {
