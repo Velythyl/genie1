@@ -36,7 +36,7 @@ public class Main {
                                 "[F] : Consulter les activités/séances\n" +
                                 "[G] : Consulter les inscriptions\n" +
                                 "[H] : Confirmer la présence d'un membre a un cours/séance/activité\n"+
-                                "[I] : Imprimer le rapport comptable\n" +
+                                "[I] : Imprimer le rapport comptable pour le Gérant\n" +
                                 "[J] : procedure comptable (TEF)( on sait que c'est pas dans les CU mais pour vos tests)\n" +
                                 "[K] : imprimer un rapport Client ou Professionel\n"  +
                                 "[L] : SORTIR DU LOGICIEL");
@@ -252,7 +252,7 @@ public class Main {
                     case "[I]":
                     case "i":
                     case "[i]":
-                        System.out.println("le rapport comptable est maintenant imprime dans le fichier report.tsv .\n");
+                        System.out.println("le rapport comptable est maintenant imprimé dans le fichier report.tsv .\n");
                         pt.printTEFs();
                         break;
                     case "J":
