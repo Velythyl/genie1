@@ -22,8 +22,8 @@ public class Main {
         //System.out.println(test);
 
         // create a scanner so we can read the command-line input
-        scannermain = new Scanner(System.in); // todo imprimer un rapport -> client pro ou manager  (demander id client ou pro)
-        System.out.println("Bienvenue à l'interface de #GYM. Que voulez-vous faire?\n"); // TODO C P M simuler acces par app mobiles
+        scannermain = new Scanner(System.in); 
+        System.out.println("Bienvenue à l'interface de #GYM. Que voulez-vous faire?\n");
         while(true){
             try {
                 System.out.println(
@@ -56,7 +56,9 @@ public class Main {
                                     pt.meta_callByString("enrollClient", clientPrompt());
                                     break label;
                                 case "2":
-                                    System.out.println("vous avez choisi option 2 : modifier client.\nMaintenant, écrivez le ID du client que vous voulez modifier puis appuyez sur ENTER");
+                                    System.out.println("vous avez choisi option 2 : modifier client.\n" +
+                                            "Maintenant, écrivez le ID du client que vous voulez" +
+                                            " modifier puis appuyez sur ENTER");
                                     UUID9 ID = (UUID9) Prototype.meta_marshallType(scannermain.nextLine(), "UUID9");
                                     System.out.println("Maintenant tous les fields requis vont vous être demandés.\n" +
                                             "SI VOUS NE VOULEZ PAS MODIFIER UN CHAMP ÉCRIVEZ SIMPLEMENT NC\n" +
@@ -75,7 +77,9 @@ public class Main {
                                     pt.modifyClient(ID, entityFields, list);
                                     break label;
                                 case "3":
-                                    System.out.println("you chose option 3 write the ID of the client to delete, then press ENTER");
+                                    System.out.println("Vous avez choisi option 3," +
+                                            " veuillez entrer l'id du client à supprimer," +
+                                            " puis appuyez sur ENTER");
                                     String id = scannermain.next();
                                     pt.meta_callByString("deleteClient", id);
                                     break label;
@@ -101,7 +105,9 @@ public class Main {
                                 pt.meta_callByString("enrollProfessionnal", clientPrompt());
                                 break label1;
                             case "2":
-                                System.out.println("vous avez choisi option 2 : modifier professionel.\nMaintenant, écrivez le ID du professionel que vous voulez modifier puis appuyez sur ENTER");
+                                System.out.println("vous avez choisi option 2 : modifier professionel.\n" +
+                                        "Maintenant, écrivez le ID du professionel que vous voulez modifier" +
+                                        " puis appuyez sur ENTER");
                                 UUID9 ID = (UUID9) Prototype.meta_marshallType(scannermain.nextLine(), "UUID9");
                                 System.out.println("Maintenant tous les fields requis vont vous être demandés.\n" +
                                         "SI VOUS NE VOULEZ PAS MODIFIER UN CHAMP ÉCRIVEZ SIMPLEMENT NC\n" +
@@ -120,7 +126,8 @@ public class Main {
                                 pt.modifyProfessionnal(ID, entityFields, list);
                                 break label1;
                             case "3":
-                                System.out.println("Vous avez choisi option 3\n écrivez le ID du professionel a supprimer puis appuyez sur ENTER");
+                                System.out.println("Vous avez choisi option 3.\n" +
+                                        " Veuillez écrire le ID du professionel à supprimer puis appuyez sur ENTER");
                                 String id = scannermain.next();
                                 pt.meta_callByString("deleteProfessionnal", id);
                                 break label1;
@@ -257,7 +264,8 @@ public class Main {
                     case "[J]":
                     case "j":
                     case "[j]":
-                        System.out.println("le rapport TEF est maintenant imprime dans le dossier TEFS.\nle rapport comptable est maintenant imprime dans le fichier report.tsv .\n");
+                        System.out.println("le rapport TEF est maintenant imprime dans le dossier TEFS.\n" +
+                                "le rapport comptable est maintenant imprimé dans le fichier report.tsv .\n");
                         pt.printAccounting();
                         break;
                     case "K":
@@ -300,7 +308,8 @@ public class Main {
     }
 
     public static void helpMessage(int x){
-        String[] cu = {"ajouter/modifier/supprimer un nouveau membre",
+        String[] cu = {
+                "ajouter/modifier/supprimer un nouveau membre",
                 "ajouter/modifier/supprimer un nouveau professionnel",
                 "inscrire un membre a un cours",
                 "faire accéder un membre au gym",
