@@ -64,13 +64,12 @@ public class Main {
                                     System.in.read();
                                     String[] entityFields = {
                                             "name",
-                                            "surname",
-                                            "phone",
-                                            "email",
                                             "address",
-                                            "gender",
-                                            "birthdate",
-                                            "comment"
+                                            "province",
+                                            "city",
+                                            "postal code",
+                                            "comment",
+                                            "email"
                                     };
                                     String[] list = clientPrompt().split("\t");
                                     pt.modifyClient(ID, entityFields, list);
@@ -110,13 +109,12 @@ public class Main {
                                 System.in.read();
                                 String[] entityFields = {
                                         "name",
-                                        "surname",
-                                        "phone",
-                                        "email",
                                         "address",
-                                        "gender",
-                                        "birthdate",
-                                        "comment"
+                                        "province",
+                                        "city",
+                                        "postal code",
+                                        "comment",
+                                        "email"
                                 };
                                 String[] list = clientPrompt().split("\t");
                                 pt.modifyProfessionnal(ID, entityFields, list);
@@ -317,31 +315,60 @@ public class Main {
         System.out.println("voulez-vous ajouter [1], modifier [2] ou supprimer ? [3]");
     }
 
-    public static String clientPrompt(){    //TODO pas de genre ni date, seulement trucs qu'on retrouve dans Entity
+    public static String clientPrompt(){
         //TODO tester si les grandeurs des string fournis sont ok: il faut que la province soit 2 caracteres, la ville 14 max, etc
         ArrayList<String> list = new ArrayList<>();
         System.out.println("nom:");
-        list.add(scannermain.nextLine());
+        String name = scannermain.nextLine();
+        while (name.length()>25){
+            System.out.println("mauvais format: entrez 25 lettres maximum.\n" +
+                    "veuillez réécrire votre nom correctement.");
+            name = scannermain.nextLine();
+        }
+        list.add(name);
 
-        System.out.println("nom de famille:");
-        list.add(scannermain.nextLine());
+        System.out.println("addresse physique:");
+        String addr = scannermain.nextLine();
+        while (addr.length()>25){
+            System.out.println("mauvais format: entrez 25 lettres maximum.\n" +
+                    "veuillez réécrire votre addresse correctement.");
+            addr = scannermain.nextLine();
+        }
+        list.add(addr);
 
-        System.out.println("numéro de téléphone:");
+        System.out.println("province (exemple : QC):");
+        String prov = scannermain.nextLine();
+        prov = prov.replaceAll(" ", "");
+        while (prov.length()>2){
+            System.out.println("mauvais format: entrez 2 lettres seulement...  exemple : QC\n" +
+                    "veuillez réécrire votre province correctement.");
+            prov = scannermain.nextLine().replaceAll(" ", "");;
+        }
+        list.add(prov);
+
+        System.out.println("ville ( exemple : St-Augustine ):");
+        String city = scannermain.nextLine();
+        while (city.length()>14){
+            System.out.println("mauvais format: entrez 14 lettres maximum... \n" +
+                    "veuillez réécrire votre ville correctement.");
+            city = scannermain.nextLine();
+        }
+        list.add(city);
+
+        System.out.println("Code Postal ( exemple : H172M9 ):");
+        String pc = scannermain.nextLine();
+        while (pc.length()>6){
+            System.out.println("mauvais format: entrez 6 lettres maximum... \n" +
+                    "veuillez réécrire votre code postal correctement.");
+            pc = scannermain.nextLine();
+        }
+        list.add(pc);
+
+
+        System.out.println("commentaire");
         list.add(scannermain.nextLine());
 
         System.out.println("addresse courriel:");
-        list.add(scannermain.nextLine());
-
-        System.out.println("addresse physique:");
-        list.add(scannermain.nextLine());
-
-        System.out.println("genre: Homme [h],Femme [f], autre [a]");
-        list.add(scannermain.nextLine());
-
-        System.out.println("date de fete: JJ-MM-AAAA");
-        list.add(scannermain.nextLine());
-
-        System.out.println("commentaire");
         list.add(scannermain.nextLine());
 
         return String.join("\t", list);
@@ -350,18 +377,25 @@ public class Main {
     public static String activityPrompt(){
         String[] jours = new String[]{"samedi", "dimanche", "lundi", "mardi", "mecredi", "jeudi", "vendredi"};
         ArrayList<String> list = new ArrayList<>();
+
         System.out.println("commentaire");
         list.add(scannermain.nextLine());
+
         System.out.println("date de debut: JJ-MM-AAAA");
         list.add(scannermain.nextLine());
+
         System.out.println("date de fin: JJ-MM-AAAA");
         list.add(scannermain.nextLine());
+
         System.out.println("heure du cours. HH:MM");
         list.add(scannermain.nextLine());
+
         System.out.println("nombre max d'utilisateurs");
         list.add(scannermain.nextLine());
+
         System.out.println("ID du professionnel qui donnera ce cours");
         list.add(scannermain.nextLine());
+
         ArrayList<String> list2 = new ArrayList<>();
         for(int i=0; i<7; i++){
             System.out.println("le cours aura-t-il lieu le " + jours[i] + "? y = oui , n = non");
@@ -374,6 +408,7 @@ public class Main {
             list2.add(":");
         }
         list.add(String.join("",list2));
+
         System.out.println("veuillez inscrire le nom du cours");
         list.add(scannermain.nextLine());
         System.out.println("veuillez inscrire le prix du cours");

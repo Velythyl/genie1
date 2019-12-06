@@ -3,13 +3,12 @@ import java.util.ArrayList;
 //NOTE: on utilise Timestamp partout par souci de convention au lieu de java.util.Date
 public abstract class Entity extends GymClass implements UuidGymClass {
     private String name;
-    private String surname;
-    private String phone;
     private String city;
     private String address;
     private String province;
     private String postalCode;
 
+    private String email;
     private UUID9 uuid;
     private static int nextUuid = 0;
 
@@ -23,12 +22,12 @@ public abstract class Entity extends GymClass implements UuidGymClass {
         return this.activities;
     }
 
-    public Entity(String name, String phone, String address,String province, String city, String postalCode, String comment) {
+    public Entity(String name, String address,String province, String city, String postalCode, String comment, String email) {
         super(comment);
 
         this.name = name;
-        this.phone = phone;
         this.address = address;
+        this.email = email;
 
         this.uuid = new UUID9(nextUuid);
         nextUuid++;
@@ -72,7 +71,7 @@ public abstract class Entity extends GymClass implements UuidGymClass {
      * @return
      */
     public boolean equals(Entity obj) {
-        return obj.getName().equals(this.getName()) && obj.getSurname().equals(this.getSurname());
+        return obj.getName().equals(this.getName());
     }
 
     public String getName() {
@@ -81,22 +80,6 @@ public abstract class Entity extends GymClass implements UuidGymClass {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     public String getAddress() {
@@ -116,5 +99,13 @@ public abstract class Entity extends GymClass implements UuidGymClass {
 
     public UUID getUuid() {
         return this.uuid;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

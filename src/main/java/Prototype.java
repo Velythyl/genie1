@@ -35,7 +35,7 @@ public class Prototype {
             return;
         }
 
-        Client newClient = new Client(name, phone, address, province, city, postalCode, comment, email);
+        Client newClient = new Client(name, address, province, city, postalCode, comment, email);
         ds.addClient(newClient);
 
         System.out.println("Inscription réussie");
@@ -72,8 +72,8 @@ public class Prototype {
         ds.delActivity(id);
     }
 
-    void enrollProfessionnal(String name, String phone, String address,String province, String city, String postalCode, String comment, String email) {
-        Professionnal newPro = new Professionnal(name, phone, address, province, city, postalCode, comment, email);
+    void enrollProfessionnal(String name,String address,String province, String city, String postalCode, String comment, String email) {
+        Professionnal newPro = new Professionnal(name,address, province, city, postalCode, comment, email);
         ds.addProfessionnal(newPro);
 
         System.out.println("Inscription réussie");
