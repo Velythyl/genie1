@@ -1,9 +1,8 @@
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class ManagerReporter extends Reporter {
 
-    public String generateReport() {
+    public static String generateReport() {
         DataStore dataStore = DataStore.getInstance();
 
         StringBuilder rapport = new StringBuilder();

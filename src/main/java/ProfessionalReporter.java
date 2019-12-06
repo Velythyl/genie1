@@ -1,12 +1,11 @@
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class ProfessionalReporter extends EntityReporter {
 
-    public String generateReport(Professionnal professionnal) {
+    public static String generateReport(Professionnal professionnal) {
         DataStore ds = DataStore.getInstance();
 
-        String report = this.getReportHeader(professionnal);
+        String report = EntityReporter.getReportHeader(professionnal);
 
         ArrayList<Activity> weekActs = Reporter.getWeekActivities(professionnal.getActivities());
         for(Activity a: weekActs) {

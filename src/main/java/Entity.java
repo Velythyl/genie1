@@ -10,16 +10,6 @@ public abstract class Entity extends GymClass implements UuidGymClass {
     private String province;
     private String postalCode;
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    private String email;
-
     private UUID9 uuid;
     private static int nextUuid = 0;
 
@@ -33,13 +23,12 @@ public abstract class Entity extends GymClass implements UuidGymClass {
         return this.activities;
     }
 
-    public Entity(String name, String phone, String address,String province, String city, String postalCode, String comment, String email) {
+    public Entity(String name, String phone, String address,String province, String city, String postalCode, String comment) {
         super(comment);
 
         this.name = name;
         this.phone = phone;
         this.address = address;
-        this.email = email;
 
         this.uuid = new UUID9(nextUuid);
         nextUuid++;

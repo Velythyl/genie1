@@ -1,8 +1,6 @@
-import java.util.ArrayList;
-
 public class ClientReporter extends EntityReporter {
-    public String generateReport(Client c) {
-        String report = this.getReportHeader(c);
+    public static String generateReport(Client c) {
+        String report = EntityReporter.getReportHeader(c);
         DataStore ds = DataStore.getInstance();
 
         for(Activity a: Reporter.getWeekActivities(c.getActivities())) {

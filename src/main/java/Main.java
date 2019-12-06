@@ -22,8 +22,8 @@ public class Main {
         //System.out.println(test);
 
         // create a scanner so we can read the command-line input
-        scannermain = new Scanner(System.in);
-        System.out.println("Bienvenue à l'interface de #GYM. Que voulez-vous faire?\n");
+        scannermain = new Scanner(System.in); // todo imprimer un rapport -> client pro ou manager  (demander id client ou pro)
+        System.out.println("Bienvenue à l'interface de #GYM. Que voulez-vous faire?\n"); // TODO C P M simuler acces par app mobiles
         while(true){
             try {
                 System.out.println(
@@ -36,9 +36,10 @@ public class Main {
                                 "[F] : Consulter les activités/séances\n" +
                                 "[G] : Consulter les inscriptions\n" +
                                 "[H] : Confirmer la présence d'un membre a un cours/séance/activité\n"+
-                                "[I] : Imprimer le rapport\n" +
-                                "[J] : procedure comptable ( on sait que c'est pas dans les CU mais pour vos tests)\n" +
-                                "[K] : SORTIR DU LOGICIEL");
+                                "[I] : Imprimer le rapport comptable\n" +
+                                "[J] : procedure comptable (TEF)( on sait que c'est pas dans les CU mais pour vos tests)\n" +
+                                "[K] : imprimer un rapport Client ou Professionel\n"  +
+                                "[L] : SORTIR DU LOGICIEL");
                 label1:
                 switch (scannermain.nextLine()) {
                     case "A":
@@ -217,7 +218,7 @@ public class Main {
                     case "[F]":
                     case "f":
                     case "[f]":
-                        System.out.println("vous avez bien selectionne : consulter les activites");
+                        helpMessage(7);
                         pt.consultActivities();
                         break;
                     case "G":
@@ -232,7 +233,7 @@ public class Main {
                     case "[H]":
                     case "h":
                     case "[h]":
-                        System.out.println("vous avez bien selectionne : confirmer la presence d'un membre");
+                        helpMessage(5);
                         System.out.println("Voici la liste des activités:");
                         pt.consultActivities();
                         ArrayList<String> list = new ArrayList<>();
@@ -265,6 +266,30 @@ public class Main {
                     case "[K]":
                     case "k":
                     case "[k]":
+                        helpMessage(6);
+                        System.out.println("veuillez indiquer le rapport que vous voulez:\n" +
+                                "[1] : rapport client\n" +
+                                "[2] : rapport Professionel\n" +
+                                "[3] : rapport Manager");
+                        String choice = scannermain.nextLine();
+
+                        if(choice.equals("1")){
+                            System.out.println("svp écrire Uuid du client");
+                            pt.printClientReport(new UUID9(Integer.parseInt(scannermain.nextLine())));
+                        } else if (choice.equals("2")){
+                            System.out.println("svp écrire Uuid du professionel");
+                            pt.printProReport(new UUID9(Integer.parseInt(scannermain.nextLine())));
+                        } else {
+                            System.out.println("choisir une option pour le rapport du manager:\n" +
+                                    "[1] : rapport partie 1\n" +
+                                    "[2] : rapport partie 2");
+                        }
+
+                        break;
+                    case "L":
+                    case "[L]":
+                    case "l":
+                    case "[l]":
                         System.out.println("EXITING #GYM");
                         return;
                 }
@@ -282,7 +307,9 @@ public class Main {
                 "inscrire un membre a un cours",
                 "faire accéder un membre au gym",
                 "ajouter/modifier/supprimer une séance",
-                ""};
+                "confirmer la presence d'un membre",
+                "imprimer un rapport (Client, Professionel où Manager",
+                "consulter les activites"};
 
         System.out.println("vous avez choisi " + cu[x]);
     }

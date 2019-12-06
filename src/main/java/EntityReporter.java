@@ -1,5 +1,5 @@
 public class EntityReporter extends Reporter {
-    protected String getReportHeader(Entity e) {
+    protected static String getReportHeader(Entity e) {
         return "NAME: "+e.getName()+"\n" +
                 "NUMBER: "+e.getUuid()+"\n" +
                 "ADRESS: "+e.getAddress()+"\n" +

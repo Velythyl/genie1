@@ -175,7 +175,7 @@ public class Prototype {
     }
 
     void printReport() {
-        String report = ""; // Reporter.createReportString(ds); TODO WIP
+        String report = ManagerReporter.generateReport();
         try {
             File f = new File("report.tsv");
             FileWriter writer = new FileWriter(f);
@@ -207,6 +207,38 @@ public class Prototype {
                 System.out.println("---" + client.toString());
             }
         }
+    }
+
+    void printClientReport(UUID9 clientUuid){
+        Client client = ds.getClient(clientUuid);
+        String clientReport = ClientReporter.generateReport(client);
+
+        try {
+            File f = new File(genEntityFileName(client));
+            FileWriter writer = new FileWriter(f);
+            writer.write(clientReport);
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("Quelque chose s'est mal passé. Sortie de la procédure de TEF.");
+        }
+    }
+
+    void printProReport(UUID9 proUuid){
+        Professionnal professionnal = ds.getProfessionnal(proUuid);
+        String proReport = ProfessionalReporter.generateReport(professionnal);
+        try {
+            File f = new File(genEntityFileName(professionnal));
+            FileWriter writer = new FileWriter(f);
+            writer.write(proReport);
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("Quelque chose s'est mal passé. Sortie de la procédure de TEF.");
+        }
+    }
+
+    String genEntityFileName(Entity entity){
+        Stamp stamp = new Stamp();
+        return entity.getName() + stamp.toString().split(" ")[0];
     }
 
     //https://stackoverflow.com/questions/1042798/retrieving-the-inherited-attribute-names-values-using-java-reflection
