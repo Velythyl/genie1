@@ -2,11 +2,14 @@ import java.io.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+/**
+ * An activity represents a seance
+ */
 public class Activity extends GymClass implements UuidGymClass {
     private Stamp start, end;    //start and end of activity's offering
     private int capacity;
     private UUID9 proNumber;
-    private Hours hour;
+    private Hour hour;
     private Week week; //7-sized array
     private ArrayList<Client> inscriptions;    //uuid of clients
     private String name;
@@ -16,17 +19,24 @@ public class Activity extends GymClass implements UuidGymClass {
 
     private ArrayList<Attendance> attendances;
 
-    public ArrayList<Attendance> getAttendances() {
-        return attendances;
-    }
-
-    public boolean isPayPerClient() {
-        return payPerClient;
-    }
-
     private boolean payPerClient;
 
-    public Activity(String comment, Stamp start, Stamp end, Hours hour, int capacity, UUID9 proNumber, Week week, String name, double price, boolean payPerClient, String type) {
+    /**
+     * Builds a new activity
+     *
+     * @param comment the activity's
+     * @param start the activity's start
+     * @param end the activity's end
+     * @param hour the activity's hour
+     * @param capacity the activity's capcity (max 30)
+     * @param proNumber the activity's profesionnal
+     * @param week the activity's reccuring days
+     * @param name the activity's name
+     * @param price the activity's price
+     * @param payPerClient is the activity pay-per-client or pay-per-activity?
+     * @param type the activity's type (boxing, swimming, etc)
+     */
+    public Activity(String comment, Stamp start, Stamp end, Hour hour, int capacity, UUID9 proNumber, Week week, String name, double price, boolean payPerClient, String type) {
         super(comment);
         this.start = start;
         this.end = end;
@@ -46,6 +56,14 @@ public class Activity extends GymClass implements UuidGymClass {
         this.payPerClient = payPerClient;
     }
 
+    public ArrayList<Attendance> getAttendances() {
+        return attendances;
+    }
+
+    public boolean isPayPerClient() {
+        return payPerClient;
+    }
+
     public String getName() {
         return name;
     }
@@ -54,6 +72,16 @@ public class Activity extends GymClass implements UuidGymClass {
         this.name = name;
     }
 
+    /**
+     * Enrolls a client into this activity
+     *
+     * This is NOT saved on disk: we do NOT assume the client will show up, and so we only print a report in the
+     * Inscriptions file
+     *
+     * @param client
+     * @param date
+     * @param comment
+     */
     public void enroll(Client client, Timestamp date, String comment) {
         this.inscriptions.add(client);
         client.addActivity(this);
@@ -74,6 +102,14 @@ public class Activity extends GymClass implements UuidGymClass {
         }
     }
 
+    /**
+     * Confirms the attendance of the client
+     *
+     * This is the TRUE marker of a client's attendance, and the pay of a payperclient activity is dependant on this
+     *
+     * @param clientUuid The ID of the client
+     * @param comment
+     */
     public void confirmAttendance(UUID9 clientUuid, String comment) {
         Attendance a = new Attendance(comment, this.proNumber, clientUuid, this.getUuid(), this.price);
         this.attendances.add(a);
@@ -85,6 +121,12 @@ public class Activity extends GymClass implements UuidGymClass {
         }
     }
 
+    /**
+     * Is the client enrolled into this activity?
+     *
+     * @param clientUuid
+     * @return
+     */
     public boolean isEnrolled(UUID clientUuid) {
         for(Client i: this.inscriptions) if(i.getUuid().equals(clientUuid)) return true;
 

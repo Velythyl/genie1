@@ -1,7 +1,30 @@
 import java.util.ArrayList;
 
+/**
+ * The Reporter for Pros
+ */
 public class ProfessionalReporter extends EntityReporter {
 
+    /**
+     * Generates a report of this general format:
+     *
+     * Nom du professionnel (25 lettres)
+     * Numéro du professionnel (9 chiffres)
+     * Adresse du professionnel (25 caractères)
+     * Ville du professionnel (14 caractères)
+     * Province du professionnel (2 lettres)
+     * Code postal du professionnel (6 caractères).
+     * Pour chaque service fourni, les détails suivants sont requis :
+     *     Date du service (JJ-MM-AAA)
+     *     Date et heure à laquelle les données étaient reçues par l'ordinateur (JJ-MM-AAAA HH:MM:SS)
+     *     Nom du membre (25 caractères)
+     *     Numéro du membre (9 chiffres)
+     *     Code de la séance (7 chiffres)
+     *     Montant à payer (jusqu'à 999.99$), si facturé par inscription, sinon un seul montant est affiché.
+     *
+     * @param professionnal the pro in question
+     * @return the String report
+     */
     public static String generateReport(Professionnal professionnal) {
         DataStore ds = DataStore.getInstance();
 
@@ -28,7 +51,12 @@ public class ProfessionalReporter extends EntityReporter {
         return report;
     }
 
-    // faire une methode pour un professionnel
+    /**
+     * Pros also need TEFs: these need to be created for the banks to pay the pros
+     *
+     * @param professionnal the pro in question
+     * @return the TEF as a String
+     */
     public static String getTEF(Professionnal professionnal) {
         return "NAME: "+professionnal.getName()+"\n" +
                 "NUMBER: "+professionnal.getUuid()+"\n" +

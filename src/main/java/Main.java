@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Main is the interface with the oustide world. The command line interface is a simulation of what the mobile app sees.
+ */
 public class Main {
     /**
      * inscription au gym: inscription name surname phone email address isMale(boolean) millisTimestamp comment
@@ -18,7 +21,7 @@ public class Main {
         //int t = Integer.MAX_VALUE;
 
         //System.out.println(test);
-        //test = new Activity("bla", new Timestamp(0), new Timestamp(0), new Hours("9:21"), 20, 2, new Week("0:0:0:0:0:0:1"), "Gratin", 21.3);
+        //test = new Activity("bla", new Timestamp(0), new Timestamp(0), new Hour("9:21"), 20, 2, new Week("0:0:0:0:0:0:1"), "Gratin", 21.3);
         //System.out.println(test);
 
         // create a scanner so we can read the command-line input
@@ -53,7 +56,7 @@ public class Main {
                         while(true) {
                             switch (choice) {
                                 case "1":
-                                    pt.meta_callByString("enrollClient", clientPrompt());
+                                    pt.meta_callByString("enrollClient", entityPrompt());
                                     break label;
                                 case "2":
                                     System.out.println("vous avez choisi option 2 : modifier client.\n" +
@@ -73,7 +76,7 @@ public class Main {
                                             "comment",
                                             "email"
                                     };
-                                    String[] list = clientPrompt().split("\t");
+                                    String[] list = entityPrompt().split("\t");
                                     pt.modifyClient(ID, entityFields, list);
                                     break label;
                                 case "3":
@@ -102,7 +105,7 @@ public class Main {
 
                         switch (choice) {
                             case "1":
-                                pt.meta_callByString("enrollProfessionnal", clientPrompt());
+                                pt.meta_callByString("enrollProfessionnal", entityPrompt());
                                 break label1;
                             case "2":
                                 System.out.println("vous avez choisi option 2 : modifier professionel.\n" +
@@ -122,7 +125,7 @@ public class Main {
                                         "comment",
                                         "email"
                                 };
-                                String[] list = clientPrompt().split("\t");
+                                String[] list = entityPrompt().split("\t");
                                 pt.modifyProfessionnal(ID, entityFields, list);
                                 break label1;
                             case "3":
@@ -307,6 +310,12 @@ public class Main {
         }
     }
 
+    /**
+     * Prints the choice confirmation message. Used in case we want to change de confirmation message: they're now all
+     * grouped in the same method.
+     *
+     * @param x which message to print
+     */
     public static void helpMessage(int x){
         String[] cu = {
                 "ajouter/modifier/supprimer un nouveau membre",
@@ -320,11 +329,20 @@ public class Main {
 
         System.out.println("vous avez choisi " + cu[x]);
     }
+
+    /**
+     * Used to print the message asking for the Activity/Pro/Client options: add, modify, or delete?
+     */
     public static void addModifSupressMessage(){
         System.out.println("voulez-vous ajouter [1], modifier [2] ou supprimer ? [3]");
     }
 
-    public static String clientPrompt(){
+    /**
+     * Prints the prompt that asks all the information for an entity (pro or client)
+     *
+     * @return A tab-separated representation of all the info
+     */
+    public static String entityPrompt(){
         //TODO tester si les grandeurs des string fournis sont ok: il faut que la province soit 2 caracteres, la ville 14 max, etc
         ArrayList<String> list = new ArrayList<>();
         System.out.println("nom:");
@@ -383,8 +401,12 @@ public class Main {
         return String.join("\t", list);
     }
 
+    /**
+     * Prints the prompt that asks all the info for an activity
+     *
+     * @return A tab-separated representation of all the info
+     */
     public static String activityPrompt(){
-        String[] jours = new String[]{"samedi", "dimanche", "lundi", "mardi", "mecredi", "jeudi", "vendredi"};
         ArrayList<String> list = new ArrayList<>();
 
         System.out.println("commentaire");
@@ -405,18 +427,19 @@ public class Main {
         System.out.println("ID du professionnel qui donnera ce cours");
         list.add(scannermain.nextLine());
 
-        ArrayList<String> list2 = new ArrayList<>();
+        ArrayList<String> days = new ArrayList<>();
+        String[] jours = new String[]{"samedi", "dimanche", "lundi", "mardi", "mecredi", "jeudi", "vendredi"};
         for(int i=0; i<7; i++){
             System.out.println("le cours aura-t-il lieu le " + jours[i] + "? y = oui , n = non");
             if (scannermain.nextLine().equals("n")){
-                list2.add("0");
+                days.add("0");
             } else {
-                list2.add("1");
+                days.add("1");
             }
             if(i==6) continue;
-            list2.add(":");
+            days.add(":");
         }
-        list.add(String.join("",list2));
+        list.add(String.join("",days));
 
         System.out.println("veuillez inscrire le nom du cours");
         String className = scannermain.nextLine();
@@ -435,6 +458,9 @@ public class Main {
             price = Double.parseDouble(scannermain.nextLine());
         }
         list.add(Double.toString(price));
+
+        System.out.println("veuillez inscrire le type du cours");
+        list.add(scannermain.nextLine());
 
         return String.join("\t", list);
     }

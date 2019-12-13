@@ -1,7 +1,19 @@
 import java.util.ArrayList;
 
+/**
+ * The Reporter for the Manager report
+ */
 public class ManagerReporter extends Reporter {
-
+    /**
+     * Generates a report of this general shape:
+     *
+     * "Le rapport concerne les comptes payables et décrit la liste de tous les professionnels qui doivent être payés
+     * cette semaine-là, le nombre de services de chacun et le total de leurs frais pour cette semaine-là. À la fin du
+     * rapport, le nombre total de professionnels qui ont fourni des services cette semaine-là, le nombre total de
+     * services et le total des frais doivent apparaitre."
+     *
+     * @return the String report
+     */
     public static String generateReport() {
         DataStore dataStore = DataStore.getInstance();
 

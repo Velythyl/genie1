@@ -171,7 +171,7 @@ public class Prototype {
     }
 
     //TODO ajouter type dans les questions! type c'est genre "zumba", "polo", "boxe", etc
-    void createActivity(String comment, Stamp start, Stamp end, Hours hour, int capacity, UUID9 proNumber, Week week, String name, double price, boolean payPerClient, String type) {
+    void createActivity(String comment, Stamp start, Stamp end, Hour hour, int capacity, UUID9 proNumber, Week week, String name, double price, boolean payPerClient, String type) {
         if(capacity > 30) {
             System.out.println("Une activité ne peut avoir plus de 30 de capacitié");
             return;
@@ -396,8 +396,8 @@ public class Prototype {
                 return Integer.parseInt(str);
             case "Stamp":
                 return new Stamp(str);
-            case "Hours":
-                return new Hours(str);
+            case "Hour":
+                return new Hour(str);
             case "Week":
                 return new Week(str);
             case "UUID9":
