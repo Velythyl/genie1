@@ -43,7 +43,8 @@ public class Prototype {
     boolean accessGym(UUID9 uuid) {
         Client c = ds.getClient(uuid);
 
-        if(c.getUuid().equals(uuid)) {
+
+        if(c!=null && c.getUuid().equals(uuid)) {
             if(c.isSuspended()) System.out.println("Membre suspendu: payez votre compte, profiteurs.");
             else {
                 System.out.println("Validé");
