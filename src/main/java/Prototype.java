@@ -169,12 +169,14 @@ public class Prototype {
      * @param comment comment on the pro
      * @param email email of the pro
      */
-    void enrollProfessionnal(String name,String address,String province, String city, String postalCode, String comment, String email) {
+    UUID9 enrollProfessionnal(String name,String address,String province, String city, String postalCode, String comment, String email) {
         Professionnal newPro = new Professionnal(name,address, province, city, postalCode, comment, email);
         ds.addProfessionnal(newPro);
 
         System.out.println("Inscription réussie");
         System.out.println("Numero unique du nouveau professionnel = " + newPro.getUuid());
+
+        return (UUID9) newPro.getUuid();
     }
 
     /**
