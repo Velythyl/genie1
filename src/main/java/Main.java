@@ -13,6 +13,7 @@ public class Main {
 
     public static void main(String[] args) {
         Prototype pt = Prototype.getInstance();
+<<<<<<< HEAD
         //System.out.println(pt.meta_callByString("createActivity","commentaire\t0319413\t31874313\t21\t30\t0\ttrue,true,true,false,true,true,false\tJedi Diplomacy"));
         //System.out.println(pt.meta_callByString("accessGym\t0"));
         //pt.consultActivities();
@@ -23,6 +24,8 @@ public class Main {
         //System.out.println(test);
         //test = new Activity("bla", new Timestamp(0), new Timestamp(0), new Hour("9:21"), 20, 2, new Week("0:0:0:0:0:0:1"), "Gratin", 21.3);
         //System.out.println(test);
+=======
+>>>>>>> eed93d3a5ed43b3d049fba7a99d3da5e9c445687
 
         // create a scanner so we can read the command-line input
         scannermain = new Scanner(System.in);
@@ -72,7 +75,7 @@ public class Main {
                                             "address",
                                             "province",
                                             "city",
-                                            "postal code",
+                                            "postalCode",
                                             "comment",
                                             "email"
                                     };
@@ -398,6 +401,7 @@ public class Main {
         System.out.println("addresse courriel:");
         list.add(scannermain.nextLine());
 
+        System.out.println(list.toString());
         return String.join("\t", list);
     }
 
@@ -459,7 +463,7 @@ public class Main {
         }
         list.add(Double.toString(price));
 
-        System.out.println("veuillez inscrire le type du cours");
+        System.out.println("veuillez inscrire le type du cours");//TODO test
         list.add(scannermain.nextLine());
 
         return String.join("\t", list);

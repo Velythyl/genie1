@@ -1,4 +1,6 @@
-public class UUID {
+import java.io.Serializable;
+
+public class UUID implements Serializable {
     private String uuid;
 
     public UUID(int value, int maxUuidLength) {
