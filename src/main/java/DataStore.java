@@ -121,7 +121,7 @@ public class DataStore implements Serializable {
             this.usedActivityIDs.add(new HashMap<>());
         }
 
-        String typeCode = StringUtils.pad(activity, 3);
+        String typeCode = StringUtils.pad(activityIndex, 3);
 
         String activityNumber;
         HashMap<String, Integer> usedIDs = this.usedActivityIDs.get(activityIndex);

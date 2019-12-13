@@ -268,8 +268,7 @@ public class Main {
                         helpMessage(6);
                         System.out.println("veuillez indiquer le rapport que vous voulez:\n" +
                                 "[1] : rapport client\n" +
-                                "[2] : rapport Professionel\n" +
-                                "[3] : rapport Manager");
+                                "[2] : rapport Professionel\n");
                         String choice = scannermain.nextLine();
 
                         if(choice.equals("1")){
@@ -278,10 +277,6 @@ public class Main {
                         } else if (choice.equals("2")){
                             System.out.println("svp écrire Uuid du professionel");
                             pt.printProReport(new UUID9(Integer.parseInt(scannermain.nextLine())));
-                        } else {
-                            System.out.println("choisir une option pour le rapport du manager:\n" +
-                                    "[1] : rapport partie 1\n" +
-                                    "[2] : rapport partie 2");
                         }
 
                         break;

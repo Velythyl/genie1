@@ -578,7 +578,9 @@ public class Prototype {
 
             t.invoke(this, castParams);
             return;
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+            ignored.printStackTrace();
+        }
 
         System.out.println("Quelque chose s'est mal passé. Êtes-vous certains d'avoir bien tapé votre commande? (meta_callbystring)");
 
