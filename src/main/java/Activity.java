@@ -28,7 +28,7 @@ public class Activity extends GymClass implements UuidGymClass {
      * @param start the activity's start
      * @param end the activity's end
      * @param hour the activity's hour
-     * @param capacity the activity's capcity (max 30)
+     * @param capacity the activity's capcity
      * @param proNumber the activity's profesionnal
      * @param week the activity's reccuring days
      * @param name the activity's name

@@ -216,6 +216,13 @@ public class Prototype {
         System.out.println("Validé");
     }
 
+    /**
+     * Confim the attendance of a client to an activity
+     *
+     * @param clientUuid the client's ID
+     * @param serviceUuid the activity's ID
+     * @param comment
+     */
     void confirmAttendance(UUID9 clientUuid, UUID7 serviceUuid, String comment) {
         Activity a = ds.getActivity(serviceUuid);
 
@@ -229,6 +236,14 @@ public class Prototype {
         }
     }
 
+    /**
+     * Enrolls a client into an activity.
+     *
+     * @param clientUuid the ID of the client
+     * @param serviceUuid the ID of the activity
+     * @param onDate the date on which the clients wants to begin the activity
+     * @param comment
+     */
     void enrollIntoActivity(UUID9 clientUuid, UUID7 serviceUuid, Timestamp onDate, String comment) {
         Activity a = ds.getActivity(serviceUuid);
 
@@ -262,6 +277,9 @@ public class Prototype {
         }
     }
 
+    /**
+     * Prints all the TEFs into their files in the TEFS folder
+     */
     void printTEFs() {
         for(Professionnal p: ds.getProfessionnals()) {
             File f = new File("./TEFS/"+p.getUuid()+".tef");
@@ -280,12 +298,18 @@ public class Prototype {
         System.out.println("Validé");
     }
 
+    /**
+     * Prints the accounting report (the one that's done every Friday)
+     */
     void printAccounting() {
-        printReport();
+        printManagerReport();
         printTEFs();
     }
 
-    void printReport() {
+    /**
+     * Prints the manager's report
+     */
+    void printManagerReport() {
         String report = ManagerReporter.generateReport();
         try {
             File f = new File("report.tsv");
@@ -293,13 +317,16 @@ public class Prototype {
             writer.write(report);
             writer.close();
         } catch (IOException e) {
-            System.out.println("Quelque chose s'est mal passé. Sortie de la procédure de printReport.");
+            System.out.println("Quelque chose s'est mal passé. Sortie de la procédure de printManagerReport.");
             return;
         }
 
         System.out.println("Validé");
     }
 
+    /**
+     * Consult the list of activities that haven't reached full capacity
+     */
     void consultActivities(){
         ArrayList<Activity> fullList = ds.getActivities();
 
@@ -308,6 +335,11 @@ public class Prototype {
         });
     }
 
+    /**
+     * Consult the inscriptions of the activities of a certain pro
+     *
+     * @param proUuid the ID of the pro
+     */
     void consultInscriptions(UUID9 proUuid) {
         Professionnal p = ds.getProfessionnal(proUuid);
         ArrayList<Activity> as = p.getActivities();
@@ -320,6 +352,11 @@ public class Prototype {
         }
     }
 
+    /**
+     * Prints a client's Report
+     *
+     * @param clientUuid the ID of the client
+     */
     void printClientReport(UUID9 clientUuid){
         Client client = ds.getClient(clientUuid);
         String clientReport = ClientReporter.generateReport(client);
@@ -334,6 +371,11 @@ public class Prototype {
         }
     }
 
+    /**
+     * Prints a pro's Report
+     *
+     * @param proUuid the ID of the pro
+     */
     void printProReport(UUID9 proUuid){
         Professionnal professionnal = ds.getProfessionnal(proUuid);
         String proReport = ProfessionalReporter.generateReport(professionnal);
@@ -347,13 +389,29 @@ public class Prototype {
         }
     }
 
-    String genEntityFileName(Entity entity){
+    /**
+     * Generates a file name for the day for a certain entity
+     *
+     * @param entity the entity we want a filename for
+     * @return the file name
+     */
+    private String genEntityFileName(Entity entity){
         Stamp stamp = new Stamp();
         return entity.getName() + stamp.toString().split(" ")[0];
     }
 
-    //https://stackoverflow.com/questions/1042798/retrieving-the-inherited-attribute-names-values-using-java-reflection
+    /**
+     * Utilitary method for meta_modify.
+     *
+     * Allows us to recursively see all decladed fields of a class and its superclasses
+     *
+     * @param fields the fields accumulator for this recursive method
+     * @param type the type of the class
+     * @return the list of all the fields
+     */
     private static java.util.List<Field> meta_getAllFields(java.util.List<Field> fields, Class<?> type) {
+        //https://stackoverflow.com/questions/1042798/retrieving-the-inherited-attribute-names-values-using-java-reflection
+
         fields.addAll(Arrays.asList(type.getDeclaredFields()));
 
         if (type.getSuperclass() != null) {
@@ -363,8 +421,26 @@ public class Prototype {
         return fields;
     }
 
-    //https://blog.sevagas.com/Modify-any-Java-class-field-using-reflection
+    /**
+     * Meta_modify modifies an instance of a class. This uses reflection: very powerful, but also very dangerous and
+     * sometimes hinders development.
+     *
+     * Here, we use it to NOT have to re-write a enormous amount of boilerplate code. Every time one wants to modify an
+     * instance, one would have to ask which fields, and then check if each field is to be modified, and then call the
+     * corresponding setter, and then when the requirements change and we have to add fields to a class, we'd have to
+     * rewrite everything again...
+     *
+     * So we believe for this use-case Reflection is perfect. You give the list of fields, the list of new values, and
+     * in a score of lines we do what would take hundres otherwise.
+     *
+     * @param instance the instance to be modified
+     * @param fields the list of fields to modify
+     * @param values the new values for each field (must follow the same order as the fields) ('NC' means that the value
+     *               won't be changed)
+     */
     public void meta_modify(GymClass instance, String[] fields, String[] values) {
+        //https://blog.sevagas.com/Modify-any-Java-class-field-using-reflection
+
         if(instance == null) {
             System.out.println("Cet ID n'est pas valide.");
             return;
@@ -397,6 +473,13 @@ public class Prototype {
         ds.saveDS();
     }
 
+    /**
+     * Gets a method of this prototype by name
+     *
+     * @param name name of the method
+     * @return the method object
+     * @throws ClassNotFoundException if no methods of this name exist, throw an Exception
+     */
     private Method meta_getMethodByName(String name) throws ClassNotFoundException {
         for(Method m: Class.forName("Prototype").getDeclaredMethods()) {
             if(m.getName().equals(name)) return m;
@@ -405,11 +488,13 @@ public class Prototype {
     }
 
     /**
-     * Tries to make str into type
+     * Marshalls a String into a requested Type.
      *
-     * @param str
-     * @param type
-     * @return
+     * If the type doesn't exist, we return the original String by default.
+     *
+     * @param str the string to marshall
+     * @param type the type to marshall into
+     * @return the new Object
      */
     public static Object meta_marshallType(String str, String type) throws Exception {
         switch (type) {
@@ -461,8 +546,20 @@ public class Prototype {
     }
 
     /**
-     * Calls a function by string. Splits on tabs!
-     * @param params
+     * Calls a method of the Prototype by it's string name.
+     *
+     * Why use reflection? For the same reasons as for meta_modify: whenever requirements change, we'd have to rewrite
+     * a lot of boilerplate type marshalling and we'd have to change said marshalling inside Main, this would be messy,
+     * and hard to maintain, etc.
+     *
+     * Also, since we're doing a CLI, we're dealing with tons of strings, and having to explicitly marshall each string
+     * into its correct type would be extremely tedious and cost lots of man-hours in real life.
+     *
+     * This is why we believe reflection is the correct way to do this. This way, one just needs to call the method with
+     * string params, and they'll all be automatically converted.
+     *
+     * @param commandName The name of the method
+     * @param params the params to pass to it (they will be marshalled by meta_marshallType)
      */
     void meta_callByString(String commandName, String params) {
         String[] array = params.split("\t");
