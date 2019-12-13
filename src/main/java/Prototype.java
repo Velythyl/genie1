@@ -538,6 +538,8 @@ public class Prototype {
                 return new UUID7(Integer.parseInt(str));
             case "double":
                 return Double.parseDouble(str);
+            case "boolean":
+                return (str.equals("1") || str.equals("t") || str.equals("y"));
             default:
                 if(str.length()>100) {
                     System.out.println("Le système ne supporte pas les string de plus que 100 caractères.");

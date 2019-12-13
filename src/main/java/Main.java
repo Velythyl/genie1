@@ -450,6 +450,9 @@ public class Main {
         }
         list.add(Double.toString(price));
 
+        System.out.println("est-ce que le profesionnel sera payé par client ou par session? y=[par client] anyKey=[par session]");//TODO test
+        list.add(scannermain.nextLine().equals("y") ? "1" : "0");
+
         System.out.println("veuillez inscrire le type du cours");//TODO test
         list.add(scannermain.nextLine());
 

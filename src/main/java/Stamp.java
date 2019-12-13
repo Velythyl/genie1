@@ -57,7 +57,7 @@ public class Stamp extends Timestamp {
         String[] bigSmol = inputStr.split(" ");
         String[] bigs = bigSmol[0].split("-");
 
-        if(bigs[3].length() == 4) { // if string is of wrong format for TimeStamp
+        if(bigs[2].length() == 4) { // if string is of wrong format for TimeStamp
             String smols = bigSmol.length > 1 ? bigSmol[1] : "00:00:00";
 
             List<String> reversed = Arrays.asList(bigs);
