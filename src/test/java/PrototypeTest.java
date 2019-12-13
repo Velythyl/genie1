@@ -49,19 +49,20 @@ public class PrototypeTest {
         Client dsClient = ds.getClient(uuidtest);
         Assert.assertArrayEquals(
                 new String[]{
-                        dsClient.getName(),
-                        dsClient.getAddress(),
-                        dsClient.getCity(),
-                        dsClient.getPostalCode(),
-                        dsClient.getComment(),
-                        dsClient.getProvince()},
-                new String[]{
                         newClient.getName(),
                         newClient.getAddress(),
                         newClient.getCity(),
                         newClient.getPostalCode(),
                         newClient.getComment(),
-                        newClient.getProvince()});
+                        newClient.getProvince()},
+
+                new String[]{
+                        dsClient.getName(),
+                        dsClient.getAddress(),
+                        dsClient.getCity(),
+                        dsClient.getPostalCode(),
+                        dsClient.getComment(),
+                        dsClient.getProvince()});
 
     }
 
@@ -162,13 +163,65 @@ public class PrototypeTest {
 
     @Test
     public void deleteClient() {
+        //arrange
+        Client newClient = new Client(name, address, province, city, postalCode, comment, email);
+
+        UUID9 uuidtest = testPrototype.enrollClient(newClient.getName(),
+                newClient.getAddress(),newClient.getProvince(),newClient.getCity(),
+                newClient.getPostalCode(),newClient.getComment(),newClient.getEmail());
+
+        boolean clientIsInSystemBefore = testPrototype.accessGym(uuidtest);
+        //act
+        testPrototype.deleteClient(uuidtest);
+        boolean clientIsInSystemAft = testPrototype.accessGym(uuidtest);
+        //assert
+        Assert.assertNotEquals(clientIsInSystemBefore,clientIsInSystemAft);
     }
 
     @Test
     public void deleteProfessionnal() {
+        //arrange
+        Professionnal professionnal = new Professionnal(name, address, province, city, postalCode, comment, email);
+        UUID9 idTest = testPrototype.enrollProfessionnal(professionnal.getName(),professionnal.getAddress(),
+                professionnal.getProvince(),professionnal.getCity(),professionnal.getPostalCode(),
+                professionnal.getComment(), professionnal.getEmail());
+        boolean proIsInSystemBefore = ds.getProfessionnal(idTest)!=null;
+        //act
+        testPrototype.deleteProfessionnal(idTest);
+        boolean proIsInSystemAft = ds.getProfessionnal(idTest)!=null;
+        //assert
+        Assert.assertNotEquals(proIsInSystemBefore,proIsInSystemAft);
     }
 
     @Test
     public void enrollProfessionnal() {
+        //arrange
+        Professionnal newPro = new Professionnal(name, address, province, city, postalCode, comment, email);
+
+
+        //act
+        UUID9 uuidtest = testPrototype.enrollProfessionnal(newPro.getName(),
+                newPro.getAddress(),newPro.getProvince(),newPro.getCity(),
+                newPro.getPostalCode(),newPro.getComment(),newPro.getEmail());
+
+        //assert
+        Professionnal dsPro = ds.getProfessionnal(uuidtest);
+        Assert.assertArrayEquals(
+                new String[]{
+                        newPro.getName(),
+                        newPro.getAddress(),
+                        newPro.getCity(),
+                        newPro.getPostalCode(),
+                        newPro.getComment(),
+                        newPro.getProvince()},
+
+                new String[]{
+                        dsPro.getName(),
+                        dsPro.getAddress(),
+                        dsPro.getCity(),
+                        dsPro.getPostalCode(),
+                        dsPro.getComment(),
+                        dsPro.getProvince()});
+
     }
 }
