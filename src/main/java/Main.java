@@ -143,7 +143,9 @@ public class Main {
                         list.add(scannermain.nextLine());
 
                         System.out.println("Voici la liste des activités:");
+
                         pt.consultActivities();
+
                         System.out.println("veuillez écrire le code de l'activite:");
                         list.add(scannermain.nextLine());
 

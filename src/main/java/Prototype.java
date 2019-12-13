@@ -332,9 +332,10 @@ public class Prototype {
     void consultActivities(){
         ArrayList<Activity> fullList = ds.getActivities();
 
-        fullList.forEach( (Activity a) -> {
-            if(a.getInscriptions().size() < a.getCapacity()) System.out.println(a);
-        });
+        for(int i=0; i<fullList.size(); i++){
+            Activity a = fullList.get(i);
+            if(a.getInscriptions().size() < a.getCapacity()) System.out.println(a.toString());
+        }
     }
 
     /**

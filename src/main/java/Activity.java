@@ -135,13 +135,11 @@ public class Activity extends GymClass implements UuidGymClass {
 
     @Override
     public String toString() {
-        String hour2 = hour.toString().split(" ")[1];
-        hour2 = hour2.split(":")[0] + " " + hour2.split(":")[1];
 
         return name + ": ID=" + getUuid() + " " +
                 "début:" + start.toString().split(" ")[0] +
                 ", fin:" + end.toString().split(" ")[0] +
-                ", heure:" + hour2 +
+                ", heure:" + hour.toString() +
                 ", capacité:" + capacity +
                 ", IDduPro:" + proNumber +
                 ", Jours:[" + week.toString() + "]" +
