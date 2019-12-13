@@ -176,7 +176,21 @@ public class Prototype {
         System.out.println("Numero unique du nouveau professionnel = " + newPro.getUuid());
     }
 
-    //TODO ajouter type dans les questions! type c'est genre "zumba", "polo", "boxe", etc
+    /**
+     * Creates a new Activity
+     *
+     * @param comment the activity's comment
+     * @param start the activity's start
+     * @param end the activity's end
+     * @param hour the activity's hour
+     * @param capacity the activity's capcity (max 30)
+     * @param proNumber the activity's profesionnal
+     * @param week the activity's reccuring days
+     * @param name the activity's name
+     * @param price the activity's price (max 999.99)
+     * @param payPerClient is the activity pay-per-client or pay-per-activity?
+     * @param type the activity's type (boxing, swimming, etc)
+     */
     void createActivity(String comment, Stamp start, Stamp end, Hour hour, int capacity, UUID9 proNumber, Week week, String name, double price, boolean payPerClient, String type) {
         if(capacity > 30) {
             System.out.println("Une activité ne peut avoir plus de 30 de capacitié");

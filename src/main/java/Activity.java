@@ -24,7 +24,7 @@ public class Activity extends GymClass implements UuidGymClass {
     /**
      * Builds a new activity
      *
-     * @param comment the activity's
+     * @param comment the activity's comment
      * @param start the activity's start
      * @param end the activity's end
      * @param hour the activity's hour
