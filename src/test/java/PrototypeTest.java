@@ -76,7 +76,6 @@ public class PrototypeTest {
                 newClient.getPostalCode(),newClient.getComment(),newClient.getEmail());
 
         Client dsClient = ds.getClient(uuidtest);
-        System.out.println(dsClient.toString());
 
         String[] entityFields = {
                 "name",
@@ -88,7 +87,7 @@ public class PrototypeTest {
                 "email"
         };
 
-        String[] list = { "mathilde","NC","NC","NC","NC","NC", "NC" };
+        String[] list = { "mathilde","Sans abris","BC","NC","NC","WHUUUT", "NC" };
 
         //act
         testPrototype.modifyClient(uuidtest, entityFields, list );
@@ -98,24 +97,67 @@ public class PrototypeTest {
         Assert.assertArrayEquals(
                 new String[]{
                         "mathilde",
-                        newClient.getAddress(),
+                        "Sans abris",
                         newClient.getCity(),
                         newClient.getPostalCode(),
-                        newClient.getComment(),
-                        newClient.getProvince()},
+                        "WHUUUT",
+                        "BC",
+                        newClient.getEmail()},
                 new String[]{
                         dsClient.getName(),
                         dsClient.getAddress(),
                         dsClient.getCity(),
                         dsClient.getPostalCode(),
                         dsClient.getComment(),
-                        dsClient.getProvince()});
+                        dsClient.getProvince(),
+                        dsClient.getEmail()});
 
 
     }
 
     @Test
     public void modifyProfessionnal() {
+        //arrange
+        Professionnal professionnal = new Professionnal(name, address, province, city, postalCode, comment, email);
+        UUID9 idTest = testPrototype.enrollProfessionnal(professionnal.getName(),professionnal.getAddress(),
+                professionnal.getProvince(),professionnal.getCity(),professionnal.getPostalCode(),
+                professionnal.getComment(), professionnal.getEmail());
+
+        Professionnal proInSys = ds.getProfessionnal(idTest);
+
+        String[] entityFields = {
+                "name",
+                "address",
+                "province",
+                "city",
+                "postalCode",
+                "comment",
+                "email"
+        };
+
+        String[] list = { "mathilde","Sans abris","BC","NC","NC","WHUUUT", "NC" };
+
+        //act
+        testPrototype.modifyProfessionnal(idTest, entityFields, list );
+
+        //assert
+        Assert.assertArrayEquals(
+                new String[]{
+                        "mathilde",
+                        "Sans abris",
+                        professionnal.getCity(),
+                        professionnal.getPostalCode(),
+                        "WHUUUT",
+                        "BC",
+                        professionnal.getEmail()},
+                new String[]{
+                        proInSys.getName(),
+                        proInSys.getAddress(),
+                        proInSys.getCity(),
+                        proInSys.getPostalCode(),
+                        proInSys.getComment(),
+                        proInSys.getProvince(),
+                        proInSys.getEmail()});
     }
 
     @Test
