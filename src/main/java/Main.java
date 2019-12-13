@@ -31,7 +31,7 @@ public class Main {
                                 "[H] : Confirmer la présence d'un membre a un cours/séance/activité\n"+
                                 "[I] : Imprimer le rapport comptable pour le Gérant\n" +
                                 "[J] : procedure comptable (TEF)( on sait que c'est pas dans les CU mais pour vos tests)\n" +
-                                "[K] : imprimer un rapport Client ou Professionel\n"  +
+                                "[K] : imprimer un rapport d'entité (Client ou Professionel)\n"  +
                                 "[L] : SORTIR DU LOGICIEL");
                 label1:
                 switch (scannermain.nextLine()) {
@@ -276,7 +276,8 @@ public class Main {
                             pt.printClientReport(new UUID9(Integer.parseInt(scannermain.nextLine())));
                         } else if (choice.equals("2")){
                             System.out.println("svp écrire Uuid du professionel");
-                            pt.printProReport(new UUID9(Integer.parseInt(scannermain.nextLine())));
+                            UUID9 uuid = new UUID9(Integer.parseInt(scannermain.nextLine()));
+                            pt.printProReport(uuid);
                         }
 
                         break;
@@ -309,7 +310,7 @@ public class Main {
                 "faire accéder un membre au gym",
                 "ajouter/modifier/supprimer une séance",
                 "confirmer la presence d'un membre",
-                "imprimer un rapport (Client, Professionel où Manager",
+                "imprimer un rapport d'entité (Client ou Professionel)",
                 "consulter les activites"};
 
         System.out.println("vous avez choisi " + cu[x]);
