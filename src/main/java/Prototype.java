@@ -6,13 +6,37 @@ import java.lang.reflect.Method;
 import java.sql.Timestamp;
 import java.util.*;
 
+/**
+ * The Prototype is the meat of the program. It is here that all the sequence diagrams and use cases are implemented
+ */
 public class Prototype {
-    DataStore ds;
-    public Prototype() {
+    private static Prototype self;
+    private DataStore ds;
+
+    /**
+     * Constructor simply gets the instance of the Datastore
+     */
+    private Prototype() {
         ds = DataStore.getInstance();
     }
 
-    //TODO dans l'interface juste renommer accessGym pour logInFromApp, ça fait la même chose !
+    /**
+     * Prototype is a singleton. This method returns the instance of the Prototype
+     *
+     * @return the single Prototype instance
+     */
+    public static Prototype getInstance() {
+        if(self == null) self = new Prototype();
+
+        return self;
+    }
+
+    /**
+     * Allows a client to access the gym. In real life, the uuid will be derived from a QR code
+     *
+     * @param uuid The UUID of the client
+     * @return If the client can access the gym or not
+     */
     boolean acessGym(UUID9 uuid) {
         Client c = ds.getClient(uuid);
 
@@ -29,6 +53,19 @@ public class Prototype {
         return false;
     }
 
+    /**
+     * Enrolls a new client into the gym.
+     *
+     * This prints out the name and uuid of the new client, and this saves a new QR Code on the disk.
+     *
+     * @param name name of the client
+     * @param address address of the client
+     * @param province province of the client
+     * @param city city of the client
+     * @param postalCode postal code of the client
+     * @param comment comment on the client
+     * @param email email of the client
+     */
     void enrollClient(String name, String address, String province, String city, String postalCode, String comment, String email) {
         if(!email.endsWith("@facebook.com")) {
             System.out.println("Votre addresse email n'est pas une addresse facebook valide. Veuillez reessayer.");
@@ -45,33 +82,86 @@ public class Prototype {
         QRUtils.genQR(newClient.getUuid().toString());
     }
 
+    /**
+     * Modifies the activity through reflection
+     *
+     * the fields and the values must be of the same index (so if name is field[1], the new name value must be
+     * values[1])
+     *
+     * @param id the of of the client
+     * @param fields the fields of the client
+     * @param values of the fields to modify (NC means no changes).
+     */
     void modifyClient(UUID9 id, String[] fields, String[] values) {
         Client c = ds.getClient(id);
         meta_modify(c, fields, values);
     }
 
+    /**
+     * Modifies the activity through reflection
+     *
+     * the fields and the values must be of the same index (so if name is field[1], the new name value must be
+     * values[1])
+     *
+     * @param id the of of the client
+     * @param fields the fields of the client
+     * @param values of the fields to modify (NC means no changes).
+     */
     void modifyActivity(UUID7 id, String[] fields, String[] values) {
         Activity c = ds.getActivity(id);
         meta_modify(c, fields, values);
     }
 
+    /**
+     * Modifies the pro through reflection
+     *
+     * the fields and the values must be of the same index (so if name is field[1], the new name value must be
+     * values[1])
+     *
+     * @param id the of of the pro
+     * @param fields the fields of the pro
+     * @param values of the fields to modify (NC means no changes).
+     */
     void modifyProfessionnal(UUID9 id, String[] fields, String[] values) {
         Professionnal c = ds.getProfessionnal(id);
         meta_modify(c, fields, values);
     }
 
+    /**
+     * Deletes the client
+     * @param id the id of the client
+     */
     void deleteClient(UUID9 id) {
         ds.delClient(id);
     }
 
+    /**
+     * Deletes the pro
+     * @param id the id of the pro
+     */
     void deleteProfessionnal(UUID9 id) {
         ds.delProfessionnal(id);
     }
 
+    /**
+     * Deletes the activity
+     * @param id the id of the activity
+     */
     void deleteActivity(UUID7 id) {
         ds.delActivity(id);
     }
 
+    /**
+     * Enrolls a new pro into the gym.
+     *
+     * @param name name of the pro
+     * @param address address of the pro
+     * @param province province of the pro
+     * @param city city of the pro
+     * @param postalCode postal code of the pro
+     * @param comment comment on the pro
+     * @param email email of the pro
+     */
     void enrollProfessionnal(String name,String address,String province, String city, String postalCode, String comment, String email) {
         Professionnal newPro = new Professionnal(name,address, province, city, postalCode, comment, email);
         ds.addProfessionnal(newPro);

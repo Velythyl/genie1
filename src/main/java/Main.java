@@ -9,7 +9,7 @@ public class Main {
     public static Scanner scannermain;
 
     public static void main(String[] args) {
-        Prototype pt = new Prototype();
+        Prototype pt = Prototype.getInstance();
         //System.out.println(pt.meta_callByString("createActivity","commentaire\t0319413\t31874313\t21\t30\t0\ttrue,true,true,false,true,true,false\tJedi Diplomacy"));
         //System.out.println(pt.meta_callByString("accessGym\t0"));
         //pt.consultActivities();
