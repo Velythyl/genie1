@@ -13,19 +13,6 @@ public class Main {
 
     public static void main(String[] args) {
         Prototype pt = Prototype.getInstance();
-<<<<<<< HEAD
-        //System.out.println(pt.meta_callByString("createActivity","commentaire\t0319413\t31874313\t21\t30\t0\ttrue,true,true,false,true,true,false\tJedi Diplomacy"));
-        //System.out.println(pt.meta_callByString("accessGym\t0"));
-        //pt.consultActivities();
-        //pt.consultInscriptions(2);
-
-        //int t = Integer.MAX_VALUE;
-
-        //System.out.println(test);
-        //test = new Activity("bla", new Timestamp(0), new Timestamp(0), new Hour("9:21"), 20, 2, new Week("0:0:0:0:0:0:1"), "Gratin", 21.3);
-        //System.out.println(test);
-=======
->>>>>>> eed93d3a5ed43b3d049fba7a99d3da5e9c445687
 
         // create a scanner so we can read the command-line input
         scannermain = new Scanner(System.in);
