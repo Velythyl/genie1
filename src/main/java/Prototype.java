@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  * The Prototype is the meat of the program. It is here that all the sequence diagrams and use cases are implemented
@@ -16,7 +19,7 @@ public class Prototype {
     /**
      * Constructor simply gets the instance of the Datastore
      */
-    private Prototype() {
+    Prototype() {
         ds = DataStore.getInstance();
     }
 
@@ -37,10 +40,10 @@ public class Prototype {
      * @param uuid The UUID of the client
      * @return If the client can access the gym or not
      */
-    boolean acessGym(UUID9 uuid) {
+    boolean accessGym(UUID9 uuid) {
         Client c = ds.getClient(uuid);
 
-        if(c.getUuid() == uuid) {
+        if(c.getUuid().equals(uuid)) {
             if(c.isSuspended()) System.out.println("Membre suspendu: payez votre compte, profiteurs.");
             else {
                 System.out.println("Validé");
@@ -66,20 +69,23 @@ public class Prototype {
      * @param comment comment on the client
      * @param email email of the client
      */
-    void enrollClient(String name, String address, String province, String city, String postalCode, String comment, String email) {
+    UUID9 enrollClient(String name, String address, String province, String city, String postalCode, String comment, String email) {
+        /*
         if(!email.endsWith("@facebook.com")) {
             System.out.println("Votre addresse email n'est pas une addresse facebook valide. Veuillez reessayer.");
             return;
-        }
+        }*/
 
+        System.out.println("in enroll client: " + name + address + province + city + postalCode +comment + email);
         Client newClient = new Client(name, address, province, city, postalCode, comment, email);
         ds.addClient(newClient);
 
         System.out.println("Inscription réussie");
         System.out.println("Nom du client = "+newClient.getName());
         System.out.println("Numero unique du nouveau client = " + newClient.getUuid());
-        System.out.println("Le code QR du client a été écrit sur le fichier QRCODE.jpg");
         QRUtils.genQR(newClient.getUuid().toString());
+        System.out.println("Le code QR du client a été écrit sur le fichier QRCODE.jpg");
+        return (UUID9) newClient.getUuid();
     }
 
     /**
@@ -272,7 +278,7 @@ public class Prototype {
             writer.write(report);
             writer.close();
         } catch (IOException e) {
-            System.out.println("Quelque chose s'est mal passé. Sortie de la procédure de TEF.");
+            System.out.println("Quelque chose s'est mal passé. Sortie de la procédure de printReport.");
             return;
         }
 
@@ -458,7 +464,7 @@ public class Prototype {
             return;
         } catch (Exception ignored) {}
 
-        System.out.println("Quelque chose s'est mal passé. Êtes-vous certains d'avoir bien tapé votre commande?");
+        System.out.println("Quelque chose s'est mal passé. Êtes-vous certains d'avoir bien tapé votre commande? (meta_callbystring)");
 
     }
 }
