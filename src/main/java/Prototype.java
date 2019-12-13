@@ -288,7 +288,7 @@ public class Prototype {
             f.getParentFile().mkdirs();
             try {
                 FileWriter writer = new FileWriter(f);
-                String tef = ProfessionalReporter.getTEF(p); // TODO add the other part
+                String tef = ProfessionalReporter.getTEF(p);
                 writer.write(tef);
                 writer.close();
             } catch (IOException e) {
