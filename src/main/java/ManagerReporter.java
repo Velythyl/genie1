@@ -10,17 +10,20 @@ public class ManagerReporter extends Reporter {
         // on get la liste de tous les professionnels
         ArrayList<Professionnal> pros = dataStore.getProfessionnals();
 
-        for (Professionnal pro : pros) rapport.append(getReportLine(pro));
+        int nbPro = 0;
+        int nbAct = 0;
+        double pay = 0.0;
+        for (Professionnal pro : pros) {
+            ArrayList<Activity> list = Reporter.getWeekActivities(pro.getActivities());
 
-        return rapport.toString();
-    }
+            if(list.size() == 0) continue;
 
-    // il va dans la liste du datastore pi il fait le truc pour tous les professionnels
-    private static String getReportLine(Professionnal pro) {
-        ArrayList<Activity> list = Reporter.getWeekActivities(pro.getActivities());
+            rapport.append(pro.getName()).append("\t").append(list.size()).append("\t").append(Reporter.getWeekPrice(list) * ACTIVITY_PERCENTAGE_PAID_TO_PRO).append("\n");
+            nbPro += 1;
+            nbAct += list.size();
+            pay += Reporter.getWeekPrice(list) * ACTIVITY_PERCENTAGE_PAID_TO_PRO;
+        }
 
-        if(list.size() == 0) return "";
-
-        return pro.getName() + "\t"+list.size()+"\t"+ (Reporter.getWeekPrice(list) * ACTIVITY_PERCENTAGE_PAID_TO_PRO) + "\n";
+        return rapport.toString()+nbPro+"\t"+nbAct+"\t"+pay+"\n";
     }
 }

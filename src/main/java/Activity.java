@@ -20,16 +20,8 @@ public class Activity extends GymClass implements UuidGymClass {
         return attendances;
     }
 
-    public void setAttendances(ArrayList<Attendance> attendances) {
-        this.attendances = attendances;
-    }
-
     public boolean isPayPerClient() {
         return payPerClient;
-    }
-
-    public void setPayPerClient(boolean payPerClient) {
-        this.payPerClient = payPerClient;
     }
 
     private boolean payPerClient;
@@ -118,64 +110,24 @@ public class Activity extends GymClass implements UuidGymClass {
         return inscriptions;
     }
 
-    public void setInscriptions(ArrayList<Client> inscriptions) {
-        this.inscriptions = inscriptions;
-    }
-
-    public Stamp getStart() {
-        return start;
-    }
-
-    public void setStart(Stamp start) {
-        this.start = start;
-    }
-
     public Stamp getEnd() {
         return end;
-    }
-
-    public void setEnd(Stamp end) {
-        this.end = end;
-    }
-
-    public Hours getHour() {
-        return hour;
-    }
-
-    public void setHour(Hours hour) {
-        this.hour = hour;
     }
 
     public int getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
-
     public UUID9 getProNumber() {
         return proNumber;
-    }
-
-    public void setProNumber(UUID9 proNumber) {
-        this.proNumber = proNumber;
     }
 
     public Week getWeek() {
         return week;
     }
 
-    public void setWeek(Week week) {
-        this.week = week;
-    }
-
     public double getPrice() {
         return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 
     @Override

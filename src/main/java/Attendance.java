@@ -2,7 +2,6 @@ public class Attendance extends GymClass {
     private UUID9 proNumber, clientNumber;
     private UUID7 activityNumber;
     private double price;
-    private String comment;
 
     public Attendance(String comment, UUID9 proNumber, UUID9 clientNumber, UUID7 activityNumber, double price) {
         super(comment);
@@ -26,8 +25,8 @@ public class Attendance extends GymClass {
                 "proNumber= " + proNumber +
                 ", clientNumber= " + clientNumber +
                 ", activityNumber= " + activityNumber +
-                ", comment= " + comment +
-                ", creationStamp= " + new Stamp() +
+                ", comment= " + this.getComment() +
+                ", creationStamp= " + this.getCreationStamp() +
                 (andPrice ? ", price= " + this.price : "") +
                 "\n";
     }
