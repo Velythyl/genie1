@@ -13,7 +13,6 @@ public class Activity extends GymClass implements UuidGymClass {
     private double price;
 
     private UUID7 uuid;
-    private static int nextUuid = 0;
 
     private ArrayList<Attendance> attendances;
 
@@ -50,7 +49,7 @@ public class Activity extends GymClass implements UuidGymClass {
         this.attendances = new ArrayList<>();
 
         DataStore ds = DataStore.getInstance();
-        ds.generateActivityID(proNumber, type);
+        this.uuid = ds.generateActivityID(proNumber, type);
 
         this.payPerClient = payPerClient;
     }

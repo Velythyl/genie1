@@ -72,7 +72,7 @@ public class DataStore implements Serializable {
      * @param activity  The activity type
      * @return  The activity ID as an int.
      */
-    public int generateActivityID(UUID9 proUUID, String activity) {
+    public UUID7 generateActivityID(UUID9 proUUID, String activity) {
         String proNumber = proUUID.toString();
 
         String lastTwoProNb = proNumber.substring(proNumber.length() - 2);
@@ -101,7 +101,7 @@ public class DataStore implements Serializable {
 
         saveDS();
 
-        return Integer.parseInt(typeCode+activityNumber+lastTwoProNb);
+        return new UUID7(Integer.parseInt(typeCode+activityNumber+lastTwoProNb));
     }
 
     private <T extends UuidGymClass> T getById(ArrayList<T> list, UUID id) {
