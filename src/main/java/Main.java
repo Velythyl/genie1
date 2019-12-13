@@ -196,7 +196,8 @@ public class Main {
                                         "proNumber",
                                         "days",
                                         "name",
-                                        "price"
+                                        "price",
+                                        "type"
                                 };
                                 String[] list = activityPrompt().split("\t");
                                 pt.modifyActivity(ID, entityFields, list);
@@ -451,6 +452,7 @@ public class Main {
         System.out.println("veuillez inscrire le type du cours");//TODO test
         list.add(scannermain.nextLine());
 
+        System.out.println(String.join("\t", list));
         return String.join("\t", list);
     }
 
