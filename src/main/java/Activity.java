@@ -136,14 +136,14 @@ public class Activity extends GymClass implements UuidGymClass {
     @Override
     public String toString() {
 
-        return name + ": ID=" + getUuid() + " " +
-                "début:" + start.toString().split(" ")[0] +
-                ", fin:" + end.toString().split(" ")[0] +
-                ", heure:" + hour.toString() +
-                ", capacité:" + capacity +
-                ", IDduPro:" + proNumber +
-                ", Jours:[" + week.toString() + "]" +
-                ", inscriptions:" + inscriptions.size() + " clients";
+        return "Nom de l'activité: "+name + "\tID: " + getUuid() + "\t" +
+                "Date de début: " + start + "\t" +
+                "Date de fin: " + end + "\t" +
+                "Heure: " + hour.toString() +
+                "\tCapacité:" + capacity +
+                "\tID du Pro: " + proNumber +
+                "\tJours:[" + week.toString() + "]" +
+                "\tInscriptions:" + inscriptions.size() + " clients\n";
     }
 
     public ArrayList<Client> getInscriptions() {

@@ -5,10 +5,7 @@ import java.util.Scanner;
  * Main is the interface with the oustide world. The command line interface is a simulation of what the mobile app sees.
  */
 public class Main {
-    /**
-     * inscription au gym: inscription name surname phone email address isMale(boolean) millisTimestamp comment
-     * @param args
-     */
+
     public static Scanner scannermain;
 
     public static void main(String[] args) {
@@ -254,7 +251,7 @@ public class Main {
                     case "i":
                     case "[i]":
                         System.out.println("le rapport comptable est maintenant imprimé dans le fichier report.tsv .\n");
-                        pt.printTEFs();
+                        pt.printManagerReport();
                         break;
                     case "J":
                     case "[J]":

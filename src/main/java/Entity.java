@@ -100,9 +100,9 @@ public abstract class Entity extends GymClass implements UuidGymClass {
 
     @Override
     public String toString() {
-        return name +
-                ", uuID=" + getUuid() +
-                ",\n";
+        return "Client's name: " + name +
+                "\t client's UUID=" + getUuid() +
+                "\n";
     }
 
     public UUID getUuid() {

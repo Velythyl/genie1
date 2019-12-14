@@ -246,7 +246,7 @@ public class Prototype {
      * @param onDate the date on which the clients wants to begin the activity
      * @param comment
      */
-    void enrollIntoActivity(UUID9 clientUuid, UUID7 serviceUuid, Timestamp onDate, String comment) {
+    void enrollIntoActivity(UUID9 clientUuid, UUID7 serviceUuid, Stamp onDate, String comment) {
         Activity a = ds.getActivity(serviceUuid);
 
         if(a == null) {
@@ -332,6 +332,12 @@ public class Prototype {
     void consultActivities(){
         ArrayList<Activity> fullList = ds.getActivities();
 
+        if(fullList.size() == 0) {
+            System.out.println("Il n'y a pas d'activités libres");
+            return;
+        }
+
+
         for(int i=0; i<fullList.size(); i++){
             Activity a = fullList.get(i);
             if(a.getInscriptions().size() < a.getCapacity()) System.out.println(a.toString());
@@ -346,11 +352,17 @@ public class Prototype {
     void consultInscriptions(UUID9 proUuid) {
         Professionnal p = ds.getProfessionnal(proUuid);
         ArrayList<Activity> as = p.getActivities();
+
+        if(as.size() == 0) {
+            System.out.println("Ce professionel n'a pas d'activités");
+            return;
+        }
+
         for(Activity a: as) {
             System.out.println("activité : "+a.getName()+": ");
             ArrayList<Client> cList = a.getInscriptions();
             for (Client client : cList) {
-                System.out.println("---" + client.toString());
+                System.out.println("\t" + client.toString());
             }
         }
     }
@@ -579,9 +591,7 @@ public class Prototype {
 
             t.invoke(this, castParams);
             return;
-        } catch (Exception ignored) {
-            ignored.printStackTrace();
-        }
+        } catch (Exception ignored) {}
 
         System.out.println("Quelque chose s'est mal passé. Êtes-vous certains d'avoir bien tapé votre commande? (meta_callbystring)");
 

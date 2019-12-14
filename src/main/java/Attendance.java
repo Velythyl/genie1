@@ -41,7 +41,7 @@ public class Attendance extends GymClass {
      * @return
      */
     public String toString(boolean andPrice) {
-        return "Inscription: " +
+        return "Attendance: " +
                 "proNumber= " + proNumber +
                 ", clientNumber= " + clientNumber +
                 ", activityNumber= " + activityNumber +

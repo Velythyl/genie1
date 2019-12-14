@@ -40,11 +40,12 @@ public class ProfessionalReporter extends EntityReporter {
             for(Attendance att: Reporter.getWeekAttendances(a.getAttendances())) {
                 String date = att.getCreationStamp().toString();
 
-                report += "ACTIVITY DATE: "+date.split(" ")[0]+"\n";
-                report += "RECEIVED ATTENDANCE CONFIRMATION ON: "+date+"\n";
-                report += "CLIENT NAME: "+ds.getClient(att.getClientNumber()).getName()+"\n";
-                report += "CLIENT NUMBER: "+att.getClientNumber()+"\n";
-                report += "PAY: " + (att.getPrice() * ACTIVITY_PERCENTAGE_PAID_TO_PRO) + "\n";
+                report += "\tACTIVITY DATE: "+date.split(" ")[0]+"\n";
+                report += "\tRECEIVED ATTENDANCE CONFIRMATION ON: "+date+"\n";
+                report += "\tCLIENT NAME: "+ds.getClient(att.getClientNumber()).getName()+"\n";
+                report += "\tCLIENT NUMBER: "+att.getClientNumber()+"\n";
+                report += "\tPAY: " + (att.getPrice() * ACTIVITY_PERCENTAGE_PAID_TO_PRO) + "\n";
+                report += "\t---";
             }
         }
 

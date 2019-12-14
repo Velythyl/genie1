@@ -38,14 +38,21 @@ public class DataStore implements Serializable {
             this.activityNames = oldStore.getActivityNames();
             this.usedActivityIDs = oldStore.getUsedActivityIDs();
         } catch (ClassNotFoundException | IOException e) {
-
-            this.clients = new ArrayList<>();
-            this.professionnals = new ArrayList<>();
-            this.activities = new ArrayList<>();
-
-            this.activityNames = new ArrayList<>();
-            this.usedActivityIDs = new ArrayList<>();
+            wipe();
         }
+    }
+
+    /**
+     * Completely wipes the datastore. Very dangerous! Used only for tests and for the initial construction of the
+     * Datastore.
+     */
+    void wipe() {
+        this.clients = new ArrayList<>();
+        this.professionnals = new ArrayList<>();
+        this.activities = new ArrayList<>();
+
+        this.activityNames = new ArrayList<>();
+        this.usedActivityIDs = new ArrayList<>();
     }
 
     /**
@@ -125,6 +132,7 @@ public class DataStore implements Serializable {
 
         String activityNumber;
         HashMap<String, Integer> usedIDs = this.usedActivityIDs.get(activityIndex);
+        //cherche la liste de pros qui ont donne des activites de ce type et trouve le prochain ID libre pour ce pro
         if(!usedIDs.containsKey(lastTwoProNb)) {
             usedIDs.put(lastTwoProNb, 1);
             activityNumber = "00";

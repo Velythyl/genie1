@@ -80,7 +80,7 @@ public abstract class Reporter {
                 pay += attendance.getPrice();
             }
         } else {
-            long nb_days = (new Stamp().getTime() - getLastSat().getTime())/86400000;    // nb de millis dans un jour
+            long nb_days = (new Stamp().getTime() - getLastSat().getTime())/86400000;    // tres arbitraire? nope! nb de millis dans un jour
             for(int i=0; i<nb_days; i++) {
                 if(a.getWeek().getDays()[i]) pay += a.getPrice();
             }

@@ -1,6 +1,12 @@
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+/**
+ * Tests on the prototype
+ */
 public class PrototypeTest {
 
     Prototype testPrototype = new Prototype();
@@ -14,6 +20,9 @@ public class PrototypeTest {
 
     DataStore ds = DataStore.getInstance();
 
+    /**
+     * Tests if accessGym works
+     */
     @Test
     public void accessGym() {
         //arrange
@@ -34,6 +43,9 @@ public class PrototypeTest {
         Assert.assertEquals(false,testRez2);
     }
 
+    /**
+     * Tests if enrollClient works
+     */
     @Test
     public void enrollClient() {
         //arrange
@@ -66,7 +78,9 @@ public class PrototypeTest {
 
     }
 
-
+    /**
+     * Tests if modifyClient works
+     */
     @Test
     public void modifyClient() {
         //arrange
@@ -116,6 +130,9 @@ public class PrototypeTest {
 
     }
 
+    /**
+     * Tests if modifyProfessionnal works
+     */
     @Test
     public void modifyProfessionnal() {
         //arrange
@@ -161,6 +178,9 @@ public class PrototypeTest {
                         proInSys.getEmail()});
     }
 
+    /**
+     * Tests if deleteClient works
+     */
     @Test
     public void deleteClient() {
         //arrange
@@ -178,6 +198,9 @@ public class PrototypeTest {
         Assert.assertNotEquals(clientIsInSystemBefore,clientIsInSystemAft);
     }
 
+    /**
+     * Tests if deleteProfessionnal works
+     */
     @Test
     public void deleteProfessionnal() {
         //arrange
@@ -193,6 +216,9 @@ public class PrototypeTest {
         Assert.assertNotEquals(proIsInSystemBefore,proIsInSystemAft);
     }
 
+    /**
+     * Tests if enrollProfessionnal works
+     */
     @Test
     public void enrollProfessionnal() {
         //arrange
@@ -222,6 +248,56 @@ public class PrototypeTest {
                         dsPro.getPostalCode(),
                         dsPro.getComment(),
                         dsPro.getProvince()});
+
+    }
+
+    /**
+     * Tests if consultActivities works
+     *
+     * Also tests if the unique way of generating activity IDs works
+     */
+    @Test
+    public void consultActivities() {
+        ds.wipe();
+
+        Activity a1 = new Activity("comment", new Stamp("01-01-1000"),
+                new Stamp("01-01-1000"), new Hour("11:11"), 1, new UUID9(0),
+                new Week("1:1:1:1:1:1:1"), "le nom", 0.10, false, "zumba");
+
+        Activity a2 = new Activity("comment2", new Stamp("01-01-1000"),
+                new Stamp("01-01-1000"), new Hour("11:11"), 1, new UUID9(0),
+                new Week("1:1:1:1:1:1:1"), "le nom2", 0.10, false, "zumba");
+
+        Assert.assertEquals("0000000", a1.getUuid().toString());
+        Assert.assertEquals("0000100", a2.getUuid().toString());
+
+        ds.addActivity(a1);
+        ds.addActivity(a2);
+
+        //https://stackoverflow.com/questions/8708342/redirect-console-output-to-string-in-java
+        // Create a stream to hold the output
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(baos);
+        // IMPORTANT: Save the old System.out!
+        PrintStream old = System.out;
+        // Tell Java to use your special stream
+        System.setOut(ps);
+
+        testPrototype.consultActivities();
+
+        // Put things back
+        System.out.flush();
+        System.setOut(old);
+
+        // Show what happened
+        String outputWas = baos.toString();
+        Assert.assertEquals("Nom de l'activité: le nom\tID: 0000000\tDate de début: 01-01-1000 00:00:00.0\tDate" +
+                " de fin: 01-01-1000 00:00:00.0\tHeure: 11:11\tCapacité:1\tID du Pro: 000000000\tJours:[samedi, dimanche" +
+                ", lundi, mardi, mecredi, jeudi, vendredi]\tInscriptions:0 clients\n" +
+                "\n" +
+                "Nom de l'activité: le nom2\tID: 0000100\tDate de début: 01-01-1000 00:00:00.0\tDate de fin: 01-01-1000 " +
+                "00:00:00.0\tHeure: 11:11\tCapacité:1\tID du Pro: 000000000\tJours:[samedi, dimanche, lundi, mardi, " +
+                "mecredi, jeudi, vendredi]\tInscriptions:0 clients\n\n", outputWas);
 
     }
 }

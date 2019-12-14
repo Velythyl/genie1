@@ -1,0 +1,2 @@
+Inscription: proNumber= 000000000, clientNumber= 000000001, activityNumber= 0010000, comment= rien, creationStamp= 13-12-2019 18:21:07.804
+Inscription: proNumber= 000000000, clientNumber= 000000001, activityNumber= 0010100, comment= rien, creationStamp= 13-12-2019 18:28:57.077
