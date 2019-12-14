@@ -201,6 +201,7 @@
       <manifest>
         <attribute name="Main-Class" value="Main"/>
       </manifest>
+      <fileset dir="${basedir}/src" includes="**/*.java"/>
       <zipfileset dir="${ift2255mathieucharlie.output.dir}"/>
       <zipfileset dir="${ift2255mathieucharlie.testoutput.dir}"/>
       <zipfileset src="${basedir}/Dependencies/javase-3.4.0.jar"/>
