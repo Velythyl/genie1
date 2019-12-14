@@ -60,7 +60,7 @@
   
   <dirname property="module.ift2255mathieucharlie.basedir" file="${ant.file}"/>
   
-  <property name="compiler.args.ift2255mathieucharlie" value="-encoding UTF-8 -source 11 -target 11 ${compiler.args}"/>
+  <property name="compiler.args.ift2255mathieucharlie" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
   
   <property name="ift2255mathieucharlie.output.dir" value="${module.ift2255mathieucharlie.basedir}/out/production/ift2255mathieucharlie"/>
   <property name="ift2255mathieucharlie.testoutput.dir" value="${module.ift2255mathieucharlie.basedir}/out/test/ift2255mathieucharlie"/>
