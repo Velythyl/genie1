@@ -198,6 +198,9 @@
     <mkdir dir="${artifact.temp.output.ift2255mathieucharlie:jar}"/>
     <jar destfile="${temp.jar.path.ift2255mathieucharlie.jar}" duplicate="preserve" filesetmanifest="mergewithoutmain">
       <zipfileset file="${basedir}/src/META-INF/MANIFEST.MF" prefix="META-INF"/>
+      <manifest>
+        <attribute name="Main-Class" value="Main"/>
+      </manifest>
       <zipfileset dir="${ift2255mathieucharlie.output.dir}"/>
       <zipfileset dir="${ift2255mathieucharlie.testoutput.dir}"/>
       <zipfileset src="${basedir}/Dependencies/javase-3.4.0.jar"/>
